@@ -1,0 +1,76 @@
+
+wave.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+wave_bottom_down
+  rotate: false
+  xy: 0, 512
+  size: 600, 512
+  orig: 600, 512
+  offset: 0, 0
+  index: -1
+wave_bottom_up
+  rotate: false
+  xy: 0, 0
+  size: 600, 512
+  orig: 600, 512
+  offset: 0, 0
+  index: -1
+
+wave2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+wave_bottom_left
+  rotate: false
+  xy: 0, 0
+  size: 512, 600
+  orig: 512, 600
+  offset: 0, 0
+  index: -1
+wave_bottom_right
+  rotate: false
+  xy: 512, 0
+  size: 512, 600
+  orig: 512, 600
+  offset: 0, 0
+  index: -1
+
+wave3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+wave_top_down
+  rotate: false
+  xy: 0, 512
+  size: 600, 512
+  orig: 600, 512
+  offset: 0, 0
+  index: -1
+wave_top_up
+  rotate: false
+  xy: 0, 0
+  size: 600, 512
+  orig: 600, 512
+  offset: 0, 0
+  index: -1
+
+wave4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+wave_top_left
+  rotate: false
+  xy: 0, 0
+  size: 512, 600
+  orig: 512, 600
+  offset: 0, 0
+  index: -1
+wave_top_right
+  rotate: false
+  xy: 512, 0
+  size: 512, 600
+  orig: 512, 600
+  offset: 0, 0
+  index: -1

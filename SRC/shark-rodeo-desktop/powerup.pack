@@ -1,0 +1,40 @@
+
+powerup.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+1up
+  rotate: false
+  xy: 0, 0
+  size: 192, 32
+  orig: 192, 32
+  offset: 0, 0
+  index: -1
+2x
+  rotate: false
+  xy: 192, 0
+  size: 192, 32
+  orig: 192, 32
+  offset: 0, 0
+  index: -1
+4x
+  rotate: false
+  xy: 384, 0
+  size: 192, 32
+  orig: 192, 32
+  offset: 0, 0
+  index: -1
+end
+  rotate: false
+  xy: 576, 0
+  size: 192, 32
+  orig: 192, 32
+  offset: 0, 0
+  index: -1
+spd
+  rotate: false
+  xy: 768, 0
+  size: 192, 32
+  orig: 192, 32
+  offset: 0, 0
+  index: -1

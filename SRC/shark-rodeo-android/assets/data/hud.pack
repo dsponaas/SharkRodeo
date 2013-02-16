@@ -1,0 +1,82 @@
+
+hud.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+score_label
+  rotate: false
+  xy: 1, 69
+  size: 280, 56
+  orig: 280, 56
+  offset: 0, 0
+  index: -1
+sprint_icon_active
+  rotate: false
+  xy: 283, 13
+  size: 112, 112
+  orig: 112, 112
+  offset: 0, 0
+  index: -1
+sprint_icon_inactive
+  rotate: false
+  xy: 397, 13
+  size: 112, 112
+  orig: 112, 112
+  offset: 0, 0
+  index: -1
+sharks_left_icon
+  rotate: false
+  xy: 1, 11
+  size: 92, 56
+  orig: 92, 56
+  offset: 0, 0
+  index: -1
+lives_icon
+  rotate: false
+  xy: 95, 11
+  size: 90, 56
+  orig: 90, 56
+  offset: 0, 0
+  index: -1
+powerup_2x
+  rotate: false
+  xy: 187, 35
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+powerup_4x
+  rotate: false
+  xy: 221, 35
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+powerup_end
+  rotate: false
+  xy: 187, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+powerup_endurance_up
+  rotate: false
+  xy: 187, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+powerup_spd
+  rotate: false
+  xy: 221, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+powerup_speed_up
+  rotate: false
+  xy: 221, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

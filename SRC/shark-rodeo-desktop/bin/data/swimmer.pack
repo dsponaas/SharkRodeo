@@ -1,0 +1,47 @@
+
+swimmer.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+idle_left_4frames
+  rotate: false
+  xy: 1, 651
+  size: 512, 128
+  orig: 512, 128
+  offset: 0, 0
+  index: -1
+idle_right_4frames
+  rotate: false
+  xy: 1, 521
+  size: 512, 128
+  orig: 512, 128
+  offset: 0, 0
+  index: -1
+swim_down_4frames
+  rotate: false
+  xy: 1, 391
+  size: 512, 128
+  orig: 512, 128
+  offset: 0, 0
+  index: -1
+swim_left_4frames
+  rotate: false
+  xy: 1, 261
+  size: 512, 128
+  orig: 512, 128
+  offset: 0, 0
+  index: -1
+swim_right_4frames
+  rotate: false
+  xy: 1, 131
+  size: 512, 128
+  orig: 512, 128
+  offset: 0, 0
+  index: -1
+swim_up_4frames
+  rotate: false
+  xy: 1, 1
+  size: 512, 128
+  orig: 512, 128
+  offset: 0, 0
+  index: -1
