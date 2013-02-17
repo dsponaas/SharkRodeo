@@ -472,7 +472,7 @@ public class GameBoard {
 		{
 			if((curShark != null) && (curShark.isOnScreen()))
 			{
-				_renderer.renderGameObject(curShark, delta);
+				_renderer.renderShark(curShark, delta);
 				onScreenSharks.add(curShark);
 			}
 		}

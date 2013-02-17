@@ -14,6 +14,7 @@ public class SharkRodeoConstants {
 	public static final float MULTIPLIER_TIME = 20f;
 	public static final float RIDING_SCORE_TIME = .97f; //1 second but we'd prefer to cheat to the lower end
 	public static final float DEFAULT_SHARK_HEALTH = 15f;
+	public static final float SHARK_LUNGE_MULTIPLIER = 2.2f;
 	public static final float DIALOG_IGNORE_INPUT_TIME = 0.75f;
 	public static final float POWERUP_FADE_TIMER = 2f;
 	public static final float POWERUP_TIMER = 8f;
@@ -23,6 +24,7 @@ public class SharkRodeoConstants {
 	public static final float POWERUP_SPEED_FACTOR = 1.4f;
 	public static final float POWERUP_ENDURANCE_FACTOR = 3f;
 	public static final float POWERUP_LENGTH = 15f;
+	public static final float DEFAULT_RENDER_TOUCHPOS_ALPHA = 0.8f;
 
 	/**************************************************************************************************************************/
 	/**************************************************************************************************************************/
@@ -111,6 +113,12 @@ public class SharkRodeoConstants {
 	/**************************************************************************************************************************/
 	private static final float SHARK_HITBOX_OFFSET_128 = 28f;
 	private static final float SHARK_HITBOX_OFFSET_256 = 56f;
+	/**************************************************************************************************************************/
+	private static final float SHARK_DEST_TURN_DISTANCE_SQUARED_128 = 2500f;
+	private static final float SHARK_DEST_TURN_DISTANCE_SQUARED_256 = 10000f;
+	/**************************************************************************************************************************/
+	private static final float SHARK_DEST_ALERT_DISTANCE_SQUARED_128 = 40000f;
+	private static final float SHARK_DEST_ALERT_DISTANCE_SQUARED_256 = 160000f;
 	/**************************************************************************************************************************/
 	private static final float PLAYER_HITBOX_RADIUS_128 = 20f;
 	private static final float PLAYER_HITBOX_RADIUS_256 = 40f;
@@ -416,6 +424,26 @@ public class SharkRodeoConstants {
 		}
 		
 		Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***ERROR*** SharkRodeoConstants.getSharkBackHitboxRadius() returning default value!");
+		return 0f;
+	}
+	
+	public static float getSharkDestTurnDistanceSquared() {
+		switch( _scale ) {
+		case _128: return SHARK_DEST_TURN_DISTANCE_SQUARED_128;
+		case _256: return SHARK_DEST_TURN_DISTANCE_SQUARED_256;
+		}
+		
+		Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***ERROR*** SharkRodeoConstants.getSharkDestAlertDistanceSquared() returning default value!");
+		return 0f;
+	}
+	
+	public static float getSharkDestAlertDistanceSquared() {
+		switch( _scale ) {
+		case _128: return SHARK_DEST_ALERT_DISTANCE_SQUARED_128;
+		case _256: return SHARK_DEST_ALERT_DISTANCE_SQUARED_256;
+		}
+		
+		Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***ERROR*** SharkRodeoConstants.getSharkDestAlertDistanceSquared() returning default value!");
 		return 0f;
 	}
 	

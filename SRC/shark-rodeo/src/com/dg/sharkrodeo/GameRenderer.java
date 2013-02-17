@@ -177,6 +177,30 @@ public class GameRenderer
 //		_batch.draw(obj.getTexture(), position.x, position.y, position.x + (obj.getWidth() / 2f), position.y + (obj.getHeight() / 2f), obj.getWidth(), obj.getHeight(), 1f, 1f);
 		
 	}
+
+	public void renderShark( Shark obj, float delta ) {
+		Vector2 position = obj.getPosition();
+		obj.updateView( delta );
+		
+		TextureRegion texture = obj.getTexture();
+		if( texture != null )
+			_batch.draw( texture, position.x - ( ( float )( texture.getRegionWidth() / 2 ) ), position.y - ( ( float )( texture.getRegionHeight() / 2 ) ) );
+		
+		Vector2 playerPos = GameBoard.getInstance().getPlayerPos();
+		if( obj.isPointInLineOfSight( playerPos.x, playerPos.y ) ) {
+			TextureRegion exclamation = Hud.getRedExclamationIcon();
+			_batch.draw( exclamation, position.x - ( ( float )( exclamation.getRegionWidth() / 2 ) ), position.y + ( ( float )( exclamation.getRegionHeight() / 2 ) ) );
+		}
+		else if( obj.isAboutToTurn() ) {
+			TextureRegion exclamation = Hud.getYellowExclamationIcon();
+			_batch.draw( exclamation, position.x - ( ( float )( exclamation.getRegionWidth() / 2 ) ), position.y + ( ( float )( exclamation.getRegionHeight() / 2 ) ) );
+		}
+		
+		
+//		_batch.dra
+//		_batch.draw(obj.getTexture(), position.x, position.y, position.x + (obj.getWidth() / 2f), position.y + (obj.getHeight() / 2f), obj.getWidth(), obj.getHeight(), 1f, 1f);
+		
+	}
 	
 	public void renderWaveLayer(Wave wave, float delta, boolean top)
 	{
@@ -215,113 +239,98 @@ public class GameRenderer
 		}
 	}
 	
-	// TODO: magic numbers starting to pile up.partcularly with  regard to border
-	public void renderGameBoard()
-	{
+	public void renderGameBoard() {
 		float frameWidth = Gdx.graphics.getWidth();
 		float frameHeight = Gdx.graphics.getHeight();
 		
-		float originX = _camera.position.x - (frameWidth / 2f);
-		float originY = _camera.position.y - (frameHeight / 2f);
+		float originX = _camera.position.x - ( frameWidth / 2f );
+		float originY = _camera.position.y - ( frameHeight / 2f );
 		
 		Texture backgroundTexture = GameBoard.getInstance().getBackgroundTexture();
-		float backgroundTexWidth = ((float)backgroundTexture.getWidth());
-		float backgroundTexHeight = ((float)backgroundTexture.getHeight());
+		float backgroundTexWidth = ( ( float )backgroundTexture.getWidth() );
+		float backgroundTexHeight = ( ( float )backgroundTexture.getHeight() );
 		float backgroundStartX = 0f - frameWidth;
 		float backgroundStartY = 0f - frameHeight;
-		while (backgroundStartX < (originX - backgroundTexWidth))
+		while( backgroundStartX < ( originX - backgroundTexWidth ) )
 			backgroundStartX += backgroundTexWidth;
-		while (backgroundStartY < (originY - backgroundTexHeight))
+		while( backgroundStartY < ( originY - backgroundTexHeight ) )
 			backgroundStartY += backgroundTexHeight;
-		for(float curX = backgroundStartX; curX < (originX + frameWidth + backgroundTexWidth); curX += backgroundTexWidth)
-		{
-			for(float curY = backgroundStartY; curY < (originY + frameHeight + backgroundTexHeight); curY += backgroundTexHeight)
-			{
-				_batch.draw(backgroundTexture, curX, curY);
+		for( float curX = backgroundStartX; curX < ( originX + frameWidth + backgroundTexWidth ); curX += backgroundTexWidth ) {
+			for( float curY = backgroundStartY; curY < ( originY + frameHeight + backgroundTexHeight ); curY += backgroundTexHeight ) {
+				_batch.draw( backgroundTexture, curX, curY );
 			}
 		}
 		
-		for(OceanLayer layer : GameBoard.getInstance().getOceanLayers())
-		{
+		for( OceanLayer layer : GameBoard.getInstance().getOceanLayers() ) {
 			TextureRegion texture = layer.getTexture();
-			for(Vector2 pos : layer.getTexturePositions(originX, originY))
-			{
-				_batch.setColor(1, 1, 1, layer.getAlpha());
-				_batch.draw(texture, pos.x, pos.y);
-				_batch.setColor(1, 1, 1, 1);
+			for( Vector2 pos : layer.getTexturePositions( originX, originY ) ) {
+				_batch.setColor( 1, 1, 1, layer.getAlpha() );
+				_batch.draw( texture, pos.x, pos.y );
+				_batch.setColor( 1, 1, 1, 1 );
 			}
 		}
 	}
 	
-	public void renderBorder()
-	{
+	public void renderBorder() {
 		GameBoard board = GameBoard.getInstance();
 		
 		Texture vertBoundsTex = board.getVertBoundsTexture();
-		float borderWidth = ((float)vertBoundsTex.getWidth()) / 2f;
-		float borderLength = (float)vertBoundsTex.getHeight();
+		float borderWidth = ( ( float )vertBoundsTex.getWidth() ) / 2f;
+		float borderLength = ( float )vertBoundsTex.getHeight();
 
 		float leftBoundsX = -1f * borderWidth;
 		float rightBoundsX = board.getWidth() - borderWidth;
 		float leftBoundsY = borderLength - borderWidth;
-		for(; (leftBoundsY + borderLength) < board.getHeight(); leftBoundsY += borderLength)
-		{
-			_batch.draw(vertBoundsTex, leftBoundsX, leftBoundsY);
-			_batch.draw(vertBoundsTex, rightBoundsX, leftBoundsY);
+		for( ; ( leftBoundsY + borderLength ) < board.getHeight(); leftBoundsY += borderLength ) {
+			_batch.draw( vertBoundsTex, leftBoundsX, leftBoundsY );
+			_batch.draw( vertBoundsTex, rightBoundsX, leftBoundsY );
 		}
 		
 		Texture horBoundsTex = board.getHorBoundsTexture();
 		leftBoundsY = -1f * borderWidth;
 		float rightBoundsY = board.getHeight() - borderWidth;
-		for(leftBoundsX = borderLength - borderWidth; (leftBoundsX + borderLength) < board.getWidth(); leftBoundsX += borderLength)
-		{
-			_batch.draw(horBoundsTex, leftBoundsX, leftBoundsY);
-			_batch.draw(horBoundsTex, leftBoundsX, rightBoundsY);
+		for( leftBoundsX = borderLength - borderWidth; ( leftBoundsX + borderLength ) < board.getWidth(); leftBoundsX += borderLength ) {
+			_batch.draw( horBoundsTex, leftBoundsX, leftBoundsY );
+			_batch.draw( horBoundsTex, leftBoundsX, rightBoundsY );
 		}
 
-		_batch.draw(board.getBoundsBLTexture(), -1f * borderWidth, -1f * borderWidth);
-		_batch.draw(board.getBoundsBRTexture(), board.getWidth() + borderWidth - board.getBoundsTLTexture().getWidth(), -1f * borderWidth);
-		_batch.draw(board.getBoundsTRTexture(), board.getWidth() + borderWidth - board.getBoundsTLTexture().getWidth(), board.getHeight() + borderWidth - board.getBoundsTLTexture().getHeight());
-		_batch.draw(board.getBoundsTLTexture(), -1f * borderWidth, board.getHeight() + borderWidth - board.getBoundsTLTexture().getHeight());
+		_batch.draw( board.getBoundsBLTexture(), -1f * borderWidth, -1f * borderWidth );
+		_batch.draw( board.getBoundsBRTexture(), board.getWidth() + borderWidth - board.getBoundsTLTexture().getWidth(), -1f * borderWidth );
+		_batch.draw( board.getBoundsTRTexture(), board.getWidth() + borderWidth - board.getBoundsTLTexture().getWidth(), board.getHeight() + borderWidth - board.getBoundsTLTexture().getHeight() );
+		_batch.draw( board.getBoundsTLTexture(), -1f * borderWidth, board.getHeight() + borderWidth - board.getBoundsTLTexture().getHeight() );
 	}
 	
-	public void renderMountedTouchPos(boolean touchFlag, float percent)
-	{
-		float alpha = percent * 0.8f;//TODO: magic number
+	public void renderMountedTouchPos( boolean touchFlag, float percent ) {
+		float alpha = percent * SharkRodeoConstants.DEFAULT_RENDER_TOUCHPOS_ALPHA;
 		if(touchFlag)
-			_batch.setColor(0, 1, 0, alpha);
+			_batch.setColor( 0, 1, 0, alpha );
 		else
-			_batch.setColor(1, 0, 0, alpha);
+			_batch.setColor( 1, 0, 0, alpha );
 		
 		Texture tex = GameBoard.getInstance().getMountedTouchTexture();
 		Vector2 pos = GameBoard.getInstance().getPlayerPos();
-		_batch.draw(tex, pos.x - (tex.getWidth() / 2f), pos.y - (tex.getHeight() / 2f));
-		_batch.setColor(1, 1, 1, 1);
+		_batch.draw( tex, pos.x - ( tex.getWidth() / 2f ), pos.y - ( tex.getHeight() / 2f ) );
+		_batch.setColor( 1, 1, 1, 1 );
 	}
 	
-	public void beginShapeRender()
-	{
-		_shapeRenderer.setProjectionMatrix(_camera.combined);
+	public void beginShapeRender() {
+		_shapeRenderer.setProjectionMatrix( _camera.combined );
 	}
 	
-	public void endShapeRender()
-	{
+	public void endShapeRender() {
 		_shapeRenderer.end();
 	}
 	
-	public void renderHitBoxes(GameObject obj)
-	{
-		for(Circle cur : obj.getBounds())
-		{
-			_shapeRenderer.begin(ShapeType.Circle);
-			_shapeRenderer.setColor(Color.RED);
-			_shapeRenderer.circle(cur.x, cur.y, cur.radius);
+	public void renderHitBoxes( GameObject obj ) {
+		for( Circle cur : obj.getBounds() ) {
+			_shapeRenderer.begin( ShapeType.Circle );
+			_shapeRenderer.setColor( Color.RED );
+			_shapeRenderer.circle( cur.x, cur.y, cur.radius );
 			_shapeRenderer.end();
 		}
 	}
 	
-	public void renderHitPoints(Shark shark)
-	{
+	public void renderHitPoints( Shark shark ) {
 		float health = shark.getHealthPercent();
 		if(health > .98f) //TODO: Magic number
 			return;
@@ -332,46 +341,36 @@ public class GameRenderer
 		float buffer = 1f; //TODO:Magic number
 		Vector2 sharkPos = shark.getPosition();
 		
-		_shapeRenderer.begin(ShapeType.FilledRectangle);
-		_shapeRenderer.setColor(Color.BLACK);
-		_shapeRenderer.filledRect(sharkPos.x - (width / 2f), sharkPos.y + yOffset, width, height);
+		_shapeRenderer.begin( ShapeType.FilledRectangle );
+		_shapeRenderer.setColor( Color.BLACK );
+		_shapeRenderer.filledRect( sharkPos.x - ( width / 2f ), sharkPos.y + yOffset, width, height );
 		_shapeRenderer.end();
 		
-		_shapeRenderer.begin(ShapeType.FilledRectangle);
-		_shapeRenderer.setColor(Color.RED);
-		_shapeRenderer.filledRect(sharkPos.x - (width / 2f) + buffer, sharkPos.y + yOffset + buffer, width - (2f * buffer), height - (2f * buffer));
+		_shapeRenderer.begin( ShapeType.FilledRectangle );
+		_shapeRenderer.setColor( Color.RED );
+		_shapeRenderer.filledRect( sharkPos.x - ( width / 2f ) + buffer, sharkPos.y + yOffset + buffer, width - ( 2f * buffer ), height - ( 2f * buffer ) );
 		_shapeRenderer.end();
 		
-		_shapeRenderer.begin(ShapeType.FilledRectangle);
-		_shapeRenderer.setColor(Color.GREEN);
-		_shapeRenderer.filledRect(sharkPos.x - (width / 2f) + buffer, sharkPos.y + yOffset + buffer, health * (width - (2f * buffer)), height - (2f * buffer));
+		_shapeRenderer.begin( ShapeType.FilledRectangle );
+		_shapeRenderer.setColor( Color.GREEN );
+		_shapeRenderer.filledRect( sharkPos.x - ( width / 2f ) + buffer, sharkPos.y + yOffset + buffer, health * ( width - ( 2f * buffer ) ), height - ( 2f * buffer ) );
 		_shapeRenderer.end();
 		
 	}
 	
-	public void beginHudBatch()
-	{
+	public void beginHudBatch() {
 		_hudBatch.begin();
 	}
 	
-	public void endHudBatch()
-	{
+	public void endHudBatch() {
 		_hudBatch.end();
 	}
 	
-	public void renderHud(Hud hud)
-	{
-		//Blank out the status bar
-		_hudBackgroundRenderer.begin(ShapeType.FilledRectangle);
-		_hudBackgroundRenderer.setColor(SharkRodeoConstants.HUD_BLANK_COLOR);
-		_hudBackgroundRenderer.filledRect(0f, ((float)Gdx.graphics.getHeight()) - SharkRodeoConstants.getStatusBarWidth(), (float)Gdx.graphics.getWidth(), SharkRodeoConstants.getStatusBarWidth());
+	public void renderHud( Hud hud ) {
+		_hudBackgroundRenderer.begin( ShapeType.FilledRectangle );
+		_hudBackgroundRenderer.setColor( SharkRodeoConstants.HUD_BLANK_COLOR );
+		_hudBackgroundRenderer.filledRect( 0f, ( ( float )Gdx.graphics.getHeight() ) - SharkRodeoConstants.getStatusBarWidth(), ( float )Gdx.graphics.getWidth(), SharkRodeoConstants.getStatusBarWidth() );
 		_hudBackgroundRenderer.end();
-
-		//Blank out the utility bar
-//		_hudBackgroundRenderer.begin(ShapeType.FilledRectangle);
-//		_hudBackgroundRenderer.setColor(SharkRodeoConstants.HUD_BLANK_COLOR);
-//		_hudBackgroundRenderer.filledRect(0f, 0f, SharkRodeoConstants.getUtilityBarWidth(), (float)Gdx.graphics.getHeight());
-//		_hudBackgroundRenderer.end();
 		
 		beginHudBatch();
 		
@@ -487,37 +486,32 @@ public class GameRenderer
 		}
 	}
 	
-	public void renderDialog(SharkRodeoDialog dialog)
-	{
+	public void renderDialog( SharkRodeoDialog dialog ) {
 		TextureRegion dialogTex = dialog.getTexture();
 		Vector2 pos = dialog.getPosition();
-		if((dialogTex != null) && (pos != null)) //TODO: take this check out as an optimization?
-		{
-			_hudBatch.setColor(1, 1, 1, 0.9f);
-			_hudBatch.draw(dialogTex, pos.x, pos.y);
-			_hudBatch.setColor(1, 1, 1, 1);
+		if( ( dialogTex != null ) && ( pos != null ) ) { //TODO: take this check out as an optimization?
+			_hudBatch.setColor( 1, 1, 1, 0.9f );
+			_hudBatch.draw( dialogTex, pos.x, pos.y );
+			_hudBatch.setColor( 1, 1, 1, 1 );
 		}
 	}
 	
-	public void renderPowerup(Powerup powerup, float delta)
-	{
+	public void renderPowerup( Powerup powerup, float delta ) {
 		TextureRegion tex = powerup.getTexture();
 		Vector2 pos = powerup.getPosition();
 		ParticleEffect emitter = powerup.getEmitter();
 
-		_batch.setColor(1, 1, 1, powerup.getAlpha());
-		if(emitter != null)
-		{
-			emitter.setPosition(pos.x, pos.y);
-			emitter.draw(_batch, delta);
+		_batch.setColor( 1, 1, 1, powerup.getAlpha() );
+		if( emitter != null ) {
+			emitter.setPosition( pos.x, pos.y );
+			emitter.draw( _batch, delta );
 		}
-		_batch.draw(tex, pos.x - ((float)(tex.getRegionWidth() / 2)), pos.y - ((float)(tex.getRegionHeight() / 2)));
-		_batch.setColor(1, 1, 1, 1);
+		_batch.draw( tex, pos.x - ( ( float )( tex.getRegionWidth() / 2 ) ), pos.y - ( ( float )( tex.getRegionHeight() / 2 ) ) );
+		_batch.setColor( 1, 1, 1, 1 );
 	}
 	
-	public Vector2 getCameraPos()
-	{
-		return new Vector2(_camera.position.x, _camera.position.y);
+	public Vector2 getCameraPos() {
+		return new Vector2( _camera.position.x, _camera.position.y );
 	}
 
 }
