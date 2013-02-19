@@ -188,11 +188,11 @@ public class GameRenderer
 		
 		Vector2 playerPos = GameBoard.getInstance().getPlayerPos();
 		if( obj.isPointInLineOfSight( playerPos.x, playerPos.y ) ) {
-			TextureRegion exclamation = Hud.getRedExclamationIcon();
+			TextureRegion exclamation = Hud.getInstance().getRedExclamationIcon();
 			_batch.draw( exclamation, position.x - ( ( float )( exclamation.getRegionWidth() / 2 ) ), position.y + ( ( float )( exclamation.getRegionHeight() / 2 ) ) );
 		}
 		else if( obj.isAboutToTurn() ) {
-			TextureRegion exclamation = Hud.getYellowExclamationIcon();
+			TextureRegion exclamation = Hud.getInstance().getYellowExclamationIcon();
 			_batch.draw( exclamation, position.x - ( ( float )( exclamation.getRegionWidth() / 2 ) ), position.y + ( ( float )( exclamation.getRegionHeight() / 2 ) ) );
 		}
 		
@@ -342,17 +342,17 @@ public class GameRenderer
 		Vector2 sharkPos = shark.getPosition();
 		
 		_shapeRenderer.begin( ShapeType.FilledRectangle );
-		_shapeRenderer.setColor( Color.BLACK );
+		_shapeRenderer.setColor( new Color( 0f, 0f, 0f, 0.3f ) );
 		_shapeRenderer.filledRect( sharkPos.x - ( width / 2f ), sharkPos.y + yOffset, width, height );
 		_shapeRenderer.end();
 		
 		_shapeRenderer.begin( ShapeType.FilledRectangle );
-		_shapeRenderer.setColor( Color.RED );
+		_shapeRenderer.setColor( new Color( 1f, 0f, 0f, 0.5f ) );
 		_shapeRenderer.filledRect( sharkPos.x - ( width / 2f ) + buffer, sharkPos.y + yOffset + buffer, width - ( 2f * buffer ), height - ( 2f * buffer ) );
 		_shapeRenderer.end();
 		
 		_shapeRenderer.begin( ShapeType.FilledRectangle );
-		_shapeRenderer.setColor( Color.GREEN );
+		_shapeRenderer.setColor( new Color( 0f, 1f, 0f, 0.8f ) );
 		_shapeRenderer.filledRect( sharkPos.x - ( width / 2f ) + buffer, sharkPos.y + yOffset + buffer, health * ( width - ( 2f * buffer ) ), height - ( 2f * buffer ) );
 		_shapeRenderer.end();
 		
@@ -366,7 +366,9 @@ public class GameRenderer
 		_hudBatch.end();
 	}
 	
-	public void renderHud( Hud hud ) {
+	public void renderHud() {
+		Hud hud = Hud.getInstance();
+		
 		_hudBackgroundRenderer.begin( ShapeType.FilledRectangle );
 		_hudBackgroundRenderer.setColor( SharkRodeoConstants.HUD_BLANK_COLOR );
 		_hudBackgroundRenderer.filledRect( 0f, ( ( float )Gdx.graphics.getHeight() ) - SharkRodeoConstants.getStatusBarWidth(), ( float )Gdx.graphics.getWidth(), SharkRodeoConstants.getStatusBarWidth() );

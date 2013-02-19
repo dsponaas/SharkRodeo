@@ -44,6 +44,14 @@ public class Shark extends GameObject
 		Animation swimDownRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_swim_downright"));
 		Animation swimUpLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_swim_upleft"));
 		Animation swimUpRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_swim_upright"));
+		Animation ridingLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_riding_left"));
+		Animation ridingRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_riding_right"));
+		Animation ridingDownAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_riding_down"));
+		Animation ridingUpAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_riding_up"));
+		Animation ridingUpLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_riding_upleft"));
+		Animation ridingUpRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_riding_upright"));
+		Animation ridingDownLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_riding_downleft"));
+		Animation ridingDownRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_riding_downright"));
 		
 		AnimationSequence swimLeftSequence = new AnimationSequence(swimLeftAnim);
 		AnimationSequence swimRightSequence = new AnimationSequence(swimRightAnim);
@@ -53,6 +61,14 @@ public class Shark extends GameObject
 		AnimationSequence swimDownRightSequence = new AnimationSequence(swimDownRightAnim);
 		AnimationSequence swimUpLeftSequence = new AnimationSequence(swimUpLeftAnim);
 		AnimationSequence swimUpRightSequence = new AnimationSequence(swimUpRightAnim);
+		AnimationSequence ridingLeftSequence = new AnimationSequence(ridingLeftAnim);
+		AnimationSequence ridingRightSequence = new AnimationSequence(ridingRightAnim);
+		AnimationSequence ridingDownSequence = new AnimationSequence(ridingDownAnim);
+		AnimationSequence ridingUpSequence = new AnimationSequence(ridingUpAnim);
+		AnimationSequence ridingUpLeftSequence = new AnimationSequence(ridingUpLeftAnim);
+		AnimationSequence ridingUpRightSequence = new AnimationSequence(ridingUpRightAnim);
+		AnimationSequence ridingDownLeftSequence = new AnimationSequence(ridingDownLeftAnim);
+		AnimationSequence ridingDownRightSequence = new AnimationSequence(ridingDownRightAnim);
 		
 		addAnimation("move_left", swimLeftSequence);
 		addAnimation("move_right", swimRightSequence);
@@ -62,6 +78,14 @@ public class Shark extends GameObject
 		addAnimation("move_downright", swimDownRightSequence);
 		addAnimation("move_upleft", swimUpLeftSequence);
 		addAnimation("move_upright", swimUpRightSequence);
+		addAnimation("riding_left", ridingLeftSequence);
+		addAnimation("riding_right", ridingRightSequence);
+		addAnimation("riding_down", ridingDownSequence);
+		addAnimation("riding_up", ridingUpSequence);
+		addAnimation("riding_upleft", ridingUpLeftSequence);
+		addAnimation("riding_upright", ridingUpRightSequence);
+		addAnimation("riding_downleft", ridingDownLeftSequence);
+		addAnimation("riding_downright", ridingDownRightSequence);
 		
 		this.setClipping(false);
 
@@ -158,42 +182,66 @@ public class Shark extends GameObject
 		
 		switch( newDirection ) {
 		case UP:
-			this.setAnimState( "move_up" );
+			if( _sharkState == SharkState.MOUNTED )
+				this.setAnimState( "riding_up" );
+			else
+				this.setAnimState( "move_up" );
 			_boundsOffsets[ 0 ].set( 0, distance );
 			_boundsOffsets[ 1 ].set( 0, -1f * distance );
 			break;
 		case DOWN:
-			this.setAnimState( "move_down" );
+			if( _sharkState == SharkState.MOUNTED )
+				this.setAnimState( "riding_down" );
+			else
+				this.setAnimState( "move_down" );
 			_boundsOffsets[ 0 ].set( 0, -1f * distance );
 			_boundsOffsets[ 1 ].set( 0, distance );
 			break;
 		case LEFT:
-			this.setAnimState( "move_left" );
+			if( _sharkState == SharkState.MOUNTED )
+				this.setAnimState( "riding_left" );
+			else
+				this.setAnimState( "move_left" );
 			_boundsOffsets[ 0 ].set( -1f * distance, 0 );
 			_boundsOffsets[ 1 ].set( distance, 0 );
 			break;
 		case RIGHT:
-			this.setAnimState( "move_right" );
+			if( _sharkState == SharkState.MOUNTED )
+				this.setAnimState( "riding_right" );
+			else
+				this.setAnimState( "move_right" );
 			_boundsOffsets[ 0 ].set( distance, 0 );
 			_boundsOffsets[ 1 ].set( -1f * distance, 0 );
 			break;
 		case UP_LEFT:
-			this.setAnimState( "move_upleft" );
+			if( _sharkState == SharkState.MOUNTED )
+				this.setAnimState( "riding_left" );
+			else
+				this.setAnimState( "move_upleft" );
 			_boundsOffsets[ 0 ].set( -1f * diagDist, diagDist );
 			_boundsOffsets[ 1 ].set( diagDist, -1f * diagDist );
 			break;
 		case UP_RIGHT:
-			this.setAnimState( "move_upright" );
+			if( _sharkState == SharkState.MOUNTED )
+				this.setAnimState( "riding_right" );
+			else
+				this.setAnimState( "move_upright" );
 			_boundsOffsets[ 0 ].set( diagDist, diagDist );
 			_boundsOffsets[ 1 ].set( -1f * diagDist, -1f * diagDist );
 			break;
 		case DOWN_LEFT:
-			this.setAnimState( "move_downleft" );
+			if( _sharkState == SharkState.MOUNTED )
+				this.setAnimState( "riding_left" );
+			else
+				this.setAnimState( "move_downleft" );
 			_boundsOffsets[ 0 ].set( -1f * diagDist, -1f * diagDist );
 			_boundsOffsets[ 1 ].set( diagDist, diagDist );
 			break;
 		case DOWN_RIGHT:
-			this.setAnimState( "move_downright" );
+			if( _sharkState == SharkState.MOUNTED )
+				this.setAnimState( "riding_right" );
+			else
+				this.setAnimState( "move_downright" );
 			_boundsOffsets[ 0 ].set( diagDist, -1f * diagDist );
 			_boundsOffsets[ 1 ].set( -1f * diagDist, diagDist );
 			break;
@@ -210,6 +258,34 @@ public class Shark extends GameObject
 		setAccelerationRate( SharkRodeoConstants.getMountedSharkAcceleration() );
 		setMaxSpeed( SharkRodeoConstants.getMountedSharkMaxSpeed() );
 		// TODO: change anim state... maybe do that in changeDirection instead and just call it here? also increase speed
+		
+		switch( this.getDirection() ) {
+		case UP:
+			this.setAnimState( "riding_up" );
+			break;
+		case DOWN:
+			this.setAnimState( "riding_down" );
+			break;
+		case LEFT:
+			this.setAnimState( "riding_left" );
+			break;
+		case RIGHT:
+			this.setAnimState( "riding_right" );
+			break;
+		case UP_LEFT:
+			this.setAnimState( "riding_upleft" );
+			break;
+		case UP_RIGHT:
+			this.setAnimState( "riding_upright" );
+			break;
+		case DOWN_LEFT:
+			this.setAnimState( "riding_downleft" );
+			break;
+		case DOWN_RIGHT:
+			this.setAnimState( "riding_downright" );
+			break;
+		}
+		
 		this.setUpatePosition( true );
 		_stateTime = STATE_TIME_CRAPTAR;
 	}
@@ -368,7 +444,7 @@ public class Shark extends GameObject
 		return false;
 	}
 	
-	private boolean isBeingRidden() {
+	public boolean isBeingRidden() {
 		if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.MOUNTING ) || ( _sharkState == SharkState.THRASHING ) )
 			return true;
 		return false;
