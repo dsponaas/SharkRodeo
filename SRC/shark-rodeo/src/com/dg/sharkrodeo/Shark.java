@@ -215,7 +215,7 @@ public class Shark extends GameObject
 			break;
 		case UP_LEFT:
 			if( _sharkState == SharkState.MOUNTED )
-				this.setAnimState( "riding_left" );
+				this.setAnimState( "riding_upleft" );
 			else
 				this.setAnimState( "move_upleft" );
 			_boundsOffsets[ 0 ].set( -1f * diagDist, diagDist );
@@ -223,7 +223,7 @@ public class Shark extends GameObject
 			break;
 		case UP_RIGHT:
 			if( _sharkState == SharkState.MOUNTED )
-				this.setAnimState( "riding_right" );
+				this.setAnimState( "riding_upright" );
 			else
 				this.setAnimState( "move_upright" );
 			_boundsOffsets[ 0 ].set( diagDist, diagDist );
@@ -231,7 +231,7 @@ public class Shark extends GameObject
 			break;
 		case DOWN_LEFT:
 			if( _sharkState == SharkState.MOUNTED )
-				this.setAnimState( "riding_left" );
+				this.setAnimState( "riding_downleft" );
 			else
 				this.setAnimState( "move_downleft" );
 			_boundsOffsets[ 0 ].set( -1f * diagDist, -1f * diagDist );
@@ -239,7 +239,7 @@ public class Shark extends GameObject
 			break;
 		case DOWN_RIGHT:
 			if( _sharkState == SharkState.MOUNTED )
-				this.setAnimState( "riding_right" );
+				this.setAnimState( "riding_downright" );
 			else
 				this.setAnimState( "move_downright" );
 			_boundsOffsets[ 0 ].set( diagDist, -1f * diagDist );

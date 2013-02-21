@@ -15,8 +15,7 @@ public class GameObject {
 	private Vector2 _velocity;
 	private Vector2 _acceleration;
 	
-//	private Rectangle _bounds;
-	private Circle[] _boundsList;			// TODO: NOTE! this no longer applies to physics collision
+	private Circle[] _boundsList;
 	protected Vector2[] _boundsOffsets;
 	
 	protected Circle _collisionBounds;
@@ -24,7 +23,6 @@ public class GameObject {
 	protected float _maxSpeed;
 	protected float _accelerationRate;
 	
-//	private Texture _texture;
 	protected GameObjectView _view;
 	
 	public enum Direction { UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT };
