@@ -2,16 +2,18 @@ package com.dg.sharkrodeo;
 
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameObject {
 
 	private boolean _updatePosition;
 	private Vector2 _position;
+	private Vector2 _lastPosition;
 	private Vector2 _velocity;
 	private Vector2 _acceleration;
 	
@@ -31,6 +33,7 @@ public class GameObject {
 	
 	public GameObject( GameBoard board, float objRadius ) {
 		_position = new Vector2( 0f, 0f );
+		_lastPosition = new Vector2( _position );
 		_velocity = new Vector2( 0f, 0f );
 		_acceleration = new Vector2( 0f, 0f );
 		_maxSpeed = 200f;
@@ -70,6 +73,7 @@ public class GameObject {
 			}
 			
 			Vector2 positionDelta = ( new Vector2( _velocity ) ).mul( delta );
+			_lastPosition.set( _position );
 			_position.add( positionDelta );
 			_collisionBounds.x = _position.x;
 			_collisionBounds.y = _position.y;
@@ -200,9 +204,18 @@ public class GameObject {
 		return true;
 	}
 	
-	public void accelerateInDirection( Vector2 dir ) {
+	public void accelerateInDirection( Vector2 dir, int fuckflag ) {
 		Vector2 unitDir = dir.mul( 1f / dir.len() );
 		float angle = unitDir.angle();
+		
+		if( fuckflag == 0) {
+			Gdx.app.log( SharkRodeoConstants.LOG_TAG, "FUCK YOU, DALE!" );				
+		}
+		else if (fuckflag==1){
+//			Gdx.app.log( SharkRodeoConstants.LOG_TAG, "  " );				
+		}
+		else if (fuckflag==2){
+		}
 		
 		if( angle < 22.5f )
 			_direction = Direction.RIGHT;
@@ -231,6 +244,7 @@ public class GameObject {
 	}
 	
 	public void setPosition( float x, float y ) {
+		_lastPosition.set( _position );
 		_position.set( x, y );
 		_collisionBounds.x = x;
 		_collisionBounds.y = y;
@@ -241,6 +255,7 @@ public class GameObject {
 	}
 
 	protected void setXPosition( float x ) {
+		_lastPosition.set( _position );
 		_position.x = x;
 		_collisionBounds.x = x;
 		for( int i = 0; i < _boundsList.length; ++i ) {
@@ -249,6 +264,7 @@ public class GameObject {
 	}
 	
 	protected void setYPosition( float y ) {
+		_lastPosition.set( _position );
 		_position.y = y;
 		_collisionBounds.y = y;
 		for( int i = 0; i < _boundsList.length; ++i ) {
@@ -278,7 +294,8 @@ public class GameObject {
 	public void setMaxSpeed( float maxSpeed ) 						{	_maxSpeed = maxSpeed;	}
 
 	public float getAccelerationRate() 								{ return _accelerationRate;	}
-	public void setAccelerationRate(float accelerationRate) 		{ _accelerationRate = accelerationRate; }
+	public void setAccelerationRate(float accelerationRate) {
+		_accelerationRate = accelerationRate; }
 	
 	public TextureRegion getTexture() {
 		TextureRegion tex = _view.getCurrentAnimationFrame();
@@ -310,7 +327,16 @@ public class GameObject {
 		_velocity.set( 0f, 0f );
 	}
 	
+	public boolean isLastPositionCloserToPoint( float x, float y ) {
+		Vector2 curDelta = ( new Vector2( getPosition() ) ).sub( x, y );
+		Vector2 lastDelta = ( new Vector2( getLastPosition() ) ).sub( x, y );
+		if( lastDelta.len2() < curDelta.len2() )
+			return true;
+		return false;
+	}
+	
 	public Vector2 getPosition()									{ return _position; }
+	public Vector2 getLastPosition()								{ return _lastPosition; }
 	public void setClipping( boolean val )							{ _clipping = val; }
 	public boolean getClipping()									{ return _clipping; }
 	public Circle getCollisionBounds()								{ return _collisionBounds; }

@@ -213,13 +213,14 @@ public class GameBoard {
 						curShark.lungeAtPlayer();
 					}
 					else {
-						curShark.setAccelerationRate( SharkRodeoConstants.getSharkAcceleration() );
-						curShark.setMaxSpeed( SharkRodeoConstants.getSharkMaxSpeed() );
+//						curShark.setAccelerationRate( SharkRodeoConstants.getSharkAcceleration() );
+//						curShark.setMaxSpeed( SharkRodeoConstants.getSharkMaxSpeed() );
 					}
 				}
 				else if( !curShark.isBeingRidden() ) {
-					curShark.setAccelerationRate( SharkRodeoConstants.getSharkAcceleration() );
-					curShark.setMaxSpeed( SharkRodeoConstants.getSharkMaxSpeed() );
+					curShark.endLunge();
+//					curShark.setAccelerationRate( SharkRodeoConstants.getSharkAcceleration() );
+//					curShark.setMaxSpeed( SharkRodeoConstants.getSharkMaxSpeed() );
 				}
 				
 				Vector2 curSharkPos = curShark.getPosition();
@@ -690,6 +691,14 @@ public class GameBoard {
 			_dialog = new PlayerDeathDialog( ResourceManager.getInstance().getDialogTexture( "dialog_dead" ), this );
 			_dialogTimer = 3f;
 		}
+		
+		for( Shark curShark : _sharks ) {
+			if( null != curShark ) {
+				curShark.resetSharkState();
+			}
+		}
+		
+		endCameraShake(); // just for good measure...
 		
 		pause();
 	}

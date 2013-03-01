@@ -6,8 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 
-public class Shark extends GameObject
-{
+public class Shark extends GameObject {
 	
 	public enum SharkState { SEARCHING, MOUNTING, MOUNTED, THRASHING, LUNGING };
 	private SharkState _sharkState;
@@ -32,7 +31,7 @@ public class Shark extends GameObject
 		this.setXPosition(800f);
 		this.setYPosition(800f);
 
-		_sharkState = SharkState.SEARCHING;
+		setSharkState( SharkState.SEARCHING );
 		_health = SharkRodeoConstants.DEFAULT_SHARK_HEALTH;
 
 		TextureAtlas atlas = new TextureAtlas(SharkRodeoConstants.getSharkPack());
@@ -89,12 +88,16 @@ public class Shark extends GameObject
 		
 		this.setClipping(false);
 
-//		setAnimState("move_right");
+		this.setDirection( Direction.RIGHT );
+		setAnimState("move_right");
 		searchToDest(getNextSearchDest());
 	}
 	
 	public void update( float delta ) {
 		_stateTime -= delta;
+		
+		float shitbird = (float)(Math.PI / ((Math.atan2(0.0, 1.0) - Math.atan2(1.0, 0.0)))); 
+		Gdx.app.log( SharkRodeoConstants.LOG_TAG, "shitbrid:" + shitbird );
 		
 		if( !this.getClipping() ) {
 			if( this.isInBounds() ) {
@@ -106,39 +109,63 @@ public class Shark extends GameObject
 			_health -= delta; //TODO: times some bonus multiplier? (spurs?)
 		}
 		
-//		Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: dest: x:" + _searchDest.x + " y:" + _searchDest.y);
-		if( ( _sharkState == SharkState.SEARCHING ) || ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.LUNGING ) ) {
-			Direction oldDirection = this.getDirection();
+		if( ( _sharkState == SharkState.SEARCHING ) || ( _sharkState == SharkState.MOUNTED ) ) {
 			Vector2 positionDelta = ( new Vector2( _searchDest ) ).sub( this.getPosition() );
-			this.accelerateInDirection( positionDelta );
-			Direction newDirection = this.getDirection();
-			if( newDirection != oldDirection ) {
-				changeDirection( newDirection );
-			}
-			
-			Vector2 oldDelta = ( new Vector2( _searchDest ) ).sub( this.getPosition() );
-			if( oldDelta.len2() < SharkRodeoConstants.getSharkDestTurnDistanceSquared() ) {
+			this.accelerateInDirection( positionDelta, 1 );
+			if( isLastPositionCloserToPoint( _searchDest.x, _searchDest.y) ) {
 				searchToDest( getNextSearchDest() );
 			}
 		}//if(_sharkState == SharkState.SEARCHING)
 		
+		if( _sharkState == SharkState.LUNGING ) {
+			Vector2 playerPos = GameBoard.getInstance().getPlayerPos();
+			if( isPointInLineOfSight( playerPos.x, playerPos.y ) ) {
+				Vector2 sharkPos = getPosition();
+				Vector2 sharkToPlayer = ( new Vector2( playerPos.x - sharkPos.x, playerPos.y - sharkPos.y ) );
+				sharkToPlayer.nor();
+				Vector2 curDirection = ( new Vector2( _searchDest ) ).sub( sharkPos ).nor();
+
+				double angle = Math.atan2( sharkToPlayer.y, sharkToPlayer.x ) - Math.atan2( curDirection.y, curDirection.x );
+				if( Math.abs( angle ) > SharkRodeoConstants.SHARK_LUNGE_TURN_SPEED ) {
+					if( angle > 0f ) {
+						angle = SharkRodeoConstants.SHARK_LUNGE_TURN_SPEED;
+					}
+					else {
+						angle = -1f * SharkRodeoConstants.SHARK_LUNGE_TURN_SPEED;
+					}
+				}
+				float angleInDegrees = ( float )( ( 180.0 / Math.PI ) * angle );
+				//Gdx.app.log( SharkRodeoConstants.LOG_TAG, "angle radians:" + angle );
+				
+				curDirection.rotate( angleInDegrees );
+				float dist = sharkToPlayer.len() + 150f;//TODO:magic number
+				sharkToPlayer.mul( dist ).add( sharkPos );
+				
+				searchToDest( sharkToPlayer );
+			} // if( isPointInLineOfSight( playerPos.x, playerPos.y ) )
+			else if( isLastPositionCloserToPoint( _searchDest.x, _searchDest.y) ) {
+				endLunge();
+				searchToDest( getNextSearchDest() );
+			}
+		} // if( _sharkState == SharkState.LUNGING )
+		
 		if( _stateTime < 0f ) {
 			if( _sharkState == SharkState.MOUNTED ) {
-				_sharkState = SharkState.THRASHING;
+				setSharkState( SharkState.THRASHING );
 				this.setUpatePosition( false );
 				_stateTime = STATE_TIME_CRAPTAR;
 				GameBoard.getInstance().startCameraShake();
 			}
 			else if( _sharkState == SharkState.THRASHING ) {
-				_sharkState = SharkState.MOUNTED;
+				setSharkState( SharkState.MOUNTED );
 				this.setUpatePosition( true );
 				_stateTime = STATE_TIME_CRAPTAR;
 				GameBoard.getInstance().endCameraShake();
 			}
-		}
+		} // if( _stateTime < 0f )
 		
 		super.update( delta );
-	}
+	} // public void update( float delta )
 	
 	public void searchToDest( Vector2 dest ) {
 //		Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: dest: x:" + dest.x + " y:" + dest.y);
@@ -146,13 +173,13 @@ public class Shark extends GameObject
 		_searchDest = new Vector2(dest);
 		Direction oldDirection = this.getDirection();
 		Vector2 delta = dest.sub( this.getPosition() );
-		this.accelerateInDirection(delta);
+		this.accelerateInDirection(delta,1);
 		Direction newDirection = this.getDirection();
 		
-		if( ( newDirection != oldDirection ) || ( ( _sharkState != SharkState.SEARCHING ) && ( _sharkState != SharkState.MOUNTED ) ) ) {
+		if( ( newDirection != oldDirection ) || ( ( _sharkState != SharkState.SEARCHING ) && ( _sharkState != SharkState.MOUNTED ) && ( _sharkState != SharkState.THRASHING ) && ( _sharkState != SharkState.LUNGING ) ) ) {
 			changeDirection( newDirection );
 			if( _sharkState != SharkState.MOUNTED ) {
-				_sharkState = SharkState.SEARCHING;
+				setSharkState( SharkState.SEARCHING );
 			}
 		}
 	}
@@ -160,20 +187,36 @@ public class Shark extends GameObject
 	public void lungeAtPlayer()	{
 		if( _sharkState == SharkState.LUNGING )
 			return;
-		
-		Vector2 sharkDest = new Vector2( GameBoard.getInstance().getPlayerPos() );
-		
-		_sharkState = SharkState.LUNGING;
+
+		Vector2 sharkPos = getPosition();
+		Vector2 playerPos = GameBoard.getInstance().getPlayerPos();
+		Vector2 sharkToPlayer = ( new Vector2( playerPos.x - sharkPos.x, playerPos.y - sharkPos.y ) );//      .nor().mul( 150f ); //TODO: magic number
+		float dist = sharkToPlayer.len() + 150f;//TODO:magic number
+		sharkToPlayer.nor().mul( dist );
+		Vector2 sharkDest = ( new Vector2( playerPos ) ).add( sharkToPlayer );		
+
+		setSharkState( SharkState.LUNGING );
 		
 		_searchDest = new Vector2( sharkDest );
 		Vector2 delta = sharkDest.sub( this.getPosition() );
-		this.accelerateInDirection(delta);
+		this.accelerateInDirection(delta,1);
 		Direction newDirection = this.getDirection();
 		
 		changeDirection( newDirection );
 
 		setAccelerationRate( SharkRodeoConstants.SHARK_LUNGE_MULTIPLIER * SharkRodeoConstants.getSharkAcceleration() );
 		setMaxSpeed( SharkRodeoConstants.SHARK_LUNGE_MULTIPLIER * SharkRodeoConstants.getSharkMaxSpeed() );
+	} // public void lungeAtPlayer()
+	
+	public void endLunge() {
+		if( _sharkState != SharkState.LUNGING )
+			return;
+		
+//		Gdx.app.log(SharkRodeoConstants.LOG_TAG, "******END LUNGE" + Utils.getRandomFloatInRange(0f, 1f));
+
+		setAccelerationRate( SharkRodeoConstants.getSharkAcceleration() );
+		setMaxSpeed( SharkRodeoConstants.getSharkMaxSpeed() );
+		setSharkState( SharkState.SEARCHING );
 	}
 	
 	private void changeDirection( Direction newDirection ) {
@@ -246,15 +289,15 @@ public class Shark extends GameObject
 			_boundsOffsets[ 1 ].set( -1f * diagDist, diagDist );
 			break;
 		} // switch( newDirection )
-	}
+	} // private void changeDirection( Direction newDirection )
 	
 	public void mountingShark() {
-		_sharkState = SharkState.MOUNTING;
+		setSharkState( SharkState.MOUNTING );
 		this.setUpatePosition( true );
 	}
 	
 	public void mountShark() {
-		_sharkState = SharkState.MOUNTED;
+		setSharkState( SharkState.MOUNTED );
 		setAccelerationRate( SharkRodeoConstants.getMountedSharkAcceleration() );
 		setMaxSpeed( SharkRodeoConstants.getMountedSharkMaxSpeed() );
 		// TODO: change anim state... maybe do that in changeDirection instead and just call it here? also increase speed
@@ -284,14 +327,14 @@ public class Shark extends GameObject
 		case DOWN_RIGHT:
 			this.setAnimState( "riding_downright" );
 			break;
-		}
+		} // switch( this.getDirection() )
 		
 		this.setUpatePosition( true );
 		_stateTime = STATE_TIME_CRAPTAR;
-	}
+	} // public void mountShark()
 	
 	public void dismount() {
-		_sharkState = SharkState.SEARCHING;
+		setSharkState( SharkState.SEARCHING );
 		this.setPosition( 1200f, 1200f ); //TODO: magic number
 		setAccelerationRate( SharkRodeoConstants.getSharkAcceleration() );
 		setMaxSpeed( SharkRodeoConstants.getSharkMaxSpeed() );
@@ -321,7 +364,7 @@ public class Shark extends GameObject
 		while( !GameBoard.getInstance().isPositionInBounds( tempDest ) );
 		
 		return tempDest;
-	}
+	} // private Vector2 getNextSearchDest()
 	
 	public float getMass() {
 		if( isBeingRidden() )
@@ -416,7 +459,7 @@ public class Shark extends GameObject
 			t2.x += SIGHT_OFFSET_DIAG;
 			t2.y += SIGHT_OFFSET_DIAG;
 			break;
-		}
+		} // switch( getDirection() )
 		
 		Vector2 v0 = ( new Vector2( t1 ) ).sub( getPosition() );
 		Vector2 v1 = ( new Vector2( t2 ) ).sub( getPosition() );
@@ -433,7 +476,7 @@ public class Shark extends GameObject
 		float v = ( ( dot00 * dot12 ) - ( dot01 * dot02 ) ) * invDenim;
 		
 		return ( u >= 0f ) && ( v >= 0f ) && ( ( u + v ) < 1f );
-	}
+	} // public boolean isPointInLineOfSight( float x, float y )
 	
 	public boolean isAboutToTurn() {
 		if( isBeingRidden() )
@@ -449,9 +492,19 @@ public class Shark extends GameObject
 			return true;
 		return false;
 	}
+	
+	public void resetSharkState() {
+		setSharkState( SharkState.SEARCHING );
+		setAccelerationRate( SharkRodeoConstants.getSharkAcceleration() );
+		setMaxSpeed( SharkRodeoConstants.getSharkMaxSpeed() );
+	}
+	
+	private void setSharkState( SharkState newState ) {
+		_sharkState = newState;
+	}
 
 	public SharkState getSharkState()			{ return _sharkState; }
 	public float getHealth()					{ return _health; }
 	public float getHealthPercent()				{ return _health / SharkRodeoConstants.DEFAULT_SHARK_HEALTH; }
 
-}
+} // public class Shark

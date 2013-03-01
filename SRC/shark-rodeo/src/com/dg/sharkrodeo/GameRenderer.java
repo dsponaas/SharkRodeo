@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.dg.sharkrodeo.HudUtilityButton.UtilityButtonType;
+import com.dg.sharkrodeo.Shark.SharkState;
 import com.dg.sharkrodeo.Dialogs.SharkRodeoDialog;
 
 public class GameRenderer
@@ -187,7 +188,7 @@ public class GameRenderer
 			_batch.draw( texture, position.x - ( ( float )( texture.getRegionWidth() / 2 ) ), position.y - ( ( float )( texture.getRegionHeight() / 2 ) ) );
 		
 		Vector2 playerPos = GameBoard.getInstance().getPlayerPos();
-		if( obj.isPointInLineOfSight( playerPos.x, playerPos.y ) ) {
+		if( obj.getSharkState() == SharkState.LUNGING ) {    //obj.isPointInLineOfSight( playerPos.x, playerPos.y ) ) {
 			TextureRegion exclamation = Hud.getInstance().getRedExclamationIcon();
 			_batch.draw( exclamation, position.x - ( ( float )( exclamation.getRegionWidth() / 2 ) ), position.y + ( ( float )( exclamation.getRegionHeight() / 2 ) ) );
 		}

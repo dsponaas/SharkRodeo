@@ -199,7 +199,7 @@ public class Player extends GameObject {
 	public void moveTo( Vector2 dest ) {
 		Direction oldDirection = this.getDirection();
 		Vector2 delta = dest.sub( this.getPosition() );
-		this.accelerateInDirection( delta );
+		this.accelerateInDirection( delta, 2 );
 		Direction newDirection = this.getDirection();
 
 		float distance = 18f; // TODO: magic number
