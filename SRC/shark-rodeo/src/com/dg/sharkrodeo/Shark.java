@@ -16,88 +16,94 @@ public class Shark extends GameObject {
 	
 	private static final float STATE_TIME_CRAPTAR = 2f; 
 	
-	public Shark(GameBoard board) {
-		super(board, 36f);//TODO: magic number
+	public Shark( GameBoard board ) {
+		super( board, 36f );//TODO: magic number
 
-		setAccelerationRate(SharkRodeoConstants.getSharkAcceleration());
-		setMaxSpeed(SharkRodeoConstants.getSharkMaxSpeed());
+		setAccelerationRate( SharkRodeoConstants.getSharkAcceleration() );
+		setMaxSpeed( SharkRodeoConstants.getSharkMaxSpeed() );
 		
-		initBoundsList(2);
-		Circle bounds = new Circle(this.getPosition().x, this.getPosition().y, SharkRodeoConstants.getSharkMouthHitboxRadius());
-		Circle bounds2 = new Circle(this.getPosition().x, this.getPosition().y, SharkRodeoConstants.getSharkBackHitboxRadius());
-		setBounds(0, bounds, new Vector2(0, 0));
-		setBounds(1, bounds2, new Vector2(0, 0));
+		initBoundsList( 2 );
+		Circle bounds = new Circle( this.getPosition().x, this.getPosition().y, SharkRodeoConstants.getSharkMouthHitboxRadius() );
+		Circle bounds2 = new Circle( this.getPosition().x, this.getPosition().y, SharkRodeoConstants.getSharkBackHitboxRadius() );
+		setBounds( 0, bounds, new Vector2( 0, 0 ) );
+		setBounds( 1, bounds2, new Vector2( 0, 0 ) );
 		
-		this.setXPosition(800f);
-		this.setYPosition(800f);
+		this.setXPosition( 800f );
+		this.setYPosition( 800f );
 
 		setSharkState( SharkState.SEARCHING );
 		_health = SharkRodeoConstants.DEFAULT_SHARK_HEALTH;
 
-		TextureAtlas atlas = new TextureAtlas(SharkRodeoConstants.getSharkPack());
-		Animation swimLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_swim_left"));
-		Animation swimRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_swim_right"));
-		Animation swimDownAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_swim_down"));
-		Animation swimUpAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_swim_up"));
-		Animation swimDownLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_swim_downleft"));
-		Animation swimDownRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_swim_downright"));
-		Animation swimUpLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_swim_upleft"));
-		Animation swimUpRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_swim_upright"));
-		Animation ridingLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_riding_left"));
-		Animation ridingRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_riding_right"));
-		Animation ridingDownAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_riding_down"));
-		Animation ridingUpAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_riding_up"));
-		Animation ridingUpLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_riding_upleft"));
-		Animation ridingUpRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_riding_upright"));
-		Animation ridingDownLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_riding_downleft"));
-		Animation ridingDownRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation(0.15f, 1, 4, atlas.findRegion("shark_riding_downright"));
+		TextureAtlas atlas = new TextureAtlas( SharkRodeoConstants.getSharkPack() );
+		Animation swimLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_swim_left" ) );
+		Animation swimRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_swim_right" ) );
+		Animation swimDownAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_swim_down" ) );
+		Animation swimUpAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_swim_up" ) );
+		Animation swimDownLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_swim_downleft" ) );
+		Animation swimDownRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_swim_downright" ) );
+		Animation swimUpLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_swim_upleft" ) );
+		Animation swimUpRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_swim_upright" ) );
+		Animation ridingLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_riding_left" ) );
+		Animation ridingRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_riding_right" ) );
+		Animation ridingDownAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_riding_down" ) );
+		Animation ridingUpAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_riding_up" ) );
+		Animation ridingUpLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_riding_upleft" ) );
+		Animation ridingUpRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_riding_upright" ) );
+		Animation ridingDownLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_riding_downleft" ) );
+		Animation ridingDownRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_riding_downright" ) );
 		
-		AnimationSequence swimLeftSequence = new AnimationSequence(swimLeftAnim);
-		AnimationSequence swimRightSequence = new AnimationSequence(swimRightAnim);
-		AnimationSequence swimDownSequence = new AnimationSequence(swimDownAnim);
-		AnimationSequence swimUpSequence = new AnimationSequence(swimUpAnim);
-		AnimationSequence swimDownLeftSequence = new AnimationSequence(swimDownLeftAnim);
-		AnimationSequence swimDownRightSequence = new AnimationSequence(swimDownRightAnim);
-		AnimationSequence swimUpLeftSequence = new AnimationSequence(swimUpLeftAnim);
-		AnimationSequence swimUpRightSequence = new AnimationSequence(swimUpRightAnim);
-		AnimationSequence ridingLeftSequence = new AnimationSequence(ridingLeftAnim);
-		AnimationSequence ridingRightSequence = new AnimationSequence(ridingRightAnim);
-		AnimationSequence ridingDownSequence = new AnimationSequence(ridingDownAnim);
-		AnimationSequence ridingUpSequence = new AnimationSequence(ridingUpAnim);
-		AnimationSequence ridingUpLeftSequence = new AnimationSequence(ridingUpLeftAnim);
-		AnimationSequence ridingUpRightSequence = new AnimationSequence(ridingUpRightAnim);
-		AnimationSequence ridingDownLeftSequence = new AnimationSequence(ridingDownLeftAnim);
-		AnimationSequence ridingDownRightSequence = new AnimationSequence(ridingDownRightAnim);
+		AnimationSequence swimLeftSequence = new AnimationSequence( swimLeftAnim );
+		AnimationSequence swimRightSequence = new AnimationSequence( swimRightAnim );
+		AnimationSequence swimDownSequence = new AnimationSequence( swimDownAnim );
+		AnimationSequence swimUpSequence = new AnimationSequence( swimUpAnim );
+		AnimationSequence swimDownLeftSequence = new AnimationSequence( swimDownLeftAnim );
+		AnimationSequence swimDownRightSequence = new AnimationSequence( swimDownRightAnim );
+		AnimationSequence swimUpLeftSequence = new AnimationSequence( swimUpLeftAnim );
+		AnimationSequence swimUpRightSequence = new AnimationSequence( swimUpRightAnim );
+		AnimationSequence ridingLeftSequence = new AnimationSequence( ridingLeftAnim );
+		AnimationSequence ridingRightSequence = new AnimationSequence( ridingRightAnim );
+		AnimationSequence ridingDownSequence = new AnimationSequence( ridingDownAnim );
+		AnimationSequence ridingUpSequence = new AnimationSequence( ridingUpAnim );
+		AnimationSequence ridingUpLeftSequence = new AnimationSequence( ridingUpLeftAnim );
+		AnimationSequence ridingUpRightSequence = new AnimationSequence( ridingUpRightAnim );
+		AnimationSequence ridingDownLeftSequence = new AnimationSequence( ridingDownLeftAnim );
+		AnimationSequence ridingDownRightSequence = new AnimationSequence( ridingDownRightAnim );
 		
-		addAnimation("move_left", swimLeftSequence);
-		addAnimation("move_right", swimRightSequence);
-		addAnimation("move_down", swimDownSequence);
-		addAnimation("move_up", swimUpSequence);
-		addAnimation("move_downleft", swimDownLeftSequence);
-		addAnimation("move_downright", swimDownRightSequence);
-		addAnimation("move_upleft", swimUpLeftSequence);
-		addAnimation("move_upright", swimUpRightSequence);
-		addAnimation("riding_left", ridingLeftSequence);
-		addAnimation("riding_right", ridingRightSequence);
-		addAnimation("riding_down", ridingDownSequence);
-		addAnimation("riding_up", ridingUpSequence);
-		addAnimation("riding_upleft", ridingUpLeftSequence);
-		addAnimation("riding_upright", ridingUpRightSequence);
-		addAnimation("riding_downleft", ridingDownLeftSequence);
-		addAnimation("riding_downright", ridingDownRightSequence);
+		addAnimation( "move_left", swimLeftSequence );
+		addAnimation( "move_right", swimRightSequence );
+		addAnimation( "move_down", swimDownSequence );
+		addAnimation( "move_up", swimUpSequence );
+		addAnimation( "move_downleft", swimDownLeftSequence );
+		addAnimation( "move_downright", swimDownRightSequence );
+		addAnimation( "move_upleft", swimUpLeftSequence );
+		addAnimation( "move_upright", swimUpRightSequence );
+		addAnimation( "riding_left", ridingLeftSequence );
+		addAnimation( "riding_right", ridingRightSequence );
+		addAnimation( "riding_down", ridingDownSequence );
+		addAnimation( "riding_up", ridingUpSequence );
+		addAnimation( "riding_upleft", ridingUpLeftSequence );
+		addAnimation( "riding_upright", ridingUpRightSequence );
+		addAnimation( "riding_downleft", ridingDownLeftSequence );
+		addAnimation( "riding_downright", ridingDownRightSequence );
 		
-		this.setClipping(false);
+		this.setClipping( false );
 
 		this.setDirection( Direction.RIGHT );
-		setAnimState("move_right");
-		searchToDest(getNextSearchDest());
+		setAnimState( "move_right" );
+		searchToDest( getNextSearchDest() );
 	}
 	
 	public void update( float delta ) {
 		_stateTime -= delta;
 		
-		float shitbird = (float)(Math.PI / ((Math.atan2(0.0, 1.0) - Math.atan2(1.0, 0.0)))); 
-		Gdx.app.log( SharkRodeoConstants.LOG_TAG, "shitbrid:" + shitbird );
+		if( _sharkState == SharkState.LUNGING ) {
+			setAccelerationRate( SharkRodeoConstants.SHARK_LUNGE_MULTIPLIER * SharkRodeoConstants.getSharkAcceleration() );
+			setMaxSpeed( SharkRodeoConstants.SHARK_LUNGE_MULTIPLIER * SharkRodeoConstants.getSharkMaxSpeed() );
+		}
+		else if( !isBeingRidden() ) {
+			setAccelerationRate( SharkRodeoConstants.getSharkAcceleration() );
+			setMaxSpeed( SharkRodeoConstants.getSharkMaxSpeed() );
+		}
 		
 		if( !this.getClipping() ) {
 			if( this.isInBounds() ) {
@@ -106,22 +112,24 @@ public class Shark extends GameObject {
 		}
 		
 		if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.THRASHING ) ) {
-			_health -= delta; //TODO: times some bonus multiplier? (spurs?)
+			_health -= delta; //TODO: times some bonus multiplier? ( spurs? )
 		}
 		
-		if( ( _sharkState == SharkState.SEARCHING ) || ( _sharkState == SharkState.MOUNTED ) ) {
+		if( ( _sharkState == SharkState.SEARCHING ) || ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.LUNGING ) ) {
 			Vector2 positionDelta = ( new Vector2( _searchDest ) ).sub( this.getPosition() );
-			this.accelerateInDirection( positionDelta, 1 );
-			if( isLastPositionCloserToPoint( _searchDest.x, _searchDest.y) ) {
+			this.accelerateInDirection( positionDelta );
+			if( isLastPositionCloserToPoint( _searchDest.x, _searchDest.y ) ) {
 				searchToDest( getNextSearchDest() );
 			}
-		}//if(_sharkState == SharkState.SEARCHING)
+		}//if( _sharkState == SharkState.SEARCHING )
 		
 		if( _sharkState == SharkState.LUNGING ) {
 			Vector2 playerPos = GameBoard.getInstance().getPlayerPos();
 			if( isPointInLineOfSight( playerPos.x, playerPos.y ) ) {
 				Vector2 sharkPos = getPosition();
 				Vector2 sharkToPlayer = ( new Vector2( playerPos.x - sharkPos.x, playerPos.y - sharkPos.y ) );
+				float distanceToPlayer = sharkToPlayer.len();
+				
 				sharkToPlayer.nor();
 				Vector2 curDirection = ( new Vector2( _searchDest ) ).sub( sharkPos ).nor();
 
@@ -138,12 +146,15 @@ public class Shark extends GameObject {
 				//Gdx.app.log( SharkRodeoConstants.LOG_TAG, "angle radians:" + angle );
 				
 				curDirection.rotate( angleInDegrees );
-				float dist = sharkToPlayer.len() + 150f;//TODO:magic number
-				sharkToPlayer.mul( dist ).add( sharkPos );
+				float dist = distanceToPlayer + 150f;//TODO:magic number
 				
-				searchToDest( sharkToPlayer );
+				curDirection.mul( dist ).add( sharkPos );
+				
+//				sharkToPlayer.mul( dist ).add( sharkPos );
+				
+				searchToDest( curDirection );
 			} // if( isPointInLineOfSight( playerPos.x, playerPos.y ) )
-			else if( isLastPositionCloserToPoint( _searchDest.x, _searchDest.y) ) {
+			else if( isLastPositionCloserToPoint( _searchDest.x, _searchDest.y ) ) {
 				endLunge();
 				searchToDest( getNextSearchDest() );
 			}
@@ -168,20 +179,20 @@ public class Shark extends GameObject {
 	} // public void update( float delta )
 	
 	public void searchToDest( Vector2 dest ) {
-//		Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: dest: x:" + dest.x + " y:" + dest.y);
+//		Gdx.app.log( SharkRodeoConstants.LOG_TAG, "***********: dest: x:" + dest.x + " y:" + dest.y );
 
-		_searchDest = new Vector2(dest);
-		Direction oldDirection = this.getDirection();
+		_searchDest = new Vector2( dest );
+//		Direction oldDirection = this.getDirection();
 		Vector2 delta = dest.sub( this.getPosition() );
-		this.accelerateInDirection(delta,1);
+		this.accelerateInDirection( delta );
 		Direction newDirection = this.getDirection();
 		
-		if( ( newDirection != oldDirection ) || ( ( _sharkState != SharkState.SEARCHING ) && ( _sharkState != SharkState.MOUNTED ) && ( _sharkState != SharkState.THRASHING ) && ( _sharkState != SharkState.LUNGING ) ) ) {
-			changeDirection( newDirection );
-			if( _sharkState != SharkState.MOUNTED ) {
-				setSharkState( SharkState.SEARCHING );
-			}
+//		if( ( newDirection != oldDirection ) || ( ( _sharkState != SharkState.SEARCHING ) && ( _sharkState != SharkState.MOUNTED ) && ( _sharkState != SharkState.THRASHING ) && ( _sharkState != SharkState.LUNGING ) ) ) {
+		changeDirection( newDirection );
+		if( _sharkState != SharkState.MOUNTED ) {
+			setSharkState( SharkState.SEARCHING );
 		}
+//		}
 	}
 	
 	public void lungeAtPlayer()	{
@@ -199,7 +210,7 @@ public class Shark extends GameObject {
 		
 		_searchDest = new Vector2( sharkDest );
 		Vector2 delta = sharkDest.sub( this.getPosition() );
-		this.accelerateInDirection(delta,1);
+		this.accelerateInDirection( delta );
 		Direction newDirection = this.getDirection();
 		
 		changeDirection( newDirection );
@@ -212,10 +223,6 @@ public class Shark extends GameObject {
 		if( _sharkState != SharkState.LUNGING )
 			return;
 		
-//		Gdx.app.log(SharkRodeoConstants.LOG_TAG, "******END LUNGE" + Utils.getRandomFloatInRange(0f, 1f));
-
-		setAccelerationRate( SharkRodeoConstants.getSharkAcceleration() );
-		setMaxSpeed( SharkRodeoConstants.getSharkMaxSpeed() );
 		setSharkState( SharkState.SEARCHING );
 	}
 	
@@ -225,66 +232,82 @@ public class Shark extends GameObject {
 		
 		switch( newDirection ) {
 		case UP:
-			if( _sharkState == SharkState.MOUNTED )
+			if( _sharkState == SharkState.MOUNTED ) {
 				this.setAnimState( "riding_up" );
-			else
+			}
+			else {
 				this.setAnimState( "move_up" );
+			}
 			_boundsOffsets[ 0 ].set( 0, distance );
 			_boundsOffsets[ 1 ].set( 0, -1f * distance );
 			break;
 		case DOWN:
-			if( _sharkState == SharkState.MOUNTED )
+			if( _sharkState == SharkState.MOUNTED ) {
 				this.setAnimState( "riding_down" );
-			else
+			}
+			else {
 				this.setAnimState( "move_down" );
+			}
 			_boundsOffsets[ 0 ].set( 0, -1f * distance );
 			_boundsOffsets[ 1 ].set( 0, distance );
 			break;
 		case LEFT:
-			if( _sharkState == SharkState.MOUNTED )
+			if( _sharkState == SharkState.MOUNTED ) {
 				this.setAnimState( "riding_left" );
-			else
+			}
+			else {
 				this.setAnimState( "move_left" );
+			}
 			_boundsOffsets[ 0 ].set( -1f * distance, 0 );
 			_boundsOffsets[ 1 ].set( distance, 0 );
 			break;
 		case RIGHT:
-			if( _sharkState == SharkState.MOUNTED )
+			if( _sharkState == SharkState.MOUNTED ) {
 				this.setAnimState( "riding_right" );
-			else
+			}
+			else {
 				this.setAnimState( "move_right" );
+			}
 			_boundsOffsets[ 0 ].set( distance, 0 );
 			_boundsOffsets[ 1 ].set( -1f * distance, 0 );
 			break;
 		case UP_LEFT:
-			if( _sharkState == SharkState.MOUNTED )
+			if( _sharkState == SharkState.MOUNTED ) {
 				this.setAnimState( "riding_upleft" );
-			else
+			}
+			else {
 				this.setAnimState( "move_upleft" );
+			}
 			_boundsOffsets[ 0 ].set( -1f * diagDist, diagDist );
 			_boundsOffsets[ 1 ].set( diagDist, -1f * diagDist );
 			break;
 		case UP_RIGHT:
-			if( _sharkState == SharkState.MOUNTED )
+			if( _sharkState == SharkState.MOUNTED ) {
 				this.setAnimState( "riding_upright" );
-			else
+			}
+			else {
 				this.setAnimState( "move_upright" );
+			}
 			_boundsOffsets[ 0 ].set( diagDist, diagDist );
 			_boundsOffsets[ 1 ].set( -1f * diagDist, -1f * diagDist );
 			break;
 		case DOWN_LEFT:
-			if( _sharkState == SharkState.MOUNTED )
+			if( _sharkState == SharkState.MOUNTED ) {
 				this.setAnimState( "riding_downleft" );
-			else
+			}
+			else {
 				this.setAnimState( "move_downleft" );
+			}
 			_boundsOffsets[ 0 ].set( -1f * diagDist, -1f * diagDist );
 			_boundsOffsets[ 1 ].set( diagDist, diagDist );
 			break;
 		case DOWN_RIGHT:
-			if( _sharkState == SharkState.MOUNTED )
+			if( _sharkState == SharkState.MOUNTED ) {
 				this.setAnimState( "riding_downright" );
-			else
+			}
+			else {
 				this.setAnimState( "move_downright" );
+			}
 			_boundsOffsets[ 0 ].set( diagDist, -1f * diagDist );
 			_boundsOffsets[ 1 ].set( -1f * diagDist, diagDist );
 			break;
@@ -376,10 +399,10 @@ public class Shark extends GameObject {
 		if( isBeingRidden() )
 			return false;
 		
-		float SIGHT_DISTANCE = 350f; //TODO: magic number
-		float SIGHT_DISTANCE_DIAG = 247.487f;//(float)Math.sqrt((SIGHT_DISTANCE * SIGHT_DISTANCE) / 2f);
-		float SIGHT_OFFSET = 150f; //TODO: magic number
-		float SIGHT_OFFSET_DIAG = 106.066f;//(float)Math.sqrt((SIGHT_OFFSET * SIGHT_OFFSET) / 2f);
+		float SIGHT_DISTANCE = 550f; //TODO: magic number
+		float SIGHT_DISTANCE_DIAG = 247.487f;//( float )Math.sqrt( ( SIGHT_DISTANCE * SIGHT_DISTANCE ) / 2f );
+		float SIGHT_OFFSET = 250f; //TODO: magic number
+		float SIGHT_OFFSET_DIAG = 106.066f;//( float )Math.sqrt( ( SIGHT_OFFSET * SIGHT_OFFSET ) / 2f );
 		
 		Vector2 dist2 = new Vector2( this.getPosition() );
 		dist2.sub( x, y );
@@ -506,5 +529,6 @@ public class Shark extends GameObject {
 	public SharkState getSharkState()			{ return _sharkState; }
 	public float getHealth()					{ return _health; }
 	public float getHealthPercent()				{ return _health / SharkRodeoConstants.DEFAULT_SHARK_HEALTH; }
+	public Vector2 getSharkDest()				{ return _searchDest; }
 
 } // public class Shark

@@ -204,18 +204,9 @@ public class GameObject {
 		return true;
 	}
 	
-	public void accelerateInDirection( Vector2 dir, int fuckflag ) {
+	public void accelerateInDirection( Vector2 dir ) {
 		Vector2 unitDir = dir.mul( 1f / dir.len() );
 		float angle = unitDir.angle();
-		
-		if( fuckflag == 0) {
-			Gdx.app.log( SharkRodeoConstants.LOG_TAG, "FUCK YOU, DALE!" );				
-		}
-		else if (fuckflag==1){
-//			Gdx.app.log( SharkRodeoConstants.LOG_TAG, "  " );				
-		}
-		else if (fuckflag==2){
-		}
 		
 		if( angle < 22.5f )
 			_direction = Direction.RIGHT;

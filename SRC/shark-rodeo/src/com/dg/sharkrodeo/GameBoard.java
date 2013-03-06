@@ -417,6 +417,10 @@ public class GameBoard {
 			_renderer.renderHitBoxes( _player );
 		}
 		
+		for( Shark curShark : onScreenSharks ) {
+			_renderer.renderSharkDest( curShark );
+		}
+		
 		_renderer.endShapeRender();
 		
 		_renderer.renderHud();

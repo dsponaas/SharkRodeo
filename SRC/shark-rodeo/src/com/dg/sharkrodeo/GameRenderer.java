@@ -331,6 +331,14 @@ public class GameRenderer
 		}
 	}
 	
+	public void renderSharkDest( Shark shark ) {
+		Vector2 dest = shark.getSharkDest();
+		_shapeRenderer.begin( ShapeType.Circle );
+		_shapeRenderer.setColor( Color.RED );
+		_shapeRenderer.circle( dest.x, dest.y, 3 );
+		_shapeRenderer.end();
+	}
+	
 	public void renderHitPoints( Shark shark ) {
 		float health = shark.getHealthPercent();
 		if(health > .98f) //TODO: Magic number
