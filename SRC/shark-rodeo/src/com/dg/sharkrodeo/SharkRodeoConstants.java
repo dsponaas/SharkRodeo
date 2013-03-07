@@ -106,14 +106,14 @@ public class SharkRodeoConstants {
 	private static final float MOUNTED_SHARK_MAX_SPEED_128 = 900f;
 	private static final float MOUNTED_SHARK_MAX_SPEED_256 = 1800f;
 	/**************************************************************************************************************************/
-	private static final float SHARK_MOUTH_HITBOX_RADIUS_128 = 20f;
-	private static final float SHARK_MOUTH_HITBOX_RADIUS_256 = 40f;
+	private static final float SHARK_MOUTH_HITBOX_RADIUS_128 = 16f;
+	private static final float SHARK_MOUTH_HITBOX_RADIUS_256 = 32f;
 	/**************************************************************************************************************************/
-	private static final float SHARK_BACK_HITBOX_RADIUS_128 = 22f;
-	private static final float SHARK_BACK_HITBOX_RADIUS_256 = 44f;
+	private static final float SHARK_BACK_HITBOX_RADIUS_128 = 16f;
+	private static final float SHARK_BACK_HITBOX_RADIUS_256 = 32f;
 	/**************************************************************************************************************************/
-	private static final float SHARK_HITBOX_OFFSET_128 = 28f;
-	private static final float SHARK_HITBOX_OFFSET_256 = 56f;
+	private static final float SHARK_HITBOX_OFFSET_128 = 24f;
+	private static final float SHARK_HITBOX_OFFSET_256 = 48f;
 	/**************************************************************************************************************************/
 	private static final float SHARK_DEST_TURN_DISTANCE_SQUARED_128 = 2500f;
 	private static final float SHARK_DEST_TURN_DISTANCE_SQUARED_256 = 10000f;

@@ -333,9 +333,9 @@ public class GameRenderer
 	
 	public void renderSharkDest( Shark shark ) {
 		Vector2 dest = shark.getSharkDest();
-		_shapeRenderer.begin( ShapeType.Circle );
+		_shapeRenderer.begin( ShapeType.FilledCircle );
 		_shapeRenderer.setColor( Color.RED );
-		_shapeRenderer.circle( dest.x, dest.y, 3 );
+		_shapeRenderer.filledCircle( dest.x, dest.y, 3 );
 		_shapeRenderer.end();
 	}
 	

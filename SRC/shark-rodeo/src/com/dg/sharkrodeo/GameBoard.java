@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.dg.sharkrodeo.HudUtilityButton.UtilityButtonType;
 import com.dg.sharkrodeo.Player.PlayerState;
 import com.dg.sharkrodeo.Powerup.PowerupType;
 import com.dg.sharkrodeo.Shark.SharkState;
@@ -21,7 +22,6 @@ import com.dg.sharkrodeo.Dialogs.PlayerDeathDialog;
 import com.dg.sharkrodeo.Dialogs.SharkRodeoDialog;
 import com.dg.sharkrodeo.Dialogs.StartLevelDialog;
 import com.dg.sharkrodeo.Factories.AnimationFactory;
-import com.dg.sharkrodeo.HudUtilityButton.UtilityButtonType;
 
 public class GameBoard {
 	
@@ -60,6 +60,8 @@ public class GameBoard {
 	
 	private boolean _gameActive;
 	
+	private Music _music;
+		
 	private GameBoard() {
 		_bounds = new Rectangle();
 		_bounds.x = 0f;
@@ -113,7 +115,6 @@ public class GameBoard {
 		
 		_dialogTimer = -1f;
 		//**** THIS MUST HAPPEN BEFORE CREATION OF INPUTHANDLER ***
-//		_hud = new Hud(this);
 		Hud.getInstance().initialize();
 		ResourceManager.getInstance().initialize();
 
@@ -156,6 +157,10 @@ public class GameBoard {
 		
 		_dialog = new StartLevelDialog( ResourceManager.getInstance().getDialogTexture( "dialog_begin" ), this );
 		pause();
+		
+		_music = Gdx.audio.newMusic( Gdx.files.internal( "data/test4_looping.mp3" ) );
+		_music.setLooping( true );
+		_music.play();
 		
 		resetCamera();
 	}
@@ -415,10 +420,9 @@ public class GameBoard {
 				_renderer.renderHitBoxes( curShark );
 			}
 			_renderer.renderHitBoxes( _player );
-		}
-		
-		for( Shark curShark : onScreenSharks ) {
-			_renderer.renderSharkDest( curShark );
+			for( Shark curShark : onScreenSharks ) {
+				_renderer.renderSharkDest( curShark );
+			}
 		}
 		
 		_renderer.endShapeRender();
@@ -791,5 +795,9 @@ public class GameBoard {
 	
 	public float getRidingTimePercent()		{ return _ridingTime / SharkRodeoConstants.RIDING_TIME; }
 	
-	public void gameOver()					{ _gameActive = false; }
+	public void gameOver() {
+		_music.stop();
+		_music.dispose();
+		_gameActive = false;
+	}
 }

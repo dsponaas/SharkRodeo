@@ -68,6 +68,8 @@ public class GameObjectView {
 	}
 	
 	public void setAnimState( String newState ) {
+		_transitionState = null;
+
 		AnimationSequence newAnimation = _animations.get( newState );
 		if( ( _activeAnimation == newAnimation ) && ( !_activeAnimation.isFinishing() ) ) {
 			return;
@@ -79,8 +81,7 @@ public class GameObjectView {
 		
 		_activeAnimation = newAnimation;
 		_activeAnimation.startSequence();
-		_transitionState = null;
-	}
+	} // public void setAnimState( String newState )
 	
 	public void transitionAnimState( String newState ) {
 		_transitionState = newState;

@@ -207,25 +207,36 @@ public class GameObject {
 	public void accelerateInDirection( Vector2 dir ) {
 		Vector2 unitDir = dir.mul( 1f / dir.len() );
 		float angle = unitDir.angle();
+		int craptar = ( int )angle;
+		angle = ( float )craptar;
 		
-		if( angle < 22.5f )
+		if( angle < 22.5f ) {
 			_direction = Direction.RIGHT;
-		else if( angle < 67.5f )
+		}
+		else if( angle < 67.5f ) {
 			_direction = Direction.UP_RIGHT;
-		else if( angle < 112.5 )
+		}
+		else if( angle < 112.5 ) {
 			_direction = Direction.UP;
-		else if( angle < 157.5 )
+		}
+		else if( angle < 157.5 ) {
 			_direction = Direction.UP_LEFT;
-		else if( angle < 202.5 )
+		}
+		else if( angle < 202.5 ) {
 			_direction = Direction.LEFT;
-		else if( angle < 247.5 )
+		}
+		else if( angle < 247.5 ) {
 			_direction = Direction.DOWN_LEFT;
-		else if( angle < 292.5 )
+		}
+		else if( angle < 292.5 ) {
 			_direction = Direction.DOWN;
-		else if( angle < 337.5 )
+		}
+		else if( angle < 337.5 ) {
 			_direction = Direction.DOWN_RIGHT;
-		else
+		}
+		else {
 			_direction = Direction.RIGHT;
+		}
 		
 		_acceleration.set( unitDir.mul( getAccelerationRate() ) );
 	}
