@@ -150,8 +150,6 @@ public class Shark extends GameObject {
 				
 				curDirection.mul( dist ).add( sharkPos );
 				
-//				sharkToPlayer.mul( dist ).add( sharkPos );
-				
 				searchToDest( curDirection );
 			} // if( isPointInLineOfSight( playerPos.x, playerPos.y ) )
 			else if( isLastPositionCloserToPoint( _searchDest.x, _searchDest.y ) ) {
@@ -179,25 +177,22 @@ public class Shark extends GameObject {
 	} // public void update( float delta )
 	
 	public void searchToDest( Vector2 dest ) {
-//		Gdx.app.log( SharkRodeoConstants.LOG_TAG, "***********: dest: x:" + dest.x + " y:" + dest.y );
-
 		_searchDest = new Vector2( dest );
-//		Direction oldDirection = this.getDirection();
 		Vector2 delta = dest.sub( this.getPosition() );
 		this.accelerateInDirection( delta );
-		Direction newDirection = this.getDirection();
 		
-//		if( ( newDirection != oldDirection ) || ( ( _sharkState != SharkState.SEARCHING ) && ( _sharkState != SharkState.MOUNTED ) && ( _sharkState != SharkState.THRASHING ) && ( _sharkState != SharkState.LUNGING ) ) ) {
+		Direction newDirection = this.getDirection();
+
 		changeDirection( newDirection );
 		if( _sharkState != SharkState.MOUNTED ) {
 			setSharkState( SharkState.SEARCHING );
 		}
-//		}
-	}
+	} // public void searchToDest( Vector2 dest )
 	
 	public void lungeAtPlayer()	{
-		if( _sharkState == SharkState.LUNGING )
+		if( _sharkState == SharkState.LUNGING ) {
 			return;
+		}
 
 		Vector2 sharkPos = getPosition();
 		Vector2 playerPos = GameBoard.getInstance().getPlayerPos();
@@ -220,8 +215,9 @@ public class Shark extends GameObject {
 	} // public void lungeAtPlayer()
 	
 	public void endLunge() {
-		if( _sharkState != SharkState.LUNGING )
+		if( _sharkState != SharkState.LUNGING ) {
 			return;
+		}
 		
 		setSharkState( SharkState.SEARCHING );
 	}
@@ -358,11 +354,11 @@ public class Shark extends GameObject {
 	
 	public void dismount() {
 		setSharkState( SharkState.SEARCHING );
-		this.setPosition( 1200f, 1200f ); //TODO: magic number
 		setAccelerationRate( SharkRodeoConstants.getSharkAcceleration() );
 		setMaxSpeed( SharkRodeoConstants.getSharkMaxSpeed() );
 		this.setUpatePosition( true );
 		GameBoard.getInstance().endCameraShake();
+		this.searchToDest( getNextSearchDest() );
 	}
 
 	private Vector2 getNextSearchDest() {

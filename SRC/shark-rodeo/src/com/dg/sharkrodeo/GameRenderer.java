@@ -156,6 +156,9 @@ public class GameRenderer
 	
 	public void renderGameObjectParticles(GameObject obj, float delta)
 	{
+		if( ! obj.isInTheWater() ) {
+			return;
+		}
 		Vector2 position = obj.getPosition();
 		for(ParticleEffect emitter : obj.getEmitters())
 		{

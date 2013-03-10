@@ -11,12 +11,15 @@ import com.dg.sharkrodeo.PlayerModifier.PlayerModifierType;
 
 public class Player extends GameObject {
 	
-	public enum PlayerState { DEAD, IDLE, MOVING, MOUNTING, MOUNTED };
+	public enum PlayerState { DEAD, IDLE, MOVING, MOUNTING, MOUNTED, DISMOUNTING };
 	private PlayerState _playerState;
 	private Shark _ridingShark;
 	private float _ridingScoreTimer;
 	private boolean _sprinting;
 	private PlayerModifier[] _modifiers;
+	
+	private float _dismountTargetY;
+	private Vector2 _dismountVelocity;
 	
 	private final int MAX_MODIFIERS = 3;
 //	private boolean _alive;
@@ -104,6 +107,18 @@ public class Player extends GameObject {
 			if( _ridingShark.getHealth() < 0f )
 				tamingShark();
 		}
+		else if( _playerState == PlayerState.DISMOUNTING ) {
+			if( getPosition().y < _dismountTargetY ) {
+				dismountComplete();
+			}
+			else {
+				Vector2 currentPosition = getPosition();
+				float newVelocityY = _dismountVelocity.y - ( delta * 250f ); //TODO: magic number
+				_dismountVelocity.set( _dismountVelocity.x, newVelocityY );
+				Vector2 positionDelta = new Vector2( _dismountVelocity ).mul( delta );
+				setPosition( currentPosition.x + positionDelta.x , currentPosition.y + positionDelta.y );
+			}
+		}
 		
 		for( int i = 0; i < _modifiers.length; ++i ) {
 			if( _modifiers[ i ] != null ) {
@@ -175,16 +190,29 @@ public class Player extends GameObject {
 	}
 	
 	public void dismountingShark() {
-		this.setPosition( 100f, 100 );
-		_playerState = PlayerState.IDLE;
+//		this.setPosition( 100f, 100 );
+		_playerState = PlayerState.DISMOUNTING;
+		_ridingShark.dismount();
+
+		this.setAnimState( "idle_left" );
+		this.setInTheWater( false );
+
+		_dismountTargetY = getPosition().y;
+		_dismountVelocity = new Vector2( -100f, 300f );
+		if( this.getPosition().x < ( GameBoard.getInstance().getWidth() / 2f ) ) {
+			_dismountVelocity.set( _dismountVelocity.x * -1f, _dismountVelocity.y );
+		}
+	}
+	
+	private void dismountComplete() {
 		this.killAcceleration();
 		this.killVelocity();
 		this.setUpatePosition( true );
 		
+		this.setInTheWater( true );
+		_playerState = PlayerState.IDLE;
 		this.setAnimState( "idle_left" );
-		GameBoard.getInstance().resetCamera();
-		
-		_ridingShark.dismount();
+//		GameBoard.getInstance().resetCamera();
 	}
 	
 	public void tamingShark() {

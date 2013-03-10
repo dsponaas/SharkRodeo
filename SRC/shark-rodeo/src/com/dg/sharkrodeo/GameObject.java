@@ -30,6 +30,7 @@ public class GameObject {
 	public enum Direction { UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT };
 	private Direction _direction;
 	private boolean _clipping;
+	private boolean _inTheWater;
 	
 	public GameObject( GameBoard board, float objRadius ) {
 		_position = new Vector2( 0f, 0f );
@@ -42,6 +43,7 @@ public class GameObject {
 		_direction = Direction.UP;
 		_updatePosition = true;
 		_clipping = true;
+		_inTheWater = true;
 		_collisionBounds = new Circle( _position.x, _position.y, objRadius );
 	}
 	
@@ -205,40 +207,58 @@ public class GameObject {
 	}
 	
 	public void accelerateInDirection( Vector2 dir ) {
-		Vector2 unitDir = dir.mul( 1f / dir.len() );
-		float angle = unitDir.angle();
-		int craptar = ( int )angle;
-		angle = ( float )craptar;
+//		float oldAngle = ( new Vector2( _acceleration ) ).angle();
+		Vector2 unitDir = dir.nor();
+//		float angle = unitDir.angle();
+//		int craptar = ( int )angle;
+//		angle = ( float )craptar;
 		
-		if( angle < 22.5f ) {
-			_direction = Direction.RIGHT;
-		}
-		else if( angle < 67.5f ) {
-			_direction = Direction.UP_RIGHT;
-		}
-		else if( angle < 112.5 ) {
-			_direction = Direction.UP;
-		}
-		else if( angle < 157.5 ) {
-			_direction = Direction.UP_LEFT;
-		}
-		else if( angle < 202.5 ) {
-			_direction = Direction.LEFT;
-		}
-		else if( angle < 247.5 ) {
-			_direction = Direction.DOWN_LEFT;
-		}
-		else if( angle < 292.5 ) {
-			_direction = Direction.DOWN;
-		}
-		else if( angle < 337.5 ) {
-			_direction = Direction.DOWN_RIGHT;
-		}
-		else {
-			_direction = Direction.RIGHT;
-		}
+//		float difference = angle - oldAngle;
+//		difference = ( ( difference + 180f ) % 360f ) - 180f;
+//		if( difference > 0f ) {
+//			angle += 5f;
+//		}
+//		else {
+//			angle -= 5f;
+//		}
+//		difference *= 3f;
+//		angle += difference;
+//		Gdx.app.log( SharkRodeoConstants.LOG_TAG, "difference:" + difference );
+		
+		_direction = getDirection( unitDir );
 		
 		_acceleration.set( unitDir.mul( getAccelerationRate() ) );
+	}
+	
+	protected static Direction getDirection( Vector2 directionVector ) {
+		float angle = directionVector.angle();
+		if( angle < 22.5f ) {
+			return Direction.RIGHT;
+		}
+		else if( angle < 67.5f ) {
+			return Direction.UP_RIGHT;
+		}
+		else if( angle < 112.5 ) {
+			return Direction.UP;
+		}
+		else if( angle < 157.5 ) {
+			return Direction.UP_LEFT;
+		}
+		else if( angle < 202.5 ) {
+			return Direction.LEFT;
+		}
+		else if( angle < 247.5 ) {
+			return Direction.DOWN_LEFT;
+		}
+		else if( angle < 292.5 ) {
+			return Direction.DOWN;
+		}
+		else if( angle < 337.5 ) {
+			return Direction.DOWN_RIGHT;
+		}
+		else {
+			return Direction.RIGHT;
+		}
 	}
 	
 	public void killAcceleration() {
@@ -342,6 +362,8 @@ public class GameObject {
 	public void setClipping( boolean val )							{ _clipping = val; }
 	public boolean getClipping()									{ return _clipping; }
 	public Circle getCollisionBounds()								{ return _collisionBounds; }
+	public void setInTheWater( boolean val )						{ _inTheWater = val; }
+	public boolean isInTheWater()									{ return _inTheWater; }
 	
 	protected float getMass()										{ return 1.0f; }
 }
