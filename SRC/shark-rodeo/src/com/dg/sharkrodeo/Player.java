@@ -212,7 +212,6 @@ public class Player extends GameObject {
 		this.setInTheWater( true );
 		_playerState = PlayerState.IDLE;
 		this.setAnimState( "idle_left" );
-//		GameBoard.getInstance().resetCamera();
 	}
 	
 	public void tamingShark() {

@@ -63,6 +63,27 @@ public class GameBoard {
 	private Music _music;
 		
 	private GameBoard() {
+		_dialogTimer = -1f;
+		//**** THIS MUST HAPPEN BEFORE CREATION OF INPUTHANDLER ***
+//		Hud.getInstance().initialize();
+//		ResourceManager.getInstance().initialize();
+
+
+		_ridingFlag = false;
+		
+
+		_gameActive = true;
+		
+//		spawnPlayer();
+	}
+	
+	public static GameBoard getInstance() {
+		if( _instance == null )
+			_instance = new GameBoard();
+		return _instance;
+	}
+	
+	public void startGame() {
 		_bounds = new Rectangle();
 		_bounds.x = 0f;
 		_bounds.y = 0f;
@@ -111,37 +132,16 @@ public class GameBoard {
 		_oceanLayers[ 0 ] = new OceanLayer( AnimationFactory.createAnimation( .3f, 2, 4, layerTex ), 0, 0, 0.2f );
 		_oceanLayers[ 1 ] = new OceanLayer( AnimationFactory.createAnimation( .34f, 2, 4, layerTex ), -96, -16f, 0.62f ); //TODO: these all eventually need to be fixed up to accomodate scale or what have you.. do they?
 		_oceanLayers[ 2 ] = new OceanLayer( AnimationFactory.createAnimation( .38f, 2, 4, layerTex ), -32, -32f, 0.45f );
-		_oceanLayers[ 3 ] = new OceanLayer( AnimationFactory.createAnimation( .42f, 2, 4, layerTex ), -64, -48f, 0.89f );
+		_oceanLayers[ 3 ] = new OceanLayer( AnimationFactory.createAnimation( .42f, 2, 4, layerTex ), -64, -48f, 0.89f );		
 		
-		_dialogTimer = -1f;
-		//**** THIS MUST HAPPEN BEFORE CREATION OF INPUTHANDLER ***
 		Hud.getInstance().initialize();
 		ResourceManager.getInstance().initialize();
 
-		_inputHandler = new InputHandler( this );
-
-		_ridingFlag = false;
+		_gameActive = true;
 		
 		_powerups = new Powerup[ 3 ];
 		_whirlpools = new Whirlpool[ 8 ];
 
-		_gameActive = true;
-		
-//		spawnPlayer();
-	}
-	
-	public static GameBoard getInstance() {
-		if( _instance == null )
-			_instance = new GameBoard();
-		return _instance;
-	}
-	
-	public void startGame() {
-		Hud.getInstance().initialize();
-		ResourceManager.getInstance().initialize();
-
-		_gameActive = true;
-		
 		_sharks = new Shark[ 0 ];
 		for( int i = 0; i < _sharks.length; ++i )
 			_sharks[ i ] = null; //dont think this is necessary in java - investigate
@@ -153,6 +153,7 @@ public class GameBoard {
 		_player = new Player( this );
 		_player.setPosition( getWidth() / 2f, getHeight() / 2f );
 		
+		_inputHandler = new InputHandler( this );
 		Gdx.input.setInputProcessor( _inputHandler );
 		
 		_dialog = new StartLevelDialog( ResourceManager.getInstance().getDialogTexture( "dialog_begin" ), this );
@@ -433,8 +434,22 @@ public class GameBoard {
 		_renderer.endHudBatch();
 	}
 
-	public void dispose()
-	{		
+	public void dispose() {
+		_boundsVertTexture.dispose();
+		_boundsHorTexture.dispose();
+		_boundsBLTexture.dispose();
+		_boundsBRTexture.dispose();
+		_boundsTLTexture.dispose();
+		_boundsTRTexture.dispose();
+		_mountedTouchTexture.dispose();
+		
+		for( OceanLayer cur : _oceanLayers ) {
+			cur.dispose();
+		}
+		
+		Hud.getInstance().dispose();
+		ResourceManager.getInstance().dispose();
+		
 	}
 
 	//****************************************************************************************************************************************************************************************************	

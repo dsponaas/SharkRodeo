@@ -88,4 +88,8 @@ public class OceanLayer
 	}
 	
 	public TextureRegion getTexture()	{ return _animation.getKeyFrame(_elapsedTime, true); }
+	
+	public void dispose() {
+//		_animation.
+	}
 }	

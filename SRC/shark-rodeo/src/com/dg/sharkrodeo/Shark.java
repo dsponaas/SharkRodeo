@@ -115,7 +115,7 @@ public class Shark extends GameObject {
 			_health -= delta; //TODO: times some bonus multiplier? ( spurs? )
 		}
 		
-		if( ( _sharkState == SharkState.SEARCHING ) || ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.LUNGING ) ) {
+		if( ( _sharkState == SharkState.SEARCHING ) || ( _sharkState == SharkState.MOUNTED ) /*|| ( _sharkState == SharkState.LUNGING )*/ ) {
 			Vector2 positionDelta = ( new Vector2( _searchDest ) ).sub( this.getPosition() );
 			this.accelerateInDirection( positionDelta );
 			if( isLastPositionCloserToPoint( _searchDest.x, _searchDest.y ) ) {
@@ -175,6 +175,9 @@ public class Shark extends GameObject {
 		
 		super.update( delta );
 	} // public void update( float delta )
+	
+//	public void accelerateInDirection( Vector2 dir ) {
+//	}
 	
 	public void searchToDest( Vector2 dest ) {
 		_searchDest = new Vector2( dest );

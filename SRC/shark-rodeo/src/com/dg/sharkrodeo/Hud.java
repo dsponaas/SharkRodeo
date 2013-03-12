@@ -122,4 +122,18 @@ public class Hud {
 	public TextureRegion getEnduranceUpIcon()					{ return _enduranceUpIcon; }
 	public TextureRegion getRedExclamationIcon()				{ return _redExclamationIcon; }
 	public TextureRegion getYellowExclamationIcon()				{ return _yellowExclamationIcon; }
+	
+	public void dispose() {
+//		_hudFont;
+//		_livesIcon;
+//		_sharksLeftIcon;
+//		_scoreIcon;
+//		_2xIcon;
+//		_4xIcon;
+//		_speedUpIcon;
+//		_enduranceUpIcon;
+//		_redExclamationIcon;
+//		_yellowExclamationIcon.dispose();
+	}
+	
 }

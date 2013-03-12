@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -18,8 +17,8 @@ import com.dg.sharkrodeo.HudUtilityButton.UtilityButtonType;
 import com.dg.sharkrodeo.Shark.SharkState;
 import com.dg.sharkrodeo.Dialogs.SharkRodeoDialog;
 
-public class GameRenderer
-{
+public class GameRenderer {
+	
 	private OrthographicCamera _camera;
 	private SpriteBatch _batch;
 	private ShapeRenderer _shapeRenderer;
@@ -31,18 +30,17 @@ public class GameRenderer
 	
 	private static final float CAMERA_Z = 0f; //if i leave this final, move to constants
 	
-	public GameRenderer()
-	{
+	public GameRenderer() {
 		float camWidth = Gdx.graphics.getWidth();
 		float camHeight = Gdx.graphics.getHeight();
 		
 		_camera = new OrthographicCamera();
-		_camera.setToOrtho(false, camWidth, camHeight);
+		_camera.setToOrtho( false, camWidth, camHeight );
 		_camera.update();
 		
 		_batch = new SpriteBatch();
 		_hudBatch = new SpriteBatch();
-		_batch.setProjectionMatrix(_camera.combined);
+		_batch.setProjectionMatrix( _camera.combined );
 		
 		_shapeRenderer = new ShapeRenderer();
 		_hudBackgroundRenderer = new ShapeRenderer();
@@ -50,25 +48,21 @@ public class GameRenderer
 		_cameraDest = new Vector2();
 		_cameraTempDest = new Vector2();
 		_cameraShake = false;
-	}
+	} // public GameRenderer()
 
-	public void setCameraDest(float x, float y)
-	{
-		_cameraDest.set(x, y);
+	public void setCameraDest( float x, float y ) {
+		_cameraDest.set( x, y );
 	}
 	
-	public void update(float delta)
-	{
+	public void update( float delta ) {
 		Vector2 dest = new Vector2();
 		float speed = SharkRodeoConstants.getCameraSpeed();
-		if(_cameraShake)
-		{
+		if( _cameraShake ) {
 			speed *= SharkRodeoConstants.CAMERA_SHAKE_MULTIPLIER;
 			dest.x = _cameraTempDest.x;
 			dest.y = _cameraTempDest.y;
 		}
-		else
-		{
+		else {
 			dest.x = _cameraDest.x;
 			dest.y = _cameraDest.y;
 		}
@@ -76,69 +70,67 @@ public class GameRenderer
 		Vector2 deltaDest = new Vector2(dest);
 		deltaDest.sub(_camera.position.x, _camera.position.y);
 		float length = deltaDest.len();
-		if(length > 10f)// TODO: Magic number
-		{
-			deltaDest.mul((1f / length) * speed * delta);
-			setCameraPosition(_camera.position.x + deltaDest.x, _camera.position.y + deltaDest.y);
+		if( length > 10f ) {// TODO: Magic number
+			deltaDest.mul( ( 1f / length ) * speed * delta );
+			setCameraPosition( _camera.position.x + deltaDest.x, _camera.position.y + deltaDest.y );
 		}
-		else
-		{
-			setCameraPosition(dest.x, dest.y);
-			if(_cameraShake)
-			{
+		else {
+			setCameraPosition( dest.x, dest.y );
+			if( _cameraShake ) {
 				resetCameraShakePos();
 			}
 		}
 
 		_camera.update();
+	} // public void update( float delta )
+	
+	public void resetCameraPosition( float x, float y ) {
+		_cameraDest.set( x, y );
+		setCameraPosition( x, y );
 	}
 	
-	public void resetCameraPosition(float x, float y)
-	{
-		_cameraDest.set(x, y);
-		setCameraPosition(x, y);
-	}
-	
-	private void resetCameraShakePos()
-	{
-		float deltaX = Utils.getRandomFloatInRange(SharkRodeoConstants.getCameraShakeMin(), SharkRodeoConstants.getCameraShakeMax());
-		float deltaY = Utils.getRandomFloatInRange(SharkRodeoConstants.getCameraShakeMin(), SharkRodeoConstants.getCameraShakeMax());
-		if(Utils.coinFlip()) deltaX *= -1f;
-		if(Utils.coinFlip()) deltaY *= -1f;
+	private void resetCameraShakePos() {
+		float deltaX = Utils.getRandomFloatInRange( SharkRodeoConstants.getCameraShakeMin(), SharkRodeoConstants.getCameraShakeMax() );
+		float deltaY = Utils.getRandomFloatInRange( SharkRodeoConstants.getCameraShakeMin(), SharkRodeoConstants.getCameraShakeMax() );
+		if( Utils.coinFlip() ) {
+			deltaX *= -1f;
+		}
+		if( Utils.coinFlip() ) {
+			deltaY *= -1f;
+		}
 		_cameraTempDest.x = _cameraDest.x + deltaX;
 		_cameraTempDest.y = _cameraDest.y + deltaY;
-	}
+	} // private void resetCameraShakePos()
 	
-	public void startCameraShake()
-	{
+	public void startCameraShake() {
 		resetCameraShakePos();
 		_cameraShake = true;
 	}
 	
-	public void endCameraShake()
-	{
+	public void endCameraShake() {
 		_cameraShake = false;
 	}
 	
-	private void setCameraPosition(float x, float y)
-	{
-		Vector2 delta = new Vector2(_cameraDest.x - x, _cameraDest.y - y);
-		float frameWidthX = (float)Gdx.graphics.getWidth() / 2f * 0.65f;// TODO: magic number
-		float frameWidthY = (float)Gdx.graphics.getHeight() / 2f * 0.65f;// TODO: magic number
+	private void setCameraPosition( float x, float y ) {
+		Vector2 delta = new Vector2( _cameraDest.x - x, _cameraDest.y - y );
+		float frameWidthX = ( float )Gdx.graphics.getWidth() / 2f * 0.65f;// TODO: magic number
+		float frameWidthY = ( float )Gdx.graphics.getHeight() / 2f * 0.65f;// TODO: magic number
 		
-		float xSpillover = Math.abs(delta.x) - frameWidthX;
-		float ySpillover = Math.abs(delta.y) - frameWidthY;
+		float xSpillover = Math.abs( delta.x ) - frameWidthX;
+		float ySpillover = Math.abs( delta.y ) - frameWidthY;
 
 		float xAdjustment = 0f;
 		float yAdjustment = 0f;
 		
-		if(xSpillover > 0f)
-			xAdjustment = (delta.x > 0f) ? xSpillover : xSpillover * -1f;
-		if(ySpillover > 0f)
-			yAdjustment = (delta.y > 0f) ? ySpillover : ySpillover * -1f;
+		if( xSpillover > 0f ) {
+			xAdjustment = ( delta.x > 0f ) ? xSpillover : xSpillover * -1f;
+		}
+		if( ySpillover > 0f ) {
+			yAdjustment = ( delta.y > 0f ) ? ySpillover : ySpillover * -1f;
+		}
 		
-		_camera.position.set(x + xAdjustment, y + yAdjustment, CAMERA_Z);
-	}
+		_camera.position.set( x + xAdjustment, y + yAdjustment, CAMERA_Z );
+	} // private void setCameraPosition( float x, float y )
 	
 	public void beginRender()
 	{// i could do some checking of states here or whatever but im not going to
@@ -149,38 +141,32 @@ public class GameRenderer
 		_batch.begin();
 	}
 	
-	public void finishRender()
-	{
+	public void finishRender() {
 		_batch.end();
 	}
 	
-	public void renderGameObjectParticles(GameObject obj, float delta)
-	{
-		if( ! obj.isInTheWater() ) {
-			return;
-		}
+	public void renderGameObjectParticles( GameObject obj, float delta ) {
 		Vector2 position = obj.getPosition();
-		for(ParticleEffect emitter : obj.getEmitters())
-		{
-			emitter.setPosition(position.x, position.y);
-			emitter.draw(_batch, delta);
-//			emitter.
+		for( ParticleEffect emitter : obj.getEmitters() ) {
+			if( ! obj.isInTheWater() ) {
+				emitter.setPosition( -1000, -1000 ); //TODO: hackish asa motherfucker. find a better solution
+			}
+			else {
+				emitter.setPosition( position.x, position.y );
+			}
+			emitter.draw( _batch, delta );
 		}
-	}
+	} // public void renderGameObjectParticles( GameObject obj, float delta )
 	
-	public void renderGameObject(GameObject obj, float delta)
-	{//float x, float y, float originX, float originY, float width, float height, float scaleX, float scaleY, float rotation
+	public void renderGameObject( GameObject obj, float delta ) {//float x, float y, float originX, float originY, float width, float height, float scaleX, float scaleY, float rotation
 		Vector2 position = obj.getPosition();
-		obj.updateView(delta);
+		obj.updateView( delta );
 		
 		TextureRegion texture = obj.getTexture();
-		if(texture != null)
-			_batch.draw(texture, position.x - ((float)(texture.getRegionWidth() / 2)), position.y - ((float)(texture.getRegionHeight() / 2)));
-		
-//		_batch.dra
-//		_batch.draw(obj.getTexture(), position.x, position.y, position.x + (obj.getWidth() / 2f), position.y + (obj.getHeight() / 2f), obj.getWidth(), obj.getHeight(), 1f, 1f);
-		
-	}
+		if( texture != null ) {
+			_batch.draw( texture, position.x - ( ( float )( texture.getRegionWidth() / 2 ) ), position.y - ( ( float )( texture.getRegionHeight() / 2 ) ) );
+		}
+	} // public void renderGameObject( GameObject obj, float delta )
 
 	public void renderShark( Shark obj, float delta ) {
 		Vector2 position = obj.getPosition();
@@ -190,7 +176,6 @@ public class GameRenderer
 		if( texture != null )
 			_batch.draw( texture, position.x - ( ( float )( texture.getRegionWidth() / 2 ) ), position.y - ( ( float )( texture.getRegionHeight() / 2 ) ) );
 		
-		Vector2 playerPos = GameBoard.getInstance().getPlayerPos();
 		if( obj.getSharkState() == SharkState.LUNGING ) {    //obj.isPointInLineOfSight( playerPos.x, playerPos.y ) ) {
 			TextureRegion exclamation = Hud.getInstance().getRedExclamationIcon();
 			_batch.draw( exclamation, position.x - ( ( float )( exclamation.getRegionWidth() / 2 ) ), position.y + ( ( float )( exclamation.getRegionHeight() / 2 ) ) );
@@ -199,49 +184,40 @@ public class GameRenderer
 			TextureRegion exclamation = Hud.getInstance().getYellowExclamationIcon();
 			_batch.draw( exclamation, position.x - ( ( float )( exclamation.getRegionWidth() / 2 ) ), position.y + ( ( float )( exclamation.getRegionHeight() / 2 ) ) );
 		}
-		
-		
-//		_batch.dra
-//		_batch.draw(obj.getTexture(), position.x, position.y, position.x + (obj.getWidth() / 2f), position.y + (obj.getHeight() / 2f), obj.getWidth(), obj.getHeight(), 1f, 1f);
-		
-	}
+	} // public void renderShark( Shark obj, float delta )
 	
-	public void renderWaveLayer(Wave wave, float delta, boolean top)
-	{
-		wave.updateView(delta);
+	public void renderWaveLayer( Wave wave, float delta, boolean top ) {
+		wave.updateView( delta );
 		Vector2 position = wave.getPosition();
 		TextureRegion texture;
 		float alpha;
 		
-		if(top)
-		{
+		if( top ) {
 			texture = wave.getTopTexture();
 			alpha = 0.9f;
 		}
-		else
-		{
+		else {
 			texture = wave.getBottomTexture();
 			alpha = 0.5f;
 		}
 		
-		_batch.setColor(1f, 1f, 1f, alpha);
-		if(texture != null)
-			_batch.draw(texture, position.x - ((float)(texture.getRegionWidth() / 2)), position.y - ((float)(texture.getRegionHeight() / 2)));
-		_batch.setColor(1f, 1f, 1f, 1f);
-	}
-	
-	public void renderWhirlpool(Whirlpool pool, float delta)
-	{
-		pool.updateView(delta);
-		for(int i = 0; i < pool.getNumLayers(); ++i)
-		{
-			Vector2 pos = pool.getPosition();
-			TextureRegion tex = pool.getTexture(i);
-			_batch.setColor(1, 1, 1, pool.getAlpha());
-			_batch.draw(tex, pos.x - ((float)tex.getRegionWidth() / 2f), pos.y - ((float)tex.getRegionHeight() / 2f));
-			_batch.setColor(1, 1, 1, 1);
+		_batch.setColor( 1f, 1f, 1f, alpha );
+		if( texture != null ) {
+			_batch.draw( texture, position.x - ( ( float )( texture.getRegionWidth() / 2 ) ), position.y - ( ( float )( texture.getRegionHeight() / 2 ) ) );
 		}
-	}
+		_batch.setColor( 1f, 1f, 1f, 1f );
+	} // public void renderWaveLayer( Wave wave, float delta, boolean top )
+	
+	public void renderWhirlpool( Whirlpool pool, float delta ) {
+		pool.updateView( delta );
+		for( int i = 0; i < pool.getNumLayers(); ++i ) {
+			Vector2 pos = pool.getPosition();
+			TextureRegion tex = pool.getTexture( i );
+			_batch.setColor( 1, 1, 1, pool.getAlpha() );
+			_batch.draw( tex, pos.x - ( ( float )tex.getRegionWidth() / 2f ), pos.y - ( ( float )tex.getRegionHeight() / 2f ) );
+			_batch.setColor( 1, 1, 1, 1 );
+		} // for( int i = 0; i < pool.getNumLayers(); ++i )
+	} // public void renderWhirlpool( Whirlpool pool, float delta )
 	
 	public void renderGameBoard() {
 		float frameWidth = Gdx.graphics.getWidth();
@@ -272,8 +248,8 @@ public class GameRenderer
 				_batch.draw( texture, pos.x, pos.y );
 				_batch.setColor( 1, 1, 1, 1 );
 			}
-		}
-	}
+		} // for( OceanLayer layer : GameBoard.getInstance().getOceanLayers() )
+	} // public void renderGameBoard()
 	
 	public void renderBorder() {
 		GameBoard board = GameBoard.getInstance();
@@ -302,7 +278,7 @@ public class GameRenderer
 		_batch.draw( board.getBoundsBRTexture(), board.getWidth() + borderWidth - board.getBoundsTLTexture().getWidth(), -1f * borderWidth );
 		_batch.draw( board.getBoundsTRTexture(), board.getWidth() + borderWidth - board.getBoundsTLTexture().getWidth(), board.getHeight() + borderWidth - board.getBoundsTLTexture().getHeight() );
 		_batch.draw( board.getBoundsTLTexture(), -1f * borderWidth, board.getHeight() + borderWidth - board.getBoundsTLTexture().getHeight() );
-	}
+	} // public void renderBorder()
 	
 	public void renderMountedTouchPos( boolean touchFlag, float percent ) {
 		float alpha = percent * SharkRodeoConstants.DEFAULT_RENDER_TOUCHPOS_ALPHA;
@@ -315,7 +291,7 @@ public class GameRenderer
 		Vector2 pos = GameBoard.getInstance().getPlayerPos();
 		_batch.draw( tex, pos.x - ( tex.getWidth() / 2f ), pos.y - ( tex.getHeight() / 2f ) );
 		_batch.setColor( 1, 1, 1, 1 );
-	}
+	} // public void renderMountedTouchPos( boolean touchFlag, float percent )
 	
 	public void beginShapeRender() {
 		_shapeRenderer.setProjectionMatrix( _camera.combined );
@@ -367,8 +343,7 @@ public class GameRenderer
 		_shapeRenderer.setColor( new Color( 0f, 1f, 0f, 0.8f ) );
 		_shapeRenderer.filledRect( sharkPos.x - ( width / 2f ) + buffer, sharkPos.y + yOffset + buffer, health * ( width - ( 2f * buffer ) ), height - ( 2f * buffer ) );
 		_shapeRenderer.end();
-		
-	}
+	} // public void renderHitPoints( Shark shark )
 	
 	public void beginHudBatch() {
 		_hudBatch.begin();
@@ -396,47 +371,42 @@ public class GameRenderer
 //		TextureRegion scoreIcon = hud.getScoreIcon();
 //		TextureRegion timeIcon = hud.getTimeIcon();
 		float livesIconXPos = 0f;
-		float livesIconYPos = (float)Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() + ((SharkRodeoConstants.getStatusBarWidth() - (float)livesIcon.getRegionHeight()) / 2f);
+		float livesIconYPos = ( float )Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() + ( ( SharkRodeoConstants.getStatusBarWidth() - ( float )livesIcon.getRegionHeight() ) / 2f );
 		_hudBatch.draw(livesIcon, livesIconXPos, livesIconYPos);
 		int lives = GameState.getLives();
-		hudFont.draw(_hudBatch, Integer.toString(lives < 0 ? 0 : lives), livesIconXPos + (float)livesIcon.getRegionWidth(), (float)Gdx.graphics.getHeight() - 4f);//TODO: magic number
+		hudFont.draw( _hudBatch, Integer.toString( lives < 0 ? 0 : lives ), livesIconXPos + ( float )livesIcon.getRegionWidth(), ( float )Gdx.graphics.getHeight() - 4f );//TODO: magic number
 		
-		float sharksLeftIconXPos = ((float)Gdx.graphics.getWidth()) / 6f;
-		_hudBatch.draw(sharksLeftIcon, sharksLeftIconXPos, livesIconYPos);
+		float sharksLeftIconXPos = ( ( float )Gdx.graphics.getWidth() ) / 6f;
+		_hudBatch.draw( sharksLeftIcon, sharksLeftIconXPos, livesIconYPos );
 		int sharksRemaining = GameBoard.getInstance().getSharksRemaining();
-		hudFont.draw(_hudBatch, Integer.toString(sharksRemaining < 0 ? 0 : sharksRemaining), sharksLeftIconXPos + (float)sharksLeftIcon.getRegionWidth(), (float)Gdx.graphics.getHeight() - 4f);//TODO: magic number
+		hudFont.draw( _hudBatch, Integer.toString( sharksRemaining < 0 ? 0 : sharksRemaining ), sharksLeftIconXPos + ( float )sharksLeftIcon.getRegionWidth(), ( float )Gdx.graphics.getHeight() - 4f );//TODO: magic number
 		
 		float levelXPos = sharksLeftIconXPos * 2f;
-		hudFont.draw(_hudBatch, "LEVEL:" + GameState.getLevel(), levelXPos, (float)Gdx.graphics.getHeight() - 4f);//TODO: magic number
+		hudFont.draw( _hudBatch, "LEVEL:" + GameState.getLevel(), levelXPos, ( float )Gdx.graphics.getHeight() - 4f );//TODO: magic number
 		
 		float scoreIconXPos = ((float)Gdx.graphics.getWidth()) / 6f + ((float)Gdx.graphics.getWidth()) / 2f;
-		hudFont.draw(_hudBatch, "SCORE:" + GameState.getScore(), scoreIconXPos, (float)Gdx.graphics.getHeight() - 4f);//TODO: magic number
+		hudFont.draw( _hudBatch, "SCORE:" + GameState.getScore(), scoreIconXPos, ( float )Gdx.graphics.getHeight() - 4f );//TODO: magic number
 		
-		_hudBatch.setColor(1, 1, 1, 0.7f);
+		_hudBatch.setColor( 1, 1, 1, 0.7f );
 		TextureRegion multiplierIcon = hud.get2xIcon();
-		float powerupIconXPos = (float)Gdx.graphics.getWidth() - (float)multiplierIcon.getRegionWidth();
-		float powerupIconYPos = (float)Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() - (float)multiplierIcon.getRegionHeight();
+		float powerupIconXPos = ( float )Gdx.graphics.getWidth() - ( float )multiplierIcon.getRegionWidth();
+		float powerupIconYPos = ( float )Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() - ( float )multiplierIcon.getRegionHeight();
 		int multiplier = GameState.getMulitplier();
-		if(multiplier == 2)
-		{
+		if( multiplier == 2 ) {
 //			hudFont.draw(_hudBatch, "2X" + GameState.getScore(), scoreIconXPos, (float)Gdx.graphics.getHeight() - 4f);//TODO: magic number
-			_hudBatch.draw(hud.get2xIcon(), powerupIconXPos, powerupIconYPos); // TODO: magic number
-			powerupIconYPos -= (float)multiplierIcon.getRegionHeight();
+			_hudBatch.draw( hud.get2xIcon(), powerupIconXPos, powerupIconYPos ); // TODO: magic number
+			powerupIconYPos -= ( float )multiplierIcon.getRegionHeight();
 		}
-		else if(multiplier == 4)
-		{
+		else if( multiplier == 4 ) {
 //			hudFont.draw(_hudBatch, "2X" + GameState.getScore(), scoreIconXPos, (float)Gdx.graphics.getHeight() - 4f);//TODO: magic number
-			_hudBatch.draw(hud.get4xIcon(), powerupIconXPos, powerupIconYPos); // TODO: magic number
-			powerupIconYPos -= (float)multiplierIcon.getRegionHeight();
+			_hudBatch.draw( hud.get4xIcon(), powerupIconXPos, powerupIconYPos ); // TODO: magic number
+			powerupIconYPos -= ( float )multiplierIcon.getRegionHeight();
 		}
 		
-		for(PlayerModifier cur : GameBoard.getInstance().getPlayer().getModifiers())
-		{
-			if(cur != null)
-			{
+		for( PlayerModifier cur : GameBoard.getInstance().getPlayer().getModifiers() ) {
+			if( cur != null ) {
 				TextureRegion icon = null;
-				switch(cur.getType())
-				{
+				switch( cur.getType() ) {
 				case SPEED_UP:
 					icon = hud.getSpeedUpIcon();
 					break;
@@ -445,60 +415,50 @@ public class GameRenderer
 					break;
 				}
 
-				if(icon != null)
-				{
-					_hudBatch.draw(icon, powerupIconXPos, powerupIconYPos);
-					powerupIconYPos -= (float)icon.getRegionHeight();
+				if( icon != null ) {
+					_hudBatch.draw( icon, powerupIconXPos, powerupIconYPos );
+					powerupIconYPos -= ( float )icon.getRegionHeight();
 				}
-			}
-		}
+			} // if( cur != null )
+		} // for( PlayerModifier cur : GameBoard.getInstance().getPlayer().getModifiers() )
 		
-		_hudBatch.setColor(1, 1, 1, 1);
+		_hudBatch.setColor( 1, 1, 1, 1 );
 
-		//		_hudBatch.draw(scoreIcon, scoreIconXPos, livesIconYPos);//NOTE******************************** WE ARE USING LIVESICONYPOS HERE BECAUSE THEY SHOULD BE THE SAME SIZE
-//		hudFont.draw(_hudBatch, Integer.toString(GameState.getScore()), scoreIconXPos + (float)scoreIcon.getRegionWidth(), (float)Gdx.graphics.getHeight() - 4f);//TODO: magic number
-
-//		float timeIconXPos = scoreIconXPos + ((float)Gdx.graphics.getWidth()) / 2f;
-//		_hudBatch.draw(timeIcon, timeIconXPos, livesIconYPos);//NOTE******************************** WE ARE USING LIVESICONYPOS HERE BECAUSE THEY SHOULD BE THE SAME SIZE
-//		hudFont.draw(_hudBatch, Integer.toString(GameState.getGameTime()), timeIconXPos + (float)timeIcon.getRegionWidth(), (float)Gdx.graphics.getHeight() - 4f);//TODO: magic number
-		
-		for(int i = 0; i < hud.getNumButtons(); ++i)
-		{
-			HudUtilityButton curButton = hud.getButton(i);
-			if(curButton == null)
+		for( int i = 0; i < hud.getNumButtons(); ++i ) {
+			HudUtilityButton curButton = hud.getButton( i );
+			if( curButton == null ) {
 				continue;
+			}
 			TextureRegion buttonTex = curButton.getTexture();
 			Vector2 position = curButton.getPosition();
-			_hudBatch.draw(buttonTex, position.x, position.y);
+			_hudBatch.draw( buttonTex, position.x, position.y );
 			
-			if(curButton.getType() == UtilityButtonType.SPRINT) // a bit hackish but this 'should' be my only special case button... maybe
-			{
+			if( curButton.getType() == UtilityButtonType.SPRINT ) {// a bit hackish but this 'should' be my only special case button... maybe
 				float remaining = GameState.getSprintRemainingPercent();
 				
-				if(remaining < .98f)
-				{
+				if( remaining < .98f ) {
 					float width = 8f; //TODO:Magic number
-					float height = (float)buttonTex.getRegionHeight();
+					float height = ( float )buttonTex.getRegionHeight();
 					float buffer = 1f; //TODO:Magic number
 					
-					_hudBackgroundRenderer.begin(ShapeType.FilledRectangle);
-					_hudBackgroundRenderer.setColor(Color.BLACK);
-					_hudBackgroundRenderer.filledRect(SharkRodeoConstants.getUtilityBarWidth(), position.y, width, height);
+					_hudBackgroundRenderer.begin( ShapeType.FilledRectangle );
+					_hudBackgroundRenderer.setColor( Color.BLACK );
+					_hudBackgroundRenderer.filledRect( SharkRodeoConstants.getUtilityBarWidth(), position.y, width, height );
 					_hudBackgroundRenderer.end();
 					
-					_hudBackgroundRenderer.begin(ShapeType.FilledRectangle);
-					_hudBackgroundRenderer.setColor(Color.RED);
-					_hudBackgroundRenderer.filledRect(SharkRodeoConstants.getUtilityBarWidth() + buffer, position.y + buffer, width - (2f * buffer), height - (2f * buffer));
+					_hudBackgroundRenderer.begin( ShapeType.FilledRectangle );
+					_hudBackgroundRenderer.setColor( Color.RED );
+					_hudBackgroundRenderer.filledRect( SharkRodeoConstants.getUtilityBarWidth() + buffer, position.y + buffer, width - ( 2f * buffer ), height - ( 2f * buffer ) );
 					_hudBackgroundRenderer.end();
 					
-					_hudBackgroundRenderer.begin(ShapeType.FilledRectangle);
-					_hudBackgroundRenderer.setColor(Color.GREEN);
-					_hudBackgroundRenderer.filledRect(SharkRodeoConstants.getUtilityBarWidth() + buffer, position.y + buffer, width - (2f * buffer), remaining * (height - (2f * buffer)));
+					_hudBackgroundRenderer.begin( ShapeType.FilledRectangle );
+					_hudBackgroundRenderer.setColor( Color.GREEN );
+					_hudBackgroundRenderer.filledRect( SharkRodeoConstants.getUtilityBarWidth() + buffer, position.y + buffer, width - ( 2f * buffer ), remaining * ( height - ( 2f * buffer ) ) );
 					_hudBackgroundRenderer.end();
-				}
-			}
-		}
-	}
+				} // if( remaining < .98f )
+			} // if( curButton.getType() == UtilityButtonType.SPRINT )
+		} // for( int i = 0; i < hud.getNumButtons(); ++i )
+	} // public void renderHud()
 	
 	public void renderDialog( SharkRodeoDialog dialog ) {
 		TextureRegion dialogTex = dialog.getTexture();
@@ -528,4 +488,4 @@ public class GameRenderer
 		return new Vector2( _camera.position.x, _camera.position.y );
 	}
 
-}
+} // public class GameRenderer

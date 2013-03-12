@@ -7,8 +7,8 @@ import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class GameObjectView {
 
@@ -87,6 +87,15 @@ public class GameObjectView {
 		_transitionState = newState;
 		_activeAnimation.finish();
 	}
+	
+	public void resetParticles() {
+		for( ParticleEffect curEffect : _emitters ) {
+//			curEffect.
+			for( ParticleEmitter curEmitter : curEffect.getEmitters() ) {
+				curEmitter.start();
+			}
+		}
+	} // public void resetParticles()
 	
 	public List<ParticleEffect> getEmitters()			{ return _emitters; }
 	

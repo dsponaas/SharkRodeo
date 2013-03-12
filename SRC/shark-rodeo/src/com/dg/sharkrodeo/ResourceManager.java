@@ -42,4 +42,11 @@ public class ResourceManager {
 	public TextureRegion getWhirlpoolTexture( String name ) {
 		return _whirlpoolAtlas.findRegion( name );
 	}
+	
+	public void dispose() {
+		_powerupAtlas.dispose();
+		_dialogAtlas.dispose();
+		_waveAtlas.dispose();
+		_whirlpoolAtlas.dispose();
+	}
 }
