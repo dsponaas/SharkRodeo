@@ -13,6 +13,7 @@ public class Shark extends GameObject {
 	private Vector2 _searchDest;
 	private float _stateTime;
 	private float _health;
+	private Vector2 _destAcceleration;
 	
 	private static final float STATE_TIME_CRAPTAR = 2f; 
 	
@@ -96,6 +97,38 @@ public class Shark extends GameObject {
 	public void update( float delta ) {
 		_stateTime -= delta;
 		
+		if( getAcceleration().len2() > 10f ) {
+			Vector2 unitDir = ( new Vector2( _destAcceleration ) ).nor();
+			Vector2 curAccelNor = ( new Vector2( getAcceleration() ) ).nor();
+	
+			double angle = Math.atan2( unitDir.y, unitDir.x ) - Math.atan2( curAccelNor.y, curAccelNor.x );
+			
+			double turnSpeed = ( ( _sharkState == SharkState.LUNGING ) || isBeingRidden() ) ? SharkRodeoConstants.SHARK_LUNGE_TURN_SPEED : SharkRodeoConstants.SHARK_REGULAR_TURN_SPEED; 
+			if( Math.abs( angle ) > turnSpeed ) {
+				if( angle > 0f ) {
+					angle = turnSpeed;
+				}
+				else {
+					angle = -1f * turnSpeed;
+				}
+			}
+			float angleInDegrees = ( float )( ( 180.0 / Math.PI ) * angle );
+			
+			curAccelNor.rotate( angleInDegrees );
+			setAcceleration( curAccelNor.mul( getAccelerationRate() ) );
+		}
+		else {
+			setAcceleration( _destAcceleration );
+		}
+		
+		Direction oldDirection = getDirection();
+		setDirection( getDirection( getAcceleration() ) );
+		Direction newDirection = getDirection();
+		if( newDirection != oldDirection ) {
+			changeDirection( newDirection );
+		}
+		
+		
 		if( _sharkState == SharkState.LUNGING ) {
 			setAccelerationRate( SharkRodeoConstants.SHARK_LUNGE_MULTIPLIER * SharkRodeoConstants.getSharkAcceleration() );
 			setMaxSpeed( SharkRodeoConstants.SHARK_LUNGE_MULTIPLIER * SharkRodeoConstants.getSharkMaxSpeed() );
@@ -130,27 +163,8 @@ public class Shark extends GameObject {
 				Vector2 sharkToPlayer = ( new Vector2( playerPos.x - sharkPos.x, playerPos.y - sharkPos.y ) );
 				float distanceToPlayer = sharkToPlayer.len();
 				
-				sharkToPlayer.nor();
-				Vector2 curDirection = ( new Vector2( _searchDest ) ).sub( sharkPos ).nor();
-
-				double angle = Math.atan2( sharkToPlayer.y, sharkToPlayer.x ) - Math.atan2( curDirection.y, curDirection.x );
-				if( Math.abs( angle ) > SharkRodeoConstants.SHARK_LUNGE_TURN_SPEED ) {
-					if( angle > 0f ) {
-						angle = SharkRodeoConstants.SHARK_LUNGE_TURN_SPEED;
-					}
-					else {
-						angle = -1f * SharkRodeoConstants.SHARK_LUNGE_TURN_SPEED;
-					}
-				}
-				float angleInDegrees = ( float )( ( 180.0 / Math.PI ) * angle );
-				//Gdx.app.log( SharkRodeoConstants.LOG_TAG, "angle radians:" + angle );
-				
-				curDirection.rotate( angleInDegrees );
-				float dist = distanceToPlayer + 150f;//TODO:magic number
-				
-				curDirection.mul( dist ).add( sharkPos );
-				
-				searchToDest( curDirection );
+				sharkToPlayer.nor().mul( distanceToPlayer + 150f ).add( sharkPos );
+				searchToDest( sharkToPlayer );
 			} // if( isPointInLineOfSight( playerPos.x, playerPos.y ) )
 			else if( isLastPositionCloserToPoint( _searchDest.x, _searchDest.y ) ) {
 				endLunge();
@@ -176,9 +190,6 @@ public class Shark extends GameObject {
 		super.update( delta );
 	} // public void update( float delta )
 	
-//	public void accelerateInDirection( Vector2 dir ) {
-//	}
-	
 	public void searchToDest( Vector2 dest ) {
 		_searchDest = new Vector2( dest );
 		Vector2 delta = dest.sub( this.getPosition() );
@@ -186,7 +197,7 @@ public class Shark extends GameObject {
 		
 		Direction newDirection = this.getDirection();
 
-		changeDirection( newDirection );
+//		changeDirection( newDirection );
 		if( _sharkState != SharkState.MOUNTED ) {
 			setSharkState( SharkState.SEARCHING );
 		}
@@ -209,9 +220,6 @@ public class Shark extends GameObject {
 		_searchDest = new Vector2( sharkDest );
 		Vector2 delta = sharkDest.sub( this.getPosition() );
 		this.accelerateInDirection( delta );
-		Direction newDirection = this.getDirection();
-		
-		changeDirection( newDirection );
 
 		setAccelerationRate( SharkRodeoConstants.SHARK_LUNGE_MULTIPLIER * SharkRodeoConstants.getSharkAcceleration() );
 		setMaxSpeed( SharkRodeoConstants.SHARK_LUNGE_MULTIPLIER * SharkRodeoConstants.getSharkMaxSpeed() );
@@ -231,7 +239,7 @@ public class Shark extends GameObject {
 		
 		switch( newDirection ) {
 		case UP:
-			if( _sharkState == SharkState.MOUNTED ) {
+			if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.THRASHING ) ) {
 				this.setAnimState( "riding_up" );
 			}
 			else {
@@ -241,7 +249,7 @@ public class Shark extends GameObject {
 			_boundsOffsets[ 1 ].set( 0, -1f * distance );
 			break;
 		case DOWN:
-			if( _sharkState == SharkState.MOUNTED ) {
+			if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.THRASHING ) ) {
 				this.setAnimState( "riding_down" );
 			}
 			else {
@@ -251,7 +259,7 @@ public class Shark extends GameObject {
 			_boundsOffsets[ 1 ].set( 0, distance );
 			break;
 		case LEFT:
-			if( _sharkState == SharkState.MOUNTED ) {
+			if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.THRASHING ) ) {
 				this.setAnimState( "riding_left" );
 			}
 			else {
@@ -261,7 +269,7 @@ public class Shark extends GameObject {
 			_boundsOffsets[ 1 ].set( distance, 0 );
 			break;
 		case RIGHT:
-			if( _sharkState == SharkState.MOUNTED ) {
+			if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.THRASHING ) ) {
 				this.setAnimState( "riding_right" );
 			}
 			else {
@@ -271,7 +279,7 @@ public class Shark extends GameObject {
 			_boundsOffsets[ 1 ].set( -1f * distance, 0 );
 			break;
 		case UP_LEFT:
-			if( _sharkState == SharkState.MOUNTED ) {
+			if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.THRASHING ) ) {
 				this.setAnimState( "riding_upleft" );
 			}
 			else {
@@ -281,7 +289,7 @@ public class Shark extends GameObject {
 			_boundsOffsets[ 1 ].set( diagDist, -1f * diagDist );
 			break;
 		case UP_RIGHT:
-			if( _sharkState == SharkState.MOUNTED ) {
+			if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.THRASHING ) ) {
 				this.setAnimState( "riding_upright" );
 			}
 			else {
@@ -291,7 +299,7 @@ public class Shark extends GameObject {
 			_boundsOffsets[ 1 ].set( -1f * diagDist, -1f * diagDist );
 			break;
 		case DOWN_LEFT:
-			if( _sharkState == SharkState.MOUNTED ) {
+			if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.THRASHING ) ) {
 				this.setAnimState( "riding_downleft" );
 			}
 			else {
@@ -301,7 +309,7 @@ public class Shark extends GameObject {
 			_boundsOffsets[ 1 ].set( diagDist, diagDist );
 			break;
 		case DOWN_RIGHT:
-			if( _sharkState == SharkState.MOUNTED ) {
+			if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.THRASHING ) ) {
 				this.setAnimState( "riding_downright" );
 			}
 			else {
@@ -312,6 +320,11 @@ public class Shark extends GameObject {
 			break;
 		} // switch( newDirection )
 	} // private void changeDirection( Direction newDirection )
+	
+	public void accelerateInDirection( Vector2 dir ) {
+		_destAcceleration = dir;
+	} // public void accelerateInDirection( Vector2 dir )
+	
 	
 	public void mountingShark() {
 		setSharkState( SharkState.MOUNTING );
@@ -362,6 +375,7 @@ public class Shark extends GameObject {
 		this.setUpatePosition( true );
 		GameBoard.getInstance().endCameraShake();
 		this.searchToDest( getNextSearchDest() );
+		changeDirection( getDirection() );
 	}
 
 	private Vector2 getNextSearchDest() {

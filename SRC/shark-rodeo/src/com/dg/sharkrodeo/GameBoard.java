@@ -210,9 +210,11 @@ public class GameBoard {
 					Vector2 playerPos = _player.getPosition();
 					if( Utils.circlesOverlap( curShark.getBounds()[ 0 ], _player.getBounds()[ 0 ] ) ) {
 						beginPlayerDeath();
+						break;
 					}
 					if( Utils.circlesOverlap( curShark.getBounds()[ 1 ], _player.getBounds()[ 0 ] ) ) {
 						beginMount( curShark );
+						break;
 					}
 
 					if( curShark.isPointInLineOfSight( playerPos.x, playerPos.y ) ) {
@@ -598,7 +600,7 @@ public class GameBoard {
 				break;
 			}
 		}
-	}
+	} // public void spawnShark()
 	
 	public void spawnWave() {
 		final float BUFFER = 50f; // TODO: MAGIC NUMBER

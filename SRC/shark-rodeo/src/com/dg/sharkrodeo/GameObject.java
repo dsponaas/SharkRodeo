@@ -205,30 +205,6 @@ public class GameObject {
 		return true;
 	} // protected boolean isInBounds()
 	
-	public void accelerateInDirection( Vector2 dir ) {
-		float oldAngle = ( new Vector2( _acceleration ) ).angle();
-		Vector2 unitDir = dir.nor();
-		float angle = unitDir.angle();
-//		int craptar = ( int )angle;
-//		angle = ( float )craptar;
-		
-		float difference = angle - oldAngle;
-		difference = ( ( difference + 180f ) % 360f ) - 180f;
-		if( difference > 0f ) {
-			angle += 10f;
-		}
-		else {
-			angle -= 10f;
-		}
-		difference *= 3f;
-		angle += difference;
-//		Gdx.app.log( SharkRodeoConstants.LOG_TAG, "difference:" + difference );
-		
-		_direction = getDirection( unitDir );
-		
-		_acceleration.set( unitDir.mul( getAccelerationRate() ) );
-	} // public void accelerateInDirection( Vector2 dir )
-	
 	protected static Direction getDirection( Vector2 directionVector ) {
 		float angle = directionVector.angle();
 		if( angle < 22.5f ) {
@@ -316,7 +292,12 @@ public class GameObject {
 
 	public float getAccelerationRate() 								{ return _accelerationRate;	}
 	public void setAccelerationRate(float accelerationRate) {
-		_accelerationRate = accelerationRate; }
+		_accelerationRate = accelerationRate;
+	}
+	
+	public void setAcceleration( Vector2 newAcceleration ) {
+		_acceleration.set( newAcceleration );
+	}
 	
 	public TextureRegion getTexture() {
 		TextureRegion tex = _view.getCurrentAnimationFrame();

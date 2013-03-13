@@ -216,12 +216,22 @@ public class Player extends GameObject {
 	
 	public void tamingShark() {
 		_playerState = PlayerState.IDLE;
+		this.setAnimState( "idle_left" );
 		this.killAcceleration();
 		this.killVelocity();
 		this.setUpatePosition( true );
 		
 		GameBoard.getInstance().tameShark( _ridingShark );
 	}
+	
+	public void accelerateInDirection( Vector2 dir ) {
+		float oldAngle = ( new Vector2( getAcceleration() ) ).angle();
+		Vector2 unitDir = dir.nor();
+		float angle = unitDir.angle();
+
+		setDirection( getDirection( unitDir) );
+		setAcceleration( unitDir.mul( getAccelerationRate() ) );
+	} // public void accelerateInDirection( Vector2 dir )
 	
 	public void moveTo( Vector2 dest ) {
 		Direction oldDirection = this.getDirection();
