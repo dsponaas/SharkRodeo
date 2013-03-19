@@ -813,6 +813,10 @@ public class GameBoard {
 	public float getRidingTimePercent()		{ return _ridingTime / SharkRodeoConstants.RIDING_TIME; }
 	
 	public void gameOver() {
+		int score = GameState.getScore();
+//		ActionResolver actionResolver = SharkRodeo.getActionResolver();
+		SharkRodeo.saveScore( score );
+//		SharkRodeo.saveScore( score );
 		_music.stop();
 		_music.dispose();
 		_gameActive = false;

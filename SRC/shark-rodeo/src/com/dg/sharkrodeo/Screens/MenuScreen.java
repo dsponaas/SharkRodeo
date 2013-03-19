@@ -33,7 +33,7 @@ public class MenuScreen implements Screen {
 	private SpriteBatch _batch;
 	private TextButton _button;
 	private TextButton _sizeButton;
-	private TextButton _livesButton;
+	private TextButton _scoreButton;
 	private Label _label;
 	
 	public MenuScreen(SharkRodeo game) {
@@ -81,11 +81,11 @@ public class MenuScreen implements Screen {
 		_sizeButton.setX((Gdx.graphics.getWidth() / 2) - (_button.getWidth() / 2));
 		_sizeButton.setY(((Gdx.graphics.getHeight() / 3) * 2) - (2 * _button.getHeight()) - BUFFER);
 		
-		_livesButton = new TextButton("Lives:" + GameState.getLives(), style);
-		_livesButton.setWidth(400);
-		_livesButton.setHeight(120);
-		_livesButton.setX((Gdx.graphics.getWidth() / 2) - (_button.getWidth() / 2));
-		_livesButton.setY(((Gdx.graphics.getHeight() / 3) * 2) - (3 * _button.getHeight()) - (2 * BUFFER));
+		_scoreButton = new TextButton("High Scores", style);
+		_scoreButton.setWidth(400);
+		_scoreButton.setHeight(120);
+		_scoreButton.setX((Gdx.graphics.getWidth() / 2) - (_button.getWidth() / 2));
+		_scoreButton.setY(((Gdx.graphics.getHeight() / 3) * 2) - (3 * _button.getHeight()) - (2 * BUFFER));
 		
 		_button.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -114,13 +114,12 @@ public class MenuScreen implements Screen {
 			}
 		});
 		
-		_livesButton.addListener(new InputListener() {
+		_scoreButton.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				return true;
 			}
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				GameState.addLife();
-				_livesButton.setText("Lives:" + GameState.getLives());
+				SharkRodeo.showScoreloop();
 			}
 		});
 		
@@ -133,7 +132,7 @@ public class MenuScreen implements Screen {
 		
 		_stage.addActor(_button);
 		_stage.addActor(_sizeButton);
-		_stage.addActor(_livesButton);
+		_stage.addActor(_scoreButton);
 		_stage.addActor(_label);
 	}
 

@@ -24,7 +24,7 @@ public class GameState {
 	
 	public static void reset() {
 		_score = 0;
-		_lives = 2;
+		_lives = 0;
 		_multiplier = 1;
 		_multiplierTime = 0f;
 		_gameTime = 0f;

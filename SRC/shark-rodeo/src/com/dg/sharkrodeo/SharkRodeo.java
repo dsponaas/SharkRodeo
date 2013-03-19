@@ -15,31 +15,21 @@ import com.dg.sharkrodeo.Screens.SplashScreen;
 
 
 public class SharkRodeo extends Game {
-//	private OrthographicCamera camera;
-//	private SpriteBatch batch;
-//	private Texture texture;
-//	private Sprite sprite;
+	
+	public static ActionResolver _actionResolver;
+	
+	public SharkRodeo( ActionResolver actionResolver ) {
+		_actionResolver = actionResolver;
+//		_this = this;
+	}
 	
 	@Override
 	public void create() {
 		setScreen(new SplashScreen(this));
-/*
-		float w = Gdx.graphics.getWidth();
-		float h = Gdx.graphics.getHeight();
 		
-		camera = new OrthographicCamera(1, h/w);
-		batch = new SpriteBatch();
-		
-		texture = new Texture(Gdx.files.internal("data/libgdx.png"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
-		TextureRegion region = new TextureRegion(texture, 0, 0, 512, 275);
-		
-		sprite = new Sprite(region);
-		sprite.setSize(0.9f, 0.9f * sprite.getHeight() / sprite.getWidth());
-		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
-		sprite.setPosition(-sprite.getWidth()/2, -sprite.getHeight()/2);
-*/
+		if( _actionResolver != null ) {
+			_actionResolver.bootstrap();
+		}
 	}
 
 	@Override
@@ -66,4 +56,21 @@ public class SharkRodeo extends Game {
 	public void resume() {
 		super.resume();
 	}
-}
+/*	
+	public static ActionResolver getActionResolver() {
+		return _actionResolver;
+	}
+*/
+	public static void saveScore( int score ) {
+		if( _actionResolver != null ) {
+			_actionResolver.submitScore( 0, score );
+		}
+	}
+	
+	public static void showScoreloop() {
+		if( _actionResolver != null ) {
+			_actionResolver.showScoreloop();
+		}
+	}
+
+} // public class SharkRodeo
