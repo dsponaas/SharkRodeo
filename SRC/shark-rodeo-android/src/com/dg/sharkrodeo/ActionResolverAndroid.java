@@ -37,11 +37,11 @@ public class ActionResolverAndroid implements ActionResolver {
 	} // public void showScoreloop()
 
 	@Override
-	public void submitScore( final int mode, final int score ) {
+	public void submitScore( final int level, final int score ) {
 		_uiThread.post( new Runnable() {
 			@Override
 			public void run() {
-				_handler.submitScore( score );
+				_handler.submitScore( level, score );
 				_handler.getRankingForScore( score );
 			}
 		});

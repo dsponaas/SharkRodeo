@@ -103,6 +103,11 @@ public class Whirlpool {
 		return _stateTime / FADE_TIME;
 	}
 	
+	public void kill() {
+		_whirlpoolState = WhirlpoolState.ACTIVE;
+		_stateTime = -1f;
+	}
+	
 	public int getNumLayers()						{ return _anims.length; }
 	public TextureRegion getTexture( int layer )	{ return _anims[ layer ].getKeyFrame( _elapsed, true ); }
 	public Vector2 getPosition()					{ return _position; }

@@ -61,6 +61,7 @@ public class GameBoard {
 	private boolean _gameActive;
 	
 	private Music _music;
+	private SharkRodeo _game;
 		
 	private GameBoard() {
 		_dialogTimer = -1f;
@@ -83,7 +84,9 @@ public class GameBoard {
 		return _instance;
 	}
 	
-	public void startGame() {
+	public void startGame( SharkRodeo game ) {
+		_game = game;
+		
 		_bounds = new Rectangle();
 		_bounds.x = 0f;
 		_bounds.y = 0f;
@@ -286,6 +289,10 @@ public class GameBoard {
 				if( !curWhirl.update( delta ) ) {
 					_whirlpools[ i ] = null;
 					continue;
+				}
+				
+				if( _player.getPlayerState() == PlayerState.MOUNTED ) {
+					curWhirl.kill();
 				}
 				
 				Vector2 pos = _player.getPosition();
@@ -554,9 +561,13 @@ public class GameBoard {
 	}
 	
 	public boolean canSpawnWhirlpool() {
+		if( _player.getPlayerState() == PlayerState.MOUNTED ) {
+			return false;
+		}
 		for( Whirlpool whirlpool : _whirlpools ) {
-			if( whirlpool == null )
+			if( whirlpool == null ) {
 				return true;
+			}
 		}
 		return false;
 	}
@@ -813,10 +824,9 @@ public class GameBoard {
 	public float getRidingTimePercent()		{ return _ridingTime / SharkRodeoConstants.RIDING_TIME; }
 	
 	public void gameOver() {
+		int level = GameState.getLevel();
 		int score = GameState.getScore();
-//		ActionResolver actionResolver = SharkRodeo.getActionResolver();
-		SharkRodeo.saveScore( score );
-//		SharkRodeo.saveScore( score );
+		_game.saveScore( level, score );
 		_music.stop();
 		_music.dispose();
 		_gameActive = false;

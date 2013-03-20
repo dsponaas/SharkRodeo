@@ -35,57 +35,22 @@ public class Shark extends GameObject {
 		setSharkState( SharkState.SEARCHING );
 		_health = SharkRodeoConstants.DEFAULT_SHARK_HEALTH;
 
-		TextureAtlas atlas = new TextureAtlas( SharkRodeoConstants.getSharkPack() );
-		Animation swimLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_swim_left" ) );
-		Animation swimRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_swim_right" ) );
-		Animation swimDownAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_swim_down" ) );
-		Animation swimUpAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_swim_up" ) );
-		Animation swimDownLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_swim_downleft" ) );
-		Animation swimDownRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_swim_downright" ) );
-		Animation swimUpLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_swim_upleft" ) );
-		Animation swimUpRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_swim_upright" ) );
-		Animation ridingLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_riding_left" ) );
-		Animation ridingRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_riding_right" ) );
-		Animation ridingDownAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_riding_down" ) );
-		Animation ridingUpAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_riding_up" ) );
-		Animation ridingUpLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_riding_upleft" ) );
-		Animation ridingUpRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_riding_upright" ) );
-		Animation ridingDownLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_riding_downleft" ) );
-		Animation ridingDownRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "shark_riding_downright" ) );
-		
-		AnimationSequence swimLeftSequence = new AnimationSequence( swimLeftAnim );
-		AnimationSequence swimRightSequence = new AnimationSequence( swimRightAnim );
-		AnimationSequence swimDownSequence = new AnimationSequence( swimDownAnim );
-		AnimationSequence swimUpSequence = new AnimationSequence( swimUpAnim );
-		AnimationSequence swimDownLeftSequence = new AnimationSequence( swimDownLeftAnim );
-		AnimationSequence swimDownRightSequence = new AnimationSequence( swimDownRightAnim );
-		AnimationSequence swimUpLeftSequence = new AnimationSequence( swimUpLeftAnim );
-		AnimationSequence swimUpRightSequence = new AnimationSequence( swimUpRightAnim );
-		AnimationSequence ridingLeftSequence = new AnimationSequence( ridingLeftAnim );
-		AnimationSequence ridingRightSequence = new AnimationSequence( ridingRightAnim );
-		AnimationSequence ridingDownSequence = new AnimationSequence( ridingDownAnim );
-		AnimationSequence ridingUpSequence = new AnimationSequence( ridingUpAnim );
-		AnimationSequence ridingUpLeftSequence = new AnimationSequence( ridingUpLeftAnim );
-		AnimationSequence ridingUpRightSequence = new AnimationSequence( ridingUpRightAnim );
-		AnimationSequence ridingDownLeftSequence = new AnimationSequence( ridingDownLeftAnim );
-		AnimationSequence ridingDownRightSequence = new AnimationSequence( ridingDownRightAnim );
-		
-		addAnimation( "move_left", swimLeftSequence );
-		addAnimation( "move_right", swimRightSequence );
-		addAnimation( "move_down", swimDownSequence );
-		addAnimation( "move_up", swimUpSequence );
-		addAnimation( "move_downleft", swimDownLeftSequence );
-		addAnimation( "move_downright", swimDownRightSequence );
-		addAnimation( "move_upleft", swimUpLeftSequence );
-		addAnimation( "move_upright", swimUpRightSequence );
-		addAnimation( "riding_left", ridingLeftSequence );
-		addAnimation( "riding_right", ridingRightSequence );
-		addAnimation( "riding_down", ridingDownSequence );
-		addAnimation( "riding_up", ridingUpSequence );
-		addAnimation( "riding_upleft", ridingUpLeftSequence );
-		addAnimation( "riding_upright", ridingUpRightSequence );
-		addAnimation( "riding_downleft", ridingDownLeftSequence );
-		addAnimation( "riding_downright", ridingDownRightSequence );
+		addAnimation( "move_left", ResourceManager.getInstance().getSkarkAnim( "move_left" ) );
+		addAnimation( "move_right", ResourceManager.getInstance().getSkarkAnim( "move_right" ) );
+		addAnimation( "move_down", ResourceManager.getInstance().getSkarkAnim( "move_down" ) );
+		addAnimation( "move_up", ResourceManager.getInstance().getSkarkAnim( "move_up" ) );
+		addAnimation( "move_downleft", ResourceManager.getInstance().getSkarkAnim( "move_downleft" ) );
+		addAnimation( "move_downright", ResourceManager.getInstance().getSkarkAnim( "move_downright" ) );
+		addAnimation( "move_upleft", ResourceManager.getInstance().getSkarkAnim( "move_upleft" ) );
+		addAnimation( "move_upright", ResourceManager.getInstance().getSkarkAnim( "move_upright" ) );
+		addAnimation( "riding_left", ResourceManager.getInstance().getSkarkAnim( "riding_left" ) );
+		addAnimation( "riding_right", ResourceManager.getInstance().getSkarkAnim( "riding_right" ) );
+		addAnimation( "riding_down", ResourceManager.getInstance().getSkarkAnim( "riding_down" ) );
+		addAnimation( "riding_up", ResourceManager.getInstance().getSkarkAnim( "riding_up" ) );
+		addAnimation( "riding_upleft", ResourceManager.getInstance().getSkarkAnim( "riding_upleft" ) );
+		addAnimation( "riding_upright", ResourceManager.getInstance().getSkarkAnim( "riding_upright" ) );
+		addAnimation( "riding_downleft", ResourceManager.getInstance().getSkarkAnim( "riding_downleft" ) );
+		addAnimation( "riding_downright", ResourceManager.getInstance().getSkarkAnim( "riding_downright" ) );
 		
 		this.setClipping( false );
 
@@ -195,9 +160,6 @@ public class Shark extends GameObject {
 		Vector2 delta = dest.sub( this.getPosition() );
 		this.accelerateInDirection( delta );
 		
-		Direction newDirection = this.getDirection();
-
-//		changeDirection( newDirection );
 		if( _sharkState != SharkState.MOUNTED ) {
 			setSharkState( SharkState.SEARCHING );
 		}
@@ -379,26 +341,9 @@ public class Shark extends GameObject {
 	}
 
 	private Vector2 getNextSearchDest() {
-		float MIN_DIST = 800f;
-		float MAX_DIST = 1000f;
-		float magnitude = Utils.getRandomFloatInRange( MIN_DIST, MAX_DIST );
-		
 		Vector2 tempDest = new Vector2();
-
-		if( !this.getClipping() ) {
-			tempDest.x = Utils.getRandomFloatInRange( 200f, GameBoard.getInstance().getWidth() - 200f );// TODO: MAGIC NUMBER
-			tempDest.y = Utils.getRandomFloatInRange( 200f, GameBoard.getInstance().getHeight() - 200f );// TODO: MAGIC NUMBER
-			return tempDest;
-		}
-		
-		do {
-			tempDest.set( Utils.getRandomFloatInRange( -1f, 1f ), Utils.getRandomFloatInRange( -1f, 1f ) );
-			tempDest.nor();
-			tempDest.mul( magnitude );
-			tempDest.add( this.getPosition() );
-		}
-		while( !GameBoard.getInstance().isPositionInBounds( tempDest ) );
-		
+		tempDest.x = Utils.getRandomFloatInRange( 50f, GameBoard.getInstance().getWidth() - 50f );// TODO: MAGIC NUMBER
+		tempDest.y = Utils.getRandomFloatInRange( 50f, GameBoard.getInstance().getHeight() - 50f );// TODO: MAGIC NUMBER
 		return tempDest;
 	} // private Vector2 getNextSearchDest()
 	

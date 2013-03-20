@@ -13,7 +13,7 @@ public class GameScreen implements Screen {
 		_game = game;
 		
 		//move this to an init() method?
-		GameBoard.getInstance().startGame(); // force creation of gameboard
+		GameBoard.getInstance().startGame( _game ); // force creation of gameboard
 	}
 	
 	@Override

@@ -16,7 +16,8 @@ import com.dg.sharkrodeo.Screens.SplashScreen;
 
 public class SharkRodeo extends Game {
 	
-	public static ActionResolver _actionResolver;
+	//private static 
+	private ActionResolver _actionResolver;
 	
 	public SharkRodeo( ActionResolver actionResolver ) {
 		_actionResolver = actionResolver;
@@ -61,13 +62,13 @@ public class SharkRodeo extends Game {
 		return _actionResolver;
 	}
 */
-	public static void saveScore( int score ) {
+	public void saveScore( int level, int score ) {
 		if( _actionResolver != null ) {
-			_actionResolver.submitScore( 0, score );
+			_actionResolver.submitScore( level, score );
 		}
 	}
 	
-	public static void showScoreloop() {
+	public void showScoreloop() {
 		if( _actionResolver != null ) {
 			_actionResolver.showScoreloop();
 		}

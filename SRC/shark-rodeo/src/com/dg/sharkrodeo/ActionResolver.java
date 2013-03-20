@@ -6,7 +6,7 @@ public interface ActionResolver {
 	
 	public void showScoreloop();
 	
-	public void submitScore( final int mode, final int score );
+	public void submitScore( final int level, final int score );
 	
 	public void refreshScores();
 	

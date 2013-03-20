@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.dg.sharkrodeo.HudUtilityButton.UtilityButtonType;
+import com.dg.sharkrodeo.Player.PlayerState;
 import com.dg.sharkrodeo.Shark.SharkState;
 import com.dg.sharkrodeo.Dialogs.SharkRodeoDialog;
 
@@ -67,19 +68,24 @@ public class GameRenderer {
 			dest.y = _cameraDest.y;
 		}
 
-		Vector2 deltaDest = new Vector2(dest);
-		deltaDest.sub(_camera.position.x, _camera.position.y);
-		float length = deltaDest.len();
-		if( length > 10f ) {// TODO: Magic number
-			deltaDest.mul( ( 1f / length ) * speed * delta );
-			setCameraPosition( _camera.position.x + deltaDest.x, _camera.position.y + deltaDest.y );
+		if( GameBoard.getInstance().getPlayerState() != PlayerState.MOUNTED ) {
+			setCameraPosition(dest.x, dest.y );
 		}
 		else {
-			setCameraPosition( dest.x, dest.y );
-			if( _cameraShake ) {
-				resetCameraShakePos();
+			Vector2 deltaDest = new Vector2(dest);
+			deltaDest.sub(_camera.position.x, _camera.position.y);
+			float length = deltaDest.len();
+			if( length > 10f ) {// TODO: Magic number
+				deltaDest.mul( ( 1f / length ) * speed * delta );
+				setCameraPosition( _camera.position.x + deltaDest.x, _camera.position.y + deltaDest.y );
 			}
-		}
+			else {
+				setCameraPosition( dest.x, dest.y );
+				if( _cameraShake ) {
+					resetCameraShakePos();
+				}
+			}
+		} // else
 
 		_camera.update();
 	} // public void update( float delta )

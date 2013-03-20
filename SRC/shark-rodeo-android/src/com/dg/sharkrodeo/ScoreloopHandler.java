@@ -18,8 +18,9 @@ public class ScoreloopHandler {
 		_context = context;
 	}
 	
-	public void submitScore( int scoreValue ) {
+	public void submitScore( int level, int scoreValue ) {
 		final Score score = new Score( ( double )scoreValue, null );
+		score.setLevel( level );
 		final ScoreController scoreController = new ScoreController( new ScoreSubmitObserver() );
 		scoreController.submitScore( score );
 	}

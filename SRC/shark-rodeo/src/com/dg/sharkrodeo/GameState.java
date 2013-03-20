@@ -1,10 +1,9 @@
 package com.dg.sharkrodeo;
 
-import com.badlogic.gdx.Gdx;
 
 public class GameState {
 	
-	private static int _lives = 0;
+	private static int _lives = 2;
 	private static int _score = 0;
 	private static int _multiplier;
 	private static float _multiplierTime;
@@ -24,7 +23,7 @@ public class GameState {
 	
 	public static void reset() {
 		_score = 0;
-		_lives = 0;
+		_lives = 2;
 		_multiplier = 1;
 		_multiplierTime = 0f;
 		_gameTime = 0f;
