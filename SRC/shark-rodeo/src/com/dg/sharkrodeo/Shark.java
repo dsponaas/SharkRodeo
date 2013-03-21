@@ -14,6 +14,7 @@ public class Shark extends GameObject {
 	private float _stateTime;
 	private float _health;
 	private Vector2 _destAcceleration;
+	private float _lungeTimeout;
 	
 	private static final float STATE_TIME_CRAPTAR = 2f; 
 	
@@ -127,6 +128,7 @@ public class Shark extends GameObject {
 		}//if( _sharkState == SharkState.SEARCHING )
 		
 		if( _sharkState == SharkState.LUNGING ) {
+			_lungeTimeout -= delta;
 			Vector2 playerPos = GameBoard.getInstance().getPlayerPos();
 			if( isPointInLineOfSight( playerPos.x, playerPos.y ) ) {
 				Vector2 sharkPos = getPosition();
@@ -138,7 +140,7 @@ public class Shark extends GameObject {
 			} // if( isPointInLineOfSight( playerPos.x, playerPos.y ) )
 			else {
 				Vector2 sharkToDest = ( new Vector2( _searchDest ) ).sub( getPosition() );
-				if( sharkToDest.len2() < 22500 ) { // TODO: magic number
+				if( ( _lungeTimeout < 0f ) || ( sharkToDest.len2() < 22500 ) ) { // TODO: magic number
 					endLunge();
 					searchToDest( getNextSearchDest() );
 				}
@@ -468,7 +470,13 @@ public class Shark extends GameObject {
 		float u = ( ( dot11 * dot02 ) - ( dot01 * dot12 ) ) * invDenim;
 		float v = ( ( dot00 * dot12 ) - ( dot01 * dot02 ) ) * invDenim;
 		
-		return ( u >= 0f ) && ( v >= 0f ) && ( ( u + v ) < 1f );
+		boolean retval = ( u >= 0f ) && ( v >= 0f ) && ( ( u + v ) < 1f );
+		
+		if( retval ) {
+			_lungeTimeout = 3f; // TODO: magic number
+			return true;
+		}
+		return false;
 	} // public boolean isPointInLineOfSight( float x, float y )
 	
 	public boolean isAboutToTurn() {
