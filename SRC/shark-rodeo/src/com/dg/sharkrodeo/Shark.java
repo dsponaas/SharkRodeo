@@ -62,7 +62,10 @@ public class Shark extends GameObject {
 	public void update( float delta ) {
 		_stateTime -= delta;
 		
-		if( getAcceleration().len2() > 10f ) {
+		Vector2 positionDelta = ( new Vector2( _searchDest ) ).sub( this.getPosition() );
+		this.accelerateInDirection( positionDelta );
+		
+		if( getAcceleration().len2() > 1f ) {
 			Vector2 unitDir = ( new Vector2( _destAcceleration ) ).nor();
 			Vector2 curAccelNor = ( new Vector2( getAcceleration() ) ).nor();
 	
@@ -76,7 +79,7 @@ public class Shark extends GameObject {
 				else {
 					angle = -1f * turnSpeed;
 				}
-			}
+			} // if( Math.abs( angle ) > turnSpeed )
 			float angleInDegrees = ( float )( ( 180.0 / Math.PI ) * angle );
 			
 			curAccelNor.rotate( angleInDegrees );
@@ -114,11 +117,13 @@ public class Shark extends GameObject {
 		}
 		
 		if( ( _sharkState == SharkState.SEARCHING ) || ( _sharkState == SharkState.MOUNTED ) /*|| ( _sharkState == SharkState.LUNGING )*/ ) {
-			Vector2 positionDelta = ( new Vector2( _searchDest ) ).sub( this.getPosition() );
-			this.accelerateInDirection( positionDelta );
-			if( isLastPositionCloserToPoint( _searchDest.x, _searchDest.y ) ) {
+			Vector2 sharkToDest = ( new Vector2( _searchDest ) ).sub( getPosition() );
+			if( sharkToDest.len2() < 22500 ) { // TODO: magic number
 				searchToDest( getNextSearchDest() );
 			}
+//			if( isLastPositionCloserToPoint( _searchDest.x, _searchDest.y ) ) {
+//				searchToDest( getNextSearchDest() );
+//			}
 		}//if( _sharkState == SharkState.SEARCHING )
 		
 		if( _sharkState == SharkState.LUNGING ) {
@@ -131,10 +136,17 @@ public class Shark extends GameObject {
 				sharkToPlayer.nor().mul( distanceToPlayer + 150f ).add( sharkPos );
 				searchToDest( sharkToPlayer );
 			} // if( isPointInLineOfSight( playerPos.x, playerPos.y ) )
-			else if( isLastPositionCloserToPoint( _searchDest.x, _searchDest.y ) ) {
-				endLunge();
-				searchToDest( getNextSearchDest() );
+			else {
+				Vector2 sharkToDest = ( new Vector2( _searchDest ) ).sub( getPosition() );
+				if( sharkToDest.len2() < 22500 ) { // TODO: magic number
+					endLunge();
+					searchToDest( getNextSearchDest() );
+				}
 			}
+//			else if( isLastPositionCloserToPoint( _searchDest.x, _searchDest.y ) ) {
+//				endLunge();
+//				searchToDest( getNextSearchDest() );
+//			}
 		} // if( _sharkState == SharkState.LUNGING )
 		
 		if( _stateTime < 0f ) {

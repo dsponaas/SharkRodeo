@@ -39,41 +39,17 @@ public class Player extends GameObject {
 
 		_playerState = PlayerState.DEAD;
 		
-		TextureAtlas atlas = new TextureAtlas( SharkRodeoConstants.getPlayerPack() );
-		Animation swimLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "swim_left" ) );
-		Animation swimRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "swim_right" ) );
-		Animation swimDownAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "swim_down" ) );
-		Animation swimUpAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "swim_up" ) );
-		Animation swimDownLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "swim_downleft" ) );
-		Animation swimDownRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "swim_downright" ) );
-		Animation swimUpLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "swim_upleft" ) );
-		Animation swimUpRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "swim_upright" ) );
-		Animation idleLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "idle_left" ) );
-		Animation idleRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, atlas.findRegion( "idle_right" ) );
-
-		AnimationSequence swimLeftSequence = new AnimationSequence( swimLeftAnim );
-		AnimationSequence swimRightSequence = new AnimationSequence( swimRightAnim );
-		AnimationSequence swimDownSequence = new AnimationSequence( swimDownAnim );
-		AnimationSequence swimUpSequence = new AnimationSequence( swimUpAnim );
-		AnimationSequence swimDownLeftSequence = new AnimationSequence( swimDownLeftAnim );
-		AnimationSequence swimDownRightSequence = new AnimationSequence( swimDownRightAnim );
-		AnimationSequence swimUpLeftSequence = new AnimationSequence( swimUpLeftAnim );
-		AnimationSequence swimUpRightSequence = new AnimationSequence( swimUpRightAnim );
-		AnimationSequence idleLeftSequence = new AnimationSequence( idleLeftAnim );
-		AnimationSequence idleRightSequence = new AnimationSequence( idleRightAnim );
-		AnimationSequence mountUpSequence = new AnimationSequence( idleRightAnim, false );
-		
-		addAnimation( "move_left", swimLeftSequence );
-		addAnimation( "move_right", swimRightSequence );
-		addAnimation( "move_down", swimDownSequence );
-		addAnimation( "move_up", swimUpSequence );
-		addAnimation( "move_downleft", swimDownLeftSequence );
-		addAnimation( "move_downright", swimDownRightSequence );
-		addAnimation( "move_upleft", swimUpLeftSequence );
-		addAnimation( "move_upright", swimUpRightSequence );
-		addAnimation( "idle_left", idleLeftSequence );
-		addAnimation( "idle_right", idleRightSequence );
-		addAnimation( "mount_up", mountUpSequence );
+		addAnimation( "move_left", ResourceManager.getInstance().getPlayerAnim( "move_left" ) );
+		addAnimation( "move_right", ResourceManager.getInstance().getPlayerAnim( "move_right" ) );
+		addAnimation( "move_down", ResourceManager.getInstance().getPlayerAnim( "move_down" ) );
+		addAnimation( "move_up", ResourceManager.getInstance().getPlayerAnim( "move_up" ) );
+		addAnimation( "move_downleft", ResourceManager.getInstance().getPlayerAnim( "move_downleft" ) );
+		addAnimation( "move_downright", ResourceManager.getInstance().getPlayerAnim( "move_downright" ) );
+		addAnimation( "move_upleft", ResourceManager.getInstance().getPlayerAnim( "move_upleft" ) );
+		addAnimation( "move_upright", ResourceManager.getInstance().getPlayerAnim( "move_upright" ) );
+		addAnimation( "idle_left", ResourceManager.getInstance().getPlayerAnim( "idle_left" ) );
+		addAnimation( "idle_right", ResourceManager.getInstance().getPlayerAnim( "idle_right" ) );
+		addAnimation( "mount_up", ResourceManager.getInstance().getPlayerAnim( "mount_up" ) );
 
 		setAnimState( "idle_right" );
 		

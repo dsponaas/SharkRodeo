@@ -328,7 +328,7 @@ public class GameObject {
 	public void killVelocity() {
 		_velocity.set( 0f, 0f );
 	}
-	
+/*	
 	public boolean isLastPositionCloserToPoint( float x, float y ) {
 		Vector2 curDelta = ( new Vector2( getPosition() ) ).sub( x, y );
 		Vector2 lastDelta = ( new Vector2( getLastPosition() ) ).sub( x, y );
@@ -336,7 +336,7 @@ public class GameObject {
 			return true;
 		return false;
 	}
-	
+*/	
 	public void setInTheWater( boolean val ) {
 		_inTheWater = val;
 		_view.resetParticles();

@@ -232,9 +232,9 @@ public class GameRenderer {
 		float originX = _camera.position.x - ( frameWidth / 2f );
 		float originY = _camera.position.y - ( frameHeight / 2f );
 		
-		Texture backgroundTexture = GameBoard.getInstance().getBackgroundTexture();
-		float backgroundTexWidth = ( ( float )backgroundTexture.getWidth() );
-		float backgroundTexHeight = ( ( float )backgroundTexture.getHeight() );
+		TextureRegion backgroundTexture = GameBoard.getInstance().getBackgroundTexture();
+		float backgroundTexWidth = ( ( float )backgroundTexture.getRegionWidth() );
+		float backgroundTexHeight = ( ( float )backgroundTexture.getRegionHeight() );
 		float backgroundStartX = 0f - frameWidth;
 		float backgroundStartY = 0f - frameHeight;
 		while( backgroundStartX < ( originX - backgroundTexWidth ) )
@@ -260,9 +260,9 @@ public class GameRenderer {
 	public void renderBorder() {
 		GameBoard board = GameBoard.getInstance();
 		
-		Texture vertBoundsTex = board.getVertBoundsTexture();
-		float borderWidth = ( ( float )vertBoundsTex.getWidth() ) / 2f;
-		float borderLength = ( float )vertBoundsTex.getHeight();
+		TextureRegion vertBoundsTex = board.getVertBoundsTexture();
+		float borderWidth = ( ( float )vertBoundsTex.getRegionWidth() ) / 2f;
+		float borderLength = ( float )vertBoundsTex.getRegionHeight();
 
 		float leftBoundsX = -1f * borderWidth;
 		float rightBoundsX = board.getWidth() - borderWidth;
@@ -272,7 +272,7 @@ public class GameRenderer {
 			_batch.draw( vertBoundsTex, rightBoundsX, leftBoundsY );
 		}
 		
-		Texture horBoundsTex = board.getHorBoundsTexture();
+		TextureRegion horBoundsTex = board.getHorBoundsTexture();
 		leftBoundsY = -1f * borderWidth;
 		float rightBoundsY = board.getHeight() - borderWidth;
 		for( leftBoundsX = borderLength - borderWidth; ( leftBoundsX + borderLength ) < board.getWidth(); leftBoundsX += borderLength ) {
@@ -281,9 +281,9 @@ public class GameRenderer {
 		}
 
 		_batch.draw( board.getBoundsBLTexture(), -1f * borderWidth, -1f * borderWidth );
-		_batch.draw( board.getBoundsBRTexture(), board.getWidth() + borderWidth - board.getBoundsTLTexture().getWidth(), -1f * borderWidth );
-		_batch.draw( board.getBoundsTRTexture(), board.getWidth() + borderWidth - board.getBoundsTLTexture().getWidth(), board.getHeight() + borderWidth - board.getBoundsTLTexture().getHeight() );
-		_batch.draw( board.getBoundsTLTexture(), -1f * borderWidth, board.getHeight() + borderWidth - board.getBoundsTLTexture().getHeight() );
+		_batch.draw( board.getBoundsBRTexture(), board.getWidth() + borderWidth - board.getBoundsTLTexture().getRegionWidth(), -1f * borderWidth );
+		_batch.draw( board.getBoundsTRTexture(), board.getWidth() + borderWidth - board.getBoundsTLTexture().getRegionWidth(), board.getHeight() + borderWidth - board.getBoundsTLTexture().getRegionHeight() );
+		_batch.draw( board.getBoundsTLTexture(), -1f * borderWidth, board.getHeight() + borderWidth - board.getBoundsTLTexture().getRegionHeight() );
 	} // public void renderBorder()
 	
 	public void renderMountedTouchPos( boolean touchFlag, float percent ) {
@@ -293,9 +293,9 @@ public class GameRenderer {
 		else
 			_batch.setColor( 1, 0, 0, alpha );
 		
-		Texture tex = GameBoard.getInstance().getMountedTouchTexture();
+		TextureRegion tex = GameBoard.getInstance().getMountedTouchTexture();
 		Vector2 pos = GameBoard.getInstance().getPlayerPos();
-		_batch.draw( tex, pos.x - ( tex.getWidth() / 2f ), pos.y - ( tex.getHeight() / 2f ) );
+		_batch.draw( tex, pos.x - ( tex.getRegionWidth() / 2f ), pos.y - ( tex.getRegionHeight() / 2f ) );
 		_batch.setColor( 1, 1, 1, 1 );
 	} // public void renderMountedTouchPos( boolean touchFlag, float percent )
 	

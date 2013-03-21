@@ -5,91 +5,98 @@ filter: Nearest,Nearest
 repeat: none
 score_label
   rotate: false
-  xy: 0, 64
+  xy: 0, 72
   size: 280, 56
   orig: 280, 56
   offset: 0, 0
   index: -1
+touchpos
+  rotate: false
+  xy: 280, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
 sprint_icon_active
   rotate: false
-  xy: 280, 8
+  xy: 408, 16
   size: 112, 112
   orig: 112, 112
   offset: 0, 0
   index: -1
 sprint_icon_inactive
   rotate: false
-  xy: 392, 8
+  xy: 520, 16
   size: 112, 112
   orig: 112, 112
   offset: 0, 0
   index: -1
 sharks_left_icon
   rotate: false
-  xy: 0, 8
+  xy: 0, 16
   size: 92, 56
   orig: 92, 56
   offset: 0, 0
   index: -1
 lives_icon
   rotate: false
-  xy: 92, 8
+  xy: 632, 72
   size: 90, 56
   orig: 90, 56
   offset: 0, 0
   index: -1
 powerup_2x
   rotate: false
-  xy: 182, 32
+  xy: 92, 40
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 powerup_4x
   rotate: false
-  xy: 214, 32
+  xy: 632, 40
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 powerup_end
   rotate: false
-  xy: 246, 32
+  xy: 722, 96
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 powerup_endurance_up
   rotate: false
-  xy: 246, 32
+  xy: 722, 96
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 powerup_spd
   rotate: false
-  xy: 182, 0
+  xy: 124, 40
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 powerup_speed_up
   rotate: false
-  xy: 182, 0
+  xy: 124, 40
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 red_exclamation
   rotate: false
-  xy: 214, 0
+  xy: 664, 40
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
   index: -1
 yellow_exclamation
   rotate: false
-  xy: 230, 0
+  xy: 754, 96
   size: 16, 32
   orig: 16, 32
   offset: 0, 0

@@ -41,16 +41,16 @@ public class GameBoard {
 	private float _ridingTime;
 	private boolean _paused;
 	
-	private Texture _backgroundTexture;
+	private TextureRegion _backgroundTexture;
 	
-	private Texture _boundsVertTexture;
-	private Texture _boundsHorTexture;
-	private Texture _boundsBLTexture;
-	private Texture _boundsBRTexture;
-	private Texture _boundsTLTexture;
-	private Texture _boundsTRTexture;
+	private TextureRegion _boundsVertTexture;
+	private TextureRegion _boundsHorTexture;
+	private TextureRegion _boundsBLTexture;
+	private TextureRegion _boundsBRTexture;
+	private TextureRegion _boundsTLTexture;
+	private TextureRegion _boundsTRTexture;
 	
-	private Texture _mountedTouchTexture;
+	private TextureRegion _mountedTouchTexture;
 
 	private OceanLayer[] _oceanLayers;
 	private InputHandler _inputHandler;
@@ -94,52 +94,27 @@ public class GameBoard {
 		_bounds.height = SharkRodeoConstants.getGameBoardHeight();
 		
 		_renderer = new GameRenderer();
+
+		ResourceManager.getInstance().initialize();
+		Hud.getInstance().initialize();
+
+		_backgroundTexture = ResourceManager.getInstance().getBackgroundTexture( "water_tex_blur" );
+		_boundsVertTexture = ResourceManager.getInstance().getBackgroundTexture( "board_bounds_vert" );
+		_boundsHorTexture = ResourceManager.getInstance().getBackgroundTexture( "board_bounds_hor" );
+		_boundsBLTexture = ResourceManager.getInstance().getBackgroundTexture( "board_bounds_bl" );
+		_boundsBRTexture = ResourceManager.getInstance().getBackgroundTexture( "board_bounds_br" );
+		_boundsTRTexture = ResourceManager.getInstance().getBackgroundTexture( "board_bounds_tr" );
+		_boundsTLTexture = ResourceManager.getInstance().getBackgroundTexture( "board_bounds_tl" );
+		_mountedTouchTexture = ResourceManager.getInstance().getHudTexture( "touchpos" );
 		
-		Texture layerTex = null;
-		switch( SharkRodeoConstants.getScale() ) {
-		case _128:
-			_backgroundTexture = new Texture( "data/water_tex_128_blur.png" );
-			_boundsVertTexture = new Texture( "data/board_bounds_vert.png" );
-			_boundsHorTexture = new Texture( "data/board_bounds_hor.png" );
-			_boundsBLTexture = new Texture( "data/board_bounds_bl.png" );
-			_boundsBRTexture = new Texture( "data/board_bounds_br.png" );
-			_boundsTRTexture = new Texture( "data/board_bounds_tr.png" );
-			_boundsTLTexture = new Texture( "data/board_bounds_tl.png" );
-			_mountedTouchTexture = new Texture( "data/touchpos.png" );
-			layerTex = new Texture( "data/ocean_anim_1_sparse.png" );
-			break;
-		case _256:
-			_backgroundTexture = new Texture( "data/water_tex_256_blur.png" );
-			_boundsVertTexture = new Texture( "data/board_bounds_vert_256.png" );
-			_boundsHorTexture = new Texture( "data/board_bounds_hor_256.png" );
-			_boundsBLTexture = new Texture( "data/board_bounds_bl_256.png" );
-			_boundsBRTexture = new Texture( "data/board_bounds_br_256.png" );
-			_boundsTRTexture = new Texture( "data/board_bounds_tr_256.png" );
-			_boundsTLTexture = new Texture( "data/board_bounds_tl_256.png" );
-			_mountedTouchTexture = new Texture( "data/touchpos_256.png" );
-			layerTex = new Texture( "data/ocean_anim_256_1_sparse.png" );
-			break;
-		}
-		
-		_backgroundTexture.setFilter( TextureFilter.Linear, TextureFilter.Linear );
-		_boundsVertTexture.setFilter( TextureFilter.Linear, TextureFilter.Linear );
-		_boundsHorTexture.setFilter( TextureFilter.Linear, TextureFilter.Linear );
-		_boundsBLTexture.setFilter( TextureFilter.Linear, TextureFilter.Linear );
-		_boundsBRTexture.setFilter( TextureFilter.Linear, TextureFilter.Linear );
-		_boundsTRTexture.setFilter( TextureFilter.Linear, TextureFilter.Linear );
-		_boundsTLTexture.setFilter( TextureFilter.Linear, TextureFilter.Linear );
-		_mountedTouchTexture.setFilter( TextureFilter.Linear, TextureFilter.Linear );
-		layerTex.setFilter( TextureFilter.Linear, TextureFilter.Linear );
-		
+		TextureRegion layerTex = null;
+		layerTex = ResourceManager.getInstance().getBackgroundTexture( "ocean_anim_1_sparse" );
 		_oceanLayers = new OceanLayer[ 4 ];
 		_oceanLayers[ 0 ] = new OceanLayer( AnimationFactory.createAnimation( .3f, 2, 4, layerTex ), 0, 0, 0.2f );
 		_oceanLayers[ 1 ] = new OceanLayer( AnimationFactory.createAnimation( .34f, 2, 4, layerTex ), -96, -16f, 0.62f ); //TODO: these all eventually need to be fixed up to accomodate scale or what have you.. do they?
 		_oceanLayers[ 2 ] = new OceanLayer( AnimationFactory.createAnimation( .38f, 2, 4, layerTex ), -32, -32f, 0.45f );
 		_oceanLayers[ 3 ] = new OceanLayer( AnimationFactory.createAnimation( .42f, 2, 4, layerTex ), -64, -48f, 0.89f );		
 		
-		Hud.getInstance().initialize();
-		ResourceManager.getInstance().initialize();
-
 		_gameActive = true;
 		
 		_powerups = new Powerup[ 3 ];
@@ -444,21 +419,7 @@ public class GameBoard {
 	}
 
 	public void dispose() {
-		_boundsVertTexture.dispose();
-		_boundsHorTexture.dispose();
-		_boundsBLTexture.dispose();
-		_boundsBRTexture.dispose();
-		_boundsTLTexture.dispose();
-		_boundsTRTexture.dispose();
-		_mountedTouchTexture.dispose();
-		
-		for( OceanLayer cur : _oceanLayers ) {
-			cur.dispose();
-		}
-		
-		Hud.getInstance().dispose();
 		ResourceManager.getInstance().dispose();
-		
 	}
 
 	//****************************************************************************************************************************************************************************************************	
@@ -689,28 +650,41 @@ public class GameBoard {
 	}
 	
 	public void spawnPowerup() {
-//		Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup");
 		for( int i = 0; i < _powerups.length; ++i ) {
 			if( _powerups[ i ] == null ) {
 				Powerup powerup;
 				float val = Utils.getRandomFloatInRange( 0f, 100f );
-				if( val < 20f )
+				if( val < 30f ) {
 					powerup = new Powerup( PowerupType.MULTIPLIER_2X, new Vector2( Utils.getRandomFloatInRange( 100f, getWidth() - 100f ), Utils.getRandomFloatInRange( 100f, getHeight() - 100f ) ) ); //TODO: magic numbers
-				else if( val < 40f )
+					Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:2x");
+				}
+				else if( val < 40f ) {
 					powerup = new Powerup( PowerupType.MULTIPLIER_4X, new Vector2( Utils.getRandomFloatInRange( 100f, getWidth() - 100f ), Utils.getRandomFloatInRange( 100f, getHeight() - 100f ) ) ); //TODO: magic numbers
-				else if( val < 60f )
+					Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:4x");
+				}
+				else if( val < 60f ) {
 					powerup = new Powerup( PowerupType.SPEED_UP, new Vector2( Utils.getRandomFloatInRange( 100f, getWidth() - 100f ), Utils.getRandomFloatInRange( 100f, getHeight() - 100f ) ) ); //TODO: magic numbers
-				else if( val < 80f )
-					powerup = new Powerup( PowerupType.ONE_UP, new Vector2( Utils.getRandomFloatInRange( 100f, getWidth() - 100f ), Utils.getRandomFloatInRange( 100f, getHeight() - 100f ) ) ); //TODO: magic numbers
-				else
+					Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:spd");
+				}
+				else if( val < 80f ) {
 					powerup = new Powerup( PowerupType.ENDURANCE_UP, new Vector2( Utils.getRandomFloatInRange( 100f, getWidth() - 100f ), Utils.getRandomFloatInRange( 100f, getHeight() - 100f ) ) ); //TODO: magic numbers
-
+					Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:end");
+				}
+				else {
+					if( GameState.canReceive1up() ) {
+						powerup = new Powerup( PowerupType.ONE_UP, new Vector2( Utils.getRandomFloatInRange( 100f, getWidth() - 100f ), Utils.getRandomFloatInRange( 100f, getHeight() - 100f ) ) ); //TODO: magic numbers
+						Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:1up");
+					}
+					else {
+						powerup = new Powerup( PowerupType.MULTIPLIER_2X, new Vector2( Utils.getRandomFloatInRange( 100f, getWidth() - 100f ), Utils.getRandomFloatInRange( 100f, getHeight() - 100f ) ) ); //TODO: magic numbers
+						Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:2x-1up");
+					}
+				} // else
 				_powerups[ i ] = powerup;
 				break;
-			}
-		}
-		
-	}
+			} // if( _powerups[ i ] == null )
+		} // for( int i = 0; i < _powerups.length; ++i )
+	} // public void spawnPowerup()
 	
 	public void beginPlayerDeath() {
 		if( !_player.isAlive() )
@@ -810,14 +784,14 @@ public class GameBoard {
 	public Vector2 getPlayerPos()			{ return _player.getPosition(); }
 	public Player getPlayer()				{ return _player; }
 	
-	public Texture getBackgroundTexture()	{ return _backgroundTexture; }
-	public Texture getVertBoundsTexture()	{ return _boundsVertTexture; }
-	public Texture getHorBoundsTexture()	{ return _boundsHorTexture; }
-	public Texture getBoundsBLTexture()		{ return _boundsBLTexture; }
-	public Texture getBoundsBRTexture()		{ return _boundsBRTexture; }
-	public Texture getBoundsTLTexture()		{ return _boundsTLTexture; }
-	public Texture getBoundsTRTexture()		{ return _boundsTRTexture; }
-	public Texture getMountedTouchTexture()	{ return _mountedTouchTexture; }
+	public TextureRegion getBackgroundTexture()	{ return _backgroundTexture; }
+	public TextureRegion getVertBoundsTexture()	{ return _boundsVertTexture; }
+	public TextureRegion getHorBoundsTexture()	{ return _boundsHorTexture; }
+	public TextureRegion getBoundsBLTexture()		{ return _boundsBLTexture; }
+	public TextureRegion getBoundsBRTexture()		{ return _boundsBRTexture; }
+	public TextureRegion getBoundsTLTexture()		{ return _boundsTLTexture; }
+	public TextureRegion getBoundsTRTexture()		{ return _boundsTRTexture; }
+	public TextureRegion getMountedTouchTexture()	{ return _mountedTouchTexture; }
 	
 	public OceanLayer[] getOceanLayers()	{ return _oceanLayers; }
 	

@@ -35,23 +35,23 @@ public class Hud {
 	public void initialize() {
 		_hudFont = new BitmapFont( Gdx.files.internal( "data/small_fonts_82_white_bold.fnt" ), false );
 		
-		TextureAtlas atlas = new TextureAtlas( SharkRodeoConstants.getHudPack() );
-		_livesIcon = atlas.findRegion( "lives_icon" );
-		_scoreIcon = atlas.findRegion( "score_label" );
-		_sharksLeftIcon = atlas.findRegion( "sharks_left_icon" );
-		_2xIcon = atlas.findRegion( "powerup_2x" );
-		_4xIcon = atlas.findRegion( "powerup_4x" );
-		_speedUpIcon = atlas.findRegion( "powerup_speed_up" );
-		_enduranceUpIcon = atlas.findRegion( "powerup_endurance_up" );
-		_redExclamationIcon = atlas.findRegion( "red_exclamation" );
-		_yellowExclamationIcon = atlas.findRegion( "yellow_exclamation" );
+		_livesIcon = ResourceManager.getInstance().getHudTexture( "lives_icon" );
+		_scoreIcon = ResourceManager.getInstance().getHudTexture( "score_label" );
+		_sharksLeftIcon = ResourceManager.getInstance().getHudTexture( "sharks_left_icon" );
+		_2xIcon = ResourceManager.getInstance().getHudTexture( "powerup_2x" );
+		_4xIcon = ResourceManager.getInstance().getHudTexture( "powerup_4x" );
+		_speedUpIcon = ResourceManager.getInstance().getHudTexture( "powerup_speed_up" );
+		_enduranceUpIcon = ResourceManager.getInstance().getHudTexture( "powerup_endurance_up" );
+		_redExclamationIcon = ResourceManager.getInstance().getHudTexture( "red_exclamation" );
+		_yellowExclamationIcon = ResourceManager.getInstance().getHudTexture( "yellow_exclamation" );
 		
-		TextureRegion sprintActiveIcon = atlas.findRegion( "sprint_icon_active" );
-		TextureRegion sprintInactiveIcon = atlas.findRegion( "sprint_icon_inactive" );
+		TextureRegion sprintActiveIcon = ResourceManager.getInstance().getHudTexture( "sprint_icon_active" );
+		TextureRegion sprintInactiveIcon = ResourceManager.getInstance().getHudTexture( "sprint_icon_inactive" );
 		
 		_utilityButtons = new HudUtilityButton[ 1 ];
-		for( int i = 0; i < _utilityButtons.length; ++i )
+		for( int i = 0; i < _utilityButtons.length; ++i ) {
 			_utilityButtons[ i ] = null;
+		}
 		
 		_utilityButtons[ 0 ] = new HudUtilityButton( 0, sprintActiveIcon, sprintInactiveIcon, UtilityButtonType.SPRINT );
 	}
@@ -122,18 +122,5 @@ public class Hud {
 	public TextureRegion getEnduranceUpIcon()					{ return _enduranceUpIcon; }
 	public TextureRegion getRedExclamationIcon()				{ return _redExclamationIcon; }
 	public TextureRegion getYellowExclamationIcon()				{ return _yellowExclamationIcon; }
-	
-	public void dispose() {
-//		_hudFont;
-//		_livesIcon;
-//		_sharksLeftIcon;
-//		_scoreIcon;
-//		_2xIcon;
-//		_4xIcon;
-//		_speedUpIcon;
-//		_enduranceUpIcon;
-//		_redExclamationIcon;
-//		_yellowExclamationIcon.dispose();
-	}
 	
 }

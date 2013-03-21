@@ -5,6 +5,7 @@ public class GameState {
 	
 	private static int _lives = 2;
 	private static int _score = 0;
+	private static int _1upsReceivedThisLevel = 0;
 	private static int _multiplier;
 	private static float _multiplierTime;
 	private static float _gameTime;
@@ -25,6 +26,7 @@ public class GameState {
 		_score = 0;
 		_lives = 2;
 		_multiplier = 1;
+		_1upsReceivedThisLevel = 0;
 		_multiplierTime = 0f;
 		_gameTime = 0f;
 		_curLevel = 1;
@@ -41,6 +43,8 @@ public class GameState {
 		_sharksRemaining = LevelInfo.getDelayedNumSharks( _curLevel );
 		_gameTime = 0f;
 		_timeUntilPowerupSpawn = LevelInfo.getPowerupSpawnTime( _curLevel );
+		_1upsReceivedThisLevel = 0;
+		_sprintDuration = _maxSprintDuration;
 	}
 	
 	public static void update( float delta, boolean playerSprintingFlag ) {
@@ -76,6 +80,7 @@ public class GameState {
 		--_lives;
 		_multiplier = 1;
 		_multiplierTime = 0f;
+		_sprintDuration = _maxSprintDuration;
 		if( _lives < 0 )
 			return true;
 		return false;
@@ -114,7 +119,18 @@ public class GameState {
 		return false;
 	}
 	
-	public static void addLife()								{ ++_lives; }
+	public static boolean canReceive1up() {
+		if( _1upsReceivedThisLevel > 0 ) {
+			return false;
+		}
+		return true;
+	}
+	
+	public static void addLife() {
+		++_1upsReceivedThisLevel;
+		++_lives;
+	}
+	
 	public static void addToScore( int val )					{ _score += ( val * _multiplier ); }
 	public static void incrementLevel()							{ ++_curLevel; }
 	
