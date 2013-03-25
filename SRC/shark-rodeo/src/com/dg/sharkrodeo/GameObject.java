@@ -48,7 +48,16 @@ public class GameObject {
 	} // public GameObject( GameBoard board, float objRadius )
 	
 	public boolean isOnScreen() {
-		return true;
+		Vector2 position = getPosition();
+		float width = _view.getCurrentAnimationFrame().getRegionWidth(); 
+		float height = _view.getCurrentAnimationFrame().getRegionHeight(); 
+		Rectangle rect = new Rectangle();
+		rect.setWidth( width );
+		rect.setHeight( height );
+		rect.setX( position.x - ( width / 2f ) );
+		rect.setY( position.y - ( height / 2f ) );
+		
+		return GameBoard.getInstance().isRectangleOnScreen( rect );
 	}
 	
 	public void update( float delta ) {

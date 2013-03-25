@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.dg.sharkrodeo.HudUtilityButton.UtilityButtonType;
 import com.dg.sharkrodeo.Player.PlayerState;
@@ -28,6 +28,13 @@ public class GameRenderer {
 	private Vector2 _cameraDest;
 	private Vector2 _cameraTempDest;
 	private boolean _cameraShake;
+	
+	private Rectangle _screenBounds;
+	
+	private float _topLeftAngle;
+	private float _topRightAngle;
+	private float _bottomLeftAngle;
+	private float _bottomRightAngle;
 	
 	private static final float CAMERA_Z = 0f; //if i leave this final, move to constants
 	
@@ -49,6 +56,21 @@ public class GameRenderer {
 		_cameraDest = new Vector2();
 		_cameraTempDest = new Vector2();
 		_cameraShake = false;
+		
+		Vector2 center = new Vector2( Gdx.graphics.getWidth() / 2f, ( Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() ) / 2f );
+		Vector2 topLeft = new Vector2( 0, Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() ).sub( center );
+		Vector2 topRight = new Vector2( Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() ).sub( center );
+		Vector2 bottomLeft = new Vector2( 0, 0 ).sub( center );
+		Vector2 bottomRight = new Vector2( Gdx.graphics.getWidth(), 0 ).sub( center );
+		_topLeftAngle = topLeft.angle();
+		_topRightAngle = topRight.angle();
+		_bottomLeftAngle = bottomLeft.angle();
+		_bottomRightAngle = bottomRight.angle();
+		
+		_screenBounds = new Rectangle();
+		_screenBounds.setWidth( camWidth );
+		_screenBounds.setHeight( camHeight - SharkRodeoConstants.getStatusBarWidth() );
+
 	} // public GameRenderer()
 
 	public void setCameraDest( float x, float y ) {
@@ -86,6 +108,9 @@ public class GameRenderer {
 				}
 			}
 		} // else
+		
+		_screenBounds.setX( _camera.position.x - ( Gdx.graphics.getWidth() / 2f ) );
+		_screenBounds.setY( _camera.position.y - ( ( Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() ) / 2f ) );
 
 		_camera.update();
 	} // public void update( float delta )
@@ -191,6 +216,73 @@ public class GameRenderer {
 			_batch.draw( exclamation, position.x - ( ( float )( exclamation.getRegionWidth() / 2 ) ), position.y + ( ( float )( exclamation.getRegionHeight() / 2 ) ) );
 		}
 	} // public void renderShark( Shark obj, float delta )
+	
+	public void renderSharkPositionIndicator( Shark shark ) {
+		//i can get the delta between camera pos and shark
+		
+		Vector2 center = new Vector2( Gdx.graphics.getWidth() / 2f, ( Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() ) / 2f );
+		Vector2 deltaVector = ( new Vector2( shark.getPosition() ) ).sub( _camera.position.x, _camera.position.y ).nor();
+		float deltaVectorAngle = deltaVector.angle();
+//		Gdx.app.log(SharkRodeoConstants.LOG_TAG, "angles br:" + _bottomRightAngle + " ... tr:" + _topRightAngle + " ... tl:" + _topLeftAngle + " ... bl:" + _topLeftAngle );
+		
+		TextureRegion tex = Hud.getInstance().getSharkPositionIcon( shark.getDirection() );
+		if( null == tex ) {
+			Gdx.app.log(SharkRodeoConstants.LOG_TAG, "null texture in renderer.getsharkpositionindicator" );
+			return;
+		}
+		
+		if( ( deltaVectorAngle > _bottomRightAngle ) || ( deltaVectorAngle < _topRightAngle ) ) { // right
+			float distToBorder = Gdx.graphics.getWidth() / 2f;
+			float factor = distToBorder / deltaVector.x;
+			deltaVector.mul( factor );
+			center.add( deltaVector );
+			center.set( renderSharkPositionIndicatorHelper( center ) );
+			center.set( center.x - tex.getRegionWidth(), center.y );
+		}
+		else if( deltaVectorAngle < _topLeftAngle ) { // up
+			float distToBorder = ( Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() ) / 2f;
+			float factor = distToBorder / deltaVector.y;
+			deltaVector.mul( factor );
+			center.add( deltaVector );
+			center.set( renderSharkPositionIndicatorHelper( center ) );
+			center.set( center.x, center.y - tex.getRegionHeight() );
+		}
+		else if( deltaVectorAngle < _bottomLeftAngle ) { // left
+			float distToBorder = Gdx.graphics.getWidth() / -2f;
+			float factor = distToBorder / deltaVector.x;
+			deltaVector.mul( factor );
+			center.add( deltaVector );
+			center.set( renderSharkPositionIndicatorHelper( center ) );
+		}
+		else { // down
+			float distToBorder = ( Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() ) / -2f;
+			float factor = distToBorder / deltaVector.y;
+			deltaVector.mul( factor );
+			center.add( deltaVector );
+			center.set( renderSharkPositionIndicatorHelper( center ) );
+		}
+		
+		_hudBatch.draw( tex, center.x, center.y );
+	}
+	
+	private Vector2 renderSharkPositionIndicatorHelper( Vector2 pos ) {
+		float width = Gdx.graphics.getWidth();
+		float height = Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth();
+		if( pos.x < 0f ) {
+			pos.x = 0f;
+		}
+		else if( pos.x > width ) {
+			pos.x = width;
+		}
+		
+		if( pos.y < 0f ) {
+			pos.y = 0;
+		}
+		else if( pos.y > height ) {
+			pos.y = height;
+		}
+		return pos;
+	}
 	
 	public void renderWaveLayer( Wave wave, float delta, boolean top ) {
 		wave.updateView( delta );
@@ -367,8 +459,6 @@ public class GameRenderer {
 		_hudBackgroundRenderer.filledRect( 0f, ( ( float )Gdx.graphics.getHeight() ) - SharkRodeoConstants.getStatusBarWidth(), ( float )Gdx.graphics.getWidth(), SharkRodeoConstants.getStatusBarWidth() );
 		_hudBackgroundRenderer.end();
 		
-		beginHudBatch();
-		
 //		float quarterWidth = ;
 		BitmapFont hudFont = hud.getFont();
 		
@@ -492,6 +582,10 @@ public class GameRenderer {
 	
 	public Vector2 getCameraPos() {
 		return new Vector2( _camera.position.x, _camera.position.y );
+	}
+	
+	public Rectangle getScreenBounds() {
+		return _screenBounds;
 	}
 
 } // public class GameRenderer

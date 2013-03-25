@@ -64,18 +64,6 @@ public class GameBoard {
 	private SharkRodeo _game;
 		
 	private GameBoard() {
-		_dialogTimer = -1f;
-		//**** THIS MUST HAPPEN BEFORE CREATION OF INPUTHANDLER ***
-//		Hud.getInstance().initialize();
-//		ResourceManager.getInstance().initialize();
-
-
-		_ridingFlag = false;
-		
-
-		_gameActive = true;
-		
-//		spawnPlayer();
 	}
 	
 	public static GameBoard getInstance() {
@@ -87,6 +75,10 @@ public class GameBoard {
 	public void startGame( SharkRodeo game ) {
 		_game = game;
 		
+		_dialogTimer = -1f;
+		_ridingFlag = false;
+		_gameActive = true;
+
 		_bounds = new Rectangle();
 		_bounds.x = 0f;
 		_bounds.y = 0f;
@@ -115,18 +107,18 @@ public class GameBoard {
 		_oceanLayers[ 2 ] = new OceanLayer( AnimationFactory.createAnimation( .38f, 2, 4, layerTex ), -32, -32f, 0.45f );
 		_oceanLayers[ 3 ] = new OceanLayer( AnimationFactory.createAnimation( .42f, 2, 4, layerTex ), -64, -48f, 0.89f );		
 		
-		_gameActive = true;
-		
 		_powerups = new Powerup[ 3 ];
 		_whirlpools = new Whirlpool[ 8 ];
 
 		_sharks = new Shark[ 0 ];
-		for( int i = 0; i < _sharks.length; ++i )
+		for( int i = 0; i < _sharks.length; ++i ) {
 			_sharks[ i ] = null; //dont think this is necessary in java - investigate
+		}
 		
 		_waves = new Wave[ 0 ]; //TODO:magic number
-		for( int i = 0; i < _waves.length; ++i )
+		for( int i = 0; i < _waves.length; ++i ) {
 			_waves[ i ] = null; //dont think this is necessary in java - investigate
+		}
 		
 		_player = new Player( this );
 		_player.setPosition( getWidth() / 2f, getHeight() / 2f );
@@ -343,9 +335,18 @@ public class GameBoard {
 		_renderer.renderGameBoard();
 
 		List<Shark> onScreenSharks = new ArrayList<Shark>();
+		List<Shark> offScreenSharks = new ArrayList<Shark>();
 		for( Shark curShark : _sharks ) {
-			if( ( curShark != null ) && ( curShark.isOnScreen() ) ) {
-				onScreenSharks.add( curShark );
+//			if( ( curShark != null ) && ( curShark.isOnScreen() ) ) {
+//				onScreenSharks.add( curShark );
+//			}
+			if( curShark != null ) {
+				if( curShark.isOnScreen() ) {
+					onScreenSharks.add( curShark );
+				}
+				else {
+					offScreenSharks.add( curShark );
+				}
 			}
 		}
 		
@@ -412,9 +413,14 @@ public class GameBoard {
 		
 		_renderer.endShapeRender();
 		
+		_renderer.beginHudBatch();
+		for( Shark curShark : offScreenSharks ) {
+			_renderer.renderSharkPositionIndicator( curShark );
+		}
 		_renderer.renderHud();
-		if( ( _dialog != null ) && ( _dialogTimer < 0f ) )
+		if( ( _dialog != null ) && ( _dialogTimer < 0f ) ) {
 			_renderer.renderDialog( _dialog );
+		}
 		_renderer.endHudBatch();
 	}
 
@@ -656,28 +662,28 @@ public class GameBoard {
 				float val = Utils.getRandomFloatInRange( 0f, 100f );
 				if( val < 30f ) {
 					powerup = new Powerup( PowerupType.MULTIPLIER_2X, new Vector2( Utils.getRandomFloatInRange( 100f, getWidth() - 100f ), Utils.getRandomFloatInRange( 100f, getHeight() - 100f ) ) ); //TODO: magic numbers
-					Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:2x");
+//					Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:2x");
 				}
 				else if( val < 40f ) {
 					powerup = new Powerup( PowerupType.MULTIPLIER_4X, new Vector2( Utils.getRandomFloatInRange( 100f, getWidth() - 100f ), Utils.getRandomFloatInRange( 100f, getHeight() - 100f ) ) ); //TODO: magic numbers
-					Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:4x");
+//					Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:4x");
 				}
 				else if( val < 60f ) {
 					powerup = new Powerup( PowerupType.SPEED_UP, new Vector2( Utils.getRandomFloatInRange( 100f, getWidth() - 100f ), Utils.getRandomFloatInRange( 100f, getHeight() - 100f ) ) ); //TODO: magic numbers
-					Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:spd");
+//					Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:spd");
 				}
 				else if( val < 80f ) {
 					powerup = new Powerup( PowerupType.ENDURANCE_UP, new Vector2( Utils.getRandomFloatInRange( 100f, getWidth() - 100f ), Utils.getRandomFloatInRange( 100f, getHeight() - 100f ) ) ); //TODO: magic numbers
-					Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:end");
+//					Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:end");
 				}
 				else {
 					if( GameState.canReceive1up() ) {
 						powerup = new Powerup( PowerupType.ONE_UP, new Vector2( Utils.getRandomFloatInRange( 100f, getWidth() - 100f ), Utils.getRandomFloatInRange( 100f, getHeight() - 100f ) ) ); //TODO: magic numbers
-						Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:1up");
+//						Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:1up");
 					}
 					else {
 						powerup = new Powerup( PowerupType.MULTIPLIER_2X, new Vector2( Utils.getRandomFloatInRange( 100f, getWidth() - 100f ), Utils.getRandomFloatInRange( 100f, getHeight() - 100f ) ) ); //TODO: magic numbers
-						Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:2x-1up");
+//						Gdx.app.log(SharkRodeoConstants.LOG_TAG, "***********: spawnpowerup rand:" + val + "  powerup:2x-1up");
 					}
 				} // else
 				_powerups[ i ] = powerup;
@@ -775,6 +781,14 @@ public class GameBoard {
 	
 	public void endCameraShake() {
 		_renderer.endCameraShake();
+	}
+	
+	public boolean isRectangleOnScreen( Rectangle rect ) {
+		Rectangle bounds = _renderer.getScreenBounds();
+		if( bounds.contains( rect ) || bounds.overlaps( rect ) ) {
+			return true;
+		}
+		return false;
 	}
 	
 	public float getWidth() 				{ return _bounds.width; }

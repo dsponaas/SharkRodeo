@@ -24,7 +24,7 @@ public class ResourceManager {
 	}
 	
 	public void initialize() {
-		_backgroundAtlas = new TextureAtlas( "data/background.pack" );
+		_backgroundAtlas = new TextureAtlas( "data/background.pack" );//TODO: make this variable
 		_powerupAtlas = new TextureAtlas( SharkRodeoConstants.getPowerupPack() );
 		_dialogAtlas = new TextureAtlas( SharkRodeoConstants.getDialogPack() );
 		_waveAtlas = new TextureAtlas( "data/wave.pack" );//TODO: make this variable
@@ -34,7 +34,7 @@ public class ResourceManager {
 		initSharkAnims();
 	}
 	
-	public void initPlayerAnims() {
+	private void initPlayerAnims() {
 		_playerAtlas = new TextureAtlas( SharkRodeoConstants.getPlayerPack() );
 		Animation swimLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, _playerAtlas.findRegion( "swim_left" ) );
 		Animation swimRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, _playerAtlas.findRegion( "swim_right" ) );
@@ -73,7 +73,7 @@ public class ResourceManager {
 		_playerAnims.put( "mount_up", mountUpSequence );
 	}
 	
-	public void initSharkAnims() {
+	private void initSharkAnims() {
 		_sharkAtlas = new TextureAtlas( SharkRodeoConstants.getSharkPack() );
 		Animation swimLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, _sharkAtlas.findRegion( "shark_swim_left" ) );
 		Animation swimRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, _sharkAtlas.findRegion( "shark_swim_right" ) );
@@ -176,4 +176,5 @@ public class ResourceManager {
 		_hudAtlas.dispose();
 		_backgroundAtlas.dispose();
 	}
+	
 }

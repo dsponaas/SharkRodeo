@@ -45,58 +45,114 @@ lives_icon
   orig: 90, 56
   offset: 0, 0
   index: -1
+shark_icon_down
+  rotate: false
+  xy: 92, 8
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shark_icon_downleft
+  rotate: false
+  xy: 156, 8
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shark_icon_downright
+  rotate: false
+  xy: 632, 8
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shark_icon_left
+  rotate: false
+  xy: 722, 64
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shark_icon_right
+  rotate: false
+  xy: 696, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shark_icon_up
+  rotate: false
+  xy: 760, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shark_icon_upleft
+  rotate: false
+  xy: 786, 64
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shark_icon_upright
+  rotate: false
+  xy: 824, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 powerup_2x
   rotate: false
-  xy: 92, 40
+  xy: 220, 40
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 powerup_4x
   rotate: false
-  xy: 632, 40
+  xy: 850, 96
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 powerup_end
   rotate: false
-  xy: 722, 96
+  xy: 850, 64
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 powerup_endurance_up
   rotate: false
-  xy: 722, 96
+  xy: 850, 64
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 powerup_spd
   rotate: false
-  xy: 124, 40
+  xy: 220, 8
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 powerup_speed_up
   rotate: false
-  xy: 124, 40
+  xy: 220, 8
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 red_exclamation
   rotate: false
-  xy: 664, 40
+  xy: 252, 40
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
   index: -1
 yellow_exclamation
   rotate: false
-  xy: 754, 96
+  xy: 882, 96
   size: 16, 32
   orig: 16, 32
   offset: 0, 0

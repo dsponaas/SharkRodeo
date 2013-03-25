@@ -2,9 +2,10 @@ package com.dg.sharkrodeo;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.dg.sharkrodeo.GameObject.Direction;
 import com.dg.sharkrodeo.HudUtilityButton.UtilityButtonType;
+import com.dg.sharkrodeo.Shark.SharkState;
 
 public class Hud {
 	
@@ -18,6 +19,15 @@ public class Hud {
 	private TextureRegion _enduranceUpIcon;
 	private TextureRegion _redExclamationIcon;
 	private TextureRegion _yellowExclamationIcon;
+	
+	private TextureRegion _sharkPosIconUp;
+	private TextureRegion _sharkPosIconDown;
+	private TextureRegion _sharkPosIconLeft;
+	private TextureRegion _sharkPosIconRight;
+	private TextureRegion _sharkPosIconUpLeft;
+	private TextureRegion _sharkPosIconUpRight;
+	private TextureRegion _sharkPosIconDownLeft;
+	private TextureRegion _sharkPosIconDownRight;
 	
 	private HudUtilityButton[] _utilityButtons;
 	
@@ -44,6 +54,15 @@ public class Hud {
 		_enduranceUpIcon = ResourceManager.getInstance().getHudTexture( "powerup_endurance_up" );
 		_redExclamationIcon = ResourceManager.getInstance().getHudTexture( "red_exclamation" );
 		_yellowExclamationIcon = ResourceManager.getInstance().getHudTexture( "yellow_exclamation" );
+
+		_sharkPosIconUp = ResourceManager.getInstance().getHudTexture( "shark_icon_up" );
+		_sharkPosIconDown = ResourceManager.getInstance().getHudTexture( "shark_icon_down" );
+		_sharkPosIconLeft = ResourceManager.getInstance().getHudTexture( "shark_icon_left" );
+		_sharkPosIconRight = ResourceManager.getInstance().getHudTexture( "shark_icon_right" );
+		_sharkPosIconUpLeft = ResourceManager.getInstance().getHudTexture( "shark_icon_upleft" );
+		_sharkPosIconUpRight = ResourceManager.getInstance().getHudTexture( "shark_icon_upright" );
+		_sharkPosIconDownLeft = ResourceManager.getInstance().getHudTexture( "shark_icon_downleft" );
+		_sharkPosIconDownRight = ResourceManager.getInstance().getHudTexture( "shark_icon_downright" );
 		
 		TextureRegion sprintActiveIcon = ResourceManager.getInstance().getHudTexture( "sprint_icon_active" );
 		TextureRegion sprintInactiveIcon = ResourceManager.getInstance().getHudTexture( "sprint_icon_inactive" );
@@ -109,6 +128,28 @@ public class Hud {
 				cur.deactivate();
 			}
 		}
+	}
+	
+	public TextureRegion getSharkPositionIcon( Direction direction ) {
+		switch( direction ) {
+		case UP:
+			return _sharkPosIconUp;
+		case DOWN:
+			return _sharkPosIconDown;
+		case LEFT:
+			return _sharkPosIconLeft;
+		case RIGHT:
+			return _sharkPosIconRight;
+		case UP_LEFT:
+			return _sharkPosIconUpLeft;
+		case UP_RIGHT:
+			return _sharkPosIconUpRight;
+		case DOWN_LEFT:
+			return _sharkPosIconDownLeft;
+		case DOWN_RIGHT:
+			return _sharkPosIconDownRight;
+		} // switch( newDirection )
+		return null;
 	}
 	
 	public int getNumButtons()									{ return _utilityButtons.length; }
