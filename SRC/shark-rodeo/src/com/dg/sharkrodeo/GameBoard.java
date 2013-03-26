@@ -129,7 +129,7 @@ public class GameBoard {
 		_dialog = new StartLevelDialog( ResourceManager.getInstance().getDialogTexture( "dialog_begin" ), this );
 		pause();
 		
-		_music = Gdx.audio.newMusic( Gdx.files.internal( "data/test4_looping.mp3" ) );
+		_music = Gdx.audio.newMusic( Gdx.files.internal( "data/test4_looping2.ogg" ) );
 		_music.setLooping( true );
 		_music.play();
 		
@@ -715,6 +715,8 @@ public class GameBoard {
 		}
 		
 		endCameraShake(); // just for good measure...
+		
+		ResourceManager.getInstance().getDeathNoise().play( 0.6f );
 		
 		pause();
 	}

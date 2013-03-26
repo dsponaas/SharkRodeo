@@ -3,7 +3,7 @@ package com.dg.sharkrodeo;
 
 public class GameState {
 	
-	private static int _lives = 10;
+	private static int _lives = 2;
 	private static int _score = 0;
 	private static int _1upsReceivedThisLevel = 0;
 	private static int _multiplier;
@@ -24,7 +24,7 @@ public class GameState {
 	
 	public static void reset() {
 		_score = 0;
-		_lives = 10;
+		_lives = 2;
 		_multiplier = 1;
 		_1upsReceivedThisLevel = 0;
 		_multiplierTime = 0f;

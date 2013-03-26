@@ -2,6 +2,8 @@ package com.dg.sharkrodeo;
 
 import java.util.HashMap;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,6 +21,7 @@ public class ResourceManager {
 	private TextureAtlas _backgroundAtlas;
 	private HashMap<String, AnimationSequence> _sharkAnims;
 	private HashMap<String, AnimationSequence> _playerAnims;
+	private Sound _deathNoise;
 	
 	private ResourceManager() {
 	}
@@ -32,6 +35,7 @@ public class ResourceManager {
 		_hudAtlas = new TextureAtlas( SharkRodeoConstants.getHudPack() );
 		initPlayerAnims();
 		initSharkAnims();
+		_deathNoise = Gdx.audio.newSound( Gdx.files.internal( "data/WilhelmScream.ogg" ) );;
 	}
 	
 	private void initPlayerAnims() {
@@ -166,6 +170,10 @@ public class ResourceManager {
 		return ( AnimationSequence )_playerAnims.get( anim );
 	}
 	
+	public Sound getDeathNoise() {
+		return _deathNoise;
+	}
+	
 	public void dispose() {
 		_powerupAtlas.dispose();
 		_dialogAtlas.dispose();
@@ -175,6 +183,7 @@ public class ResourceManager {
 		_playerAtlas.dispose();
 		_hudAtlas.dispose();
 		_backgroundAtlas.dispose();
+		_deathNoise.dispose();
 	}
 	
 }

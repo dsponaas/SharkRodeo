@@ -236,53 +236,55 @@ public class GameRenderer {
 			float factor = distToBorder / deltaVector.x;
 			deltaVector.mul( factor );
 			center.add( deltaVector );
-			center.set( renderSharkPositionIndicatorHelper( center ) );
-			center.set( center.x - tex.getRegionWidth(), center.y );
+			center.set( renderSharkPositionIndicatorHelper( center, tex.getRegionWidth(), tex.getRegionHeight() ) );
+//			center.set( center.x - tex.getRegionWidth(), center.y );
 		}
 		else if( deltaVectorAngle < _topLeftAngle ) { // up
 			float distToBorder = ( Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() ) / 2f;
 			float factor = distToBorder / deltaVector.y;
 			deltaVector.mul( factor );
 			center.add( deltaVector );
-			center.set( renderSharkPositionIndicatorHelper( center ) );
-			center.set( center.x, center.y - tex.getRegionHeight() );
+			center.set( renderSharkPositionIndicatorHelper( center, tex.getRegionWidth(), tex.getRegionHeight() ) );
+//			center.set( center.x, center.y - tex.getRegionHeight() );
 		}
 		else if( deltaVectorAngle < _bottomLeftAngle ) { // left
 			float distToBorder = Gdx.graphics.getWidth() / -2f;
 			float factor = distToBorder / deltaVector.x;
 			deltaVector.mul( factor );
 			center.add( deltaVector );
-			center.set( renderSharkPositionIndicatorHelper( center ) );
+			center.set( renderSharkPositionIndicatorHelper( center, tex.getRegionWidth(), tex.getRegionHeight() ) );
 		}
 		else { // down
 			float distToBorder = ( Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() ) / -2f;
 			float factor = distToBorder / deltaVector.y;
 			deltaVector.mul( factor );
 			center.add( deltaVector );
-			center.set( renderSharkPositionIndicatorHelper( center ) );
+			center.set( renderSharkPositionIndicatorHelper( center, tex.getRegionWidth(), tex.getRegionHeight() ) );
 		}
 		
 		_hudBatch.draw( tex, center.x, center.y );
-	}
+	} // public void renderSharkPositionIndicator( Shark shark )
 	
-	private Vector2 renderSharkPositionIndicatorHelper( Vector2 pos ) {
+	private Vector2 renderSharkPositionIndicatorHelper( Vector2 pos, int texWidth, int texHeight ) {
 		float width = Gdx.graphics.getWidth();
 		float height = Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth();
+//		Gdx.app.log(SharkRodeoConstants.LOG_TAG, "prePos x:" + pos.x + " y:" + pos.y );
 		if( pos.x < 0f ) {
-			pos.x = 0f;
+			pos.set( 0f, pos.y );
 		}
-		else if( pos.x > width ) {
-			pos.x = width;
+		else if( pos.x > ( width - texWidth ) ) {
+			pos.set( width - texWidth, pos.y );
 		}
 		
 		if( pos.y < 0f ) {
-			pos.y = 0;
+			pos.set( pos.x, 0f );
 		}
-		else if( pos.y > height ) {
-			pos.y = height;
+		else if( pos.y > ( height - texHeight ) ) {
+			pos.set( pos.x, height - texHeight );
 		}
+//		Gdx.app.log(SharkRodeoConstants.LOG_TAG, "postPos x:" + pos.x + " y:" + pos.y );
 		return pos;
-	}
+	} // private Vector2 renderSharkPositionIndicatorHelper( Vector2 pos )
 	
 	public void renderWaveLayer( Wave wave, float delta, boolean top ) {
 		wave.updateView( delta );
@@ -406,7 +408,7 @@ public class GameRenderer {
 			_shapeRenderer.circle( cur.x, cur.y, cur.radius );
 			_shapeRenderer.end();
 		}
-	}
+	} // public void renderHitBoxes( GameObject obj )
 	
 	public void renderSharkDest( Shark shark ) {
 		Vector2 dest = shark.getSharkDest();
@@ -414,7 +416,7 @@ public class GameRenderer {
 		_shapeRenderer.setColor( Color.RED );
 		_shapeRenderer.filledCircle( dest.x, dest.y, 3 );
 		_shapeRenderer.end();
-	}
+	} // public void renderSharkDest( Shark shark )
 	
 	public void renderHitPoints( Shark shark ) {
 		float health = shark.getHealthPercent();
@@ -459,13 +461,10 @@ public class GameRenderer {
 		_hudBackgroundRenderer.filledRect( 0f, ( ( float )Gdx.graphics.getHeight() ) - SharkRodeoConstants.getStatusBarWidth(), ( float )Gdx.graphics.getWidth(), SharkRodeoConstants.getStatusBarWidth() );
 		_hudBackgroundRenderer.end();
 		
-//		float quarterWidth = ;
 		BitmapFont hudFont = hud.getFont();
-		
 		TextureRegion livesIcon = hud.getLivesIcon();
 		TextureRegion sharksLeftIcon = hud.getSharksLeftIcon();
-//		TextureRegion scoreIcon = hud.getScoreIcon();
-//		TextureRegion timeIcon = hud.getTimeIcon();
+
 		float livesIconXPos = 0f;
 		float livesIconYPos = ( float )Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() + ( ( SharkRodeoConstants.getStatusBarWidth() - ( float )livesIcon.getRegionHeight() ) / 2f );
 		_hudBatch.draw(livesIcon, livesIconXPos, livesIconYPos);
@@ -489,12 +488,10 @@ public class GameRenderer {
 		float powerupIconYPos = ( float )Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() - ( float )multiplierIcon.getRegionHeight();
 		int multiplier = GameState.getMulitplier();
 		if( multiplier == 2 ) {
-//			hudFont.draw(_hudBatch, "2X" + GameState.getScore(), scoreIconXPos, (float)Gdx.graphics.getHeight() - 4f);//TODO: magic number
 			_hudBatch.draw( hud.get2xIcon(), powerupIconXPos, powerupIconYPos ); // TODO: magic number
 			powerupIconYPos -= ( float )multiplierIcon.getRegionHeight();
 		}
 		else if( multiplier == 4 ) {
-//			hudFont.draw(_hudBatch, "2X" + GameState.getScore(), scoreIconXPos, (float)Gdx.graphics.getHeight() - 4f);//TODO: magic number
 			_hudBatch.draw( hud.get4xIcon(), powerupIconXPos, powerupIconYPos ); // TODO: magic number
 			powerupIconYPos -= ( float )multiplierIcon.getRegionHeight();
 		}
@@ -564,7 +561,7 @@ public class GameRenderer {
 			_hudBatch.draw( dialogTex, pos.x, pos.y );
 			_hudBatch.setColor( 1, 1, 1, 1 );
 		}
-	}
+	} // public void renderDialog( SharkRodeoDialog dialog )
 	
 	public void renderPowerup( Powerup powerup, float delta ) {
 		TextureRegion tex = powerup.getTexture();
@@ -578,7 +575,7 @@ public class GameRenderer {
 		}
 		_batch.draw( tex, pos.x - ( ( float )( tex.getRegionWidth() / 2 ) ), pos.y - ( ( float )( tex.getRegionHeight() / 2 ) ) );
 		_batch.setColor( 1, 1, 1, 1 );
-	}
+	} // public void renderPowerup( Powerup powerup, float delta )
 	
 	public Vector2 getCameraPos() {
 		return new Vector2( _camera.position.x, _camera.position.y );
