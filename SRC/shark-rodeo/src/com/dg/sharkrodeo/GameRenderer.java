@@ -218,12 +218,9 @@ public class GameRenderer {
 	} // public void renderShark( Shark obj, float delta )
 	
 	public void renderSharkPositionIndicator( Shark shark ) {
-		//i can get the delta between camera pos and shark
-		
 		Vector2 center = new Vector2( Gdx.graphics.getWidth() / 2f, ( Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() ) / 2f );
 		Vector2 deltaVector = ( new Vector2( shark.getPosition() ) ).sub( _camera.position.x, _camera.position.y ).nor();
 		float deltaVectorAngle = deltaVector.angle();
-//		Gdx.app.log(SharkRodeoConstants.LOG_TAG, "angles br:" + _bottomRightAngle + " ... tr:" + _topRightAngle + " ... tl:" + _topLeftAngle + " ... bl:" + _topLeftAngle );
 		
 		TextureRegion tex = Hud.getInstance().getSharkPositionIcon( shark.getDirection() );
 		if( null == tex ) {
@@ -237,7 +234,6 @@ public class GameRenderer {
 			deltaVector.mul( factor );
 			center.add( deltaVector );
 			center.set( renderSharkPositionIndicatorHelper( center, tex.getRegionWidth(), tex.getRegionHeight() ) );
-//			center.set( center.x - tex.getRegionWidth(), center.y );
 		}
 		else if( deltaVectorAngle < _topLeftAngle ) { // up
 			float distToBorder = ( Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() ) / 2f;
@@ -245,7 +241,6 @@ public class GameRenderer {
 			deltaVector.mul( factor );
 			center.add( deltaVector );
 			center.set( renderSharkPositionIndicatorHelper( center, tex.getRegionWidth(), tex.getRegionHeight() ) );
-//			center.set( center.x, center.y - tex.getRegionHeight() );
 		}
 		else if( deltaVectorAngle < _bottomLeftAngle ) { // left
 			float distToBorder = Gdx.graphics.getWidth() / -2f;
@@ -268,7 +263,6 @@ public class GameRenderer {
 	private Vector2 renderSharkPositionIndicatorHelper( Vector2 pos, int texWidth, int texHeight ) {
 		float width = Gdx.graphics.getWidth();
 		float height = Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth();
-//		Gdx.app.log(SharkRodeoConstants.LOG_TAG, "prePos x:" + pos.x + " y:" + pos.y );
 		if( pos.x < 0f ) {
 			pos.set( 0f, pos.y );
 		}
@@ -282,7 +276,6 @@ public class GameRenderer {
 		else if( pos.y > ( height - texHeight ) ) {
 			pos.set( pos.x, height - texHeight );
 		}
-//		Gdx.app.log(SharkRodeoConstants.LOG_TAG, "postPos x:" + pos.x + " y:" + pos.y );
 		return pos;
 	} // private Vector2 renderSharkPositionIndicatorHelper( Vector2 pos )
 	
