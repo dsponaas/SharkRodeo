@@ -380,13 +380,18 @@ public class GameBoard {
 				_renderer.renderMountedTouchPos( false, getRidingTimePercent() );
 		}
 		
+		//****** NOTE: hack- render player being called after this IF alive
+		if( !_player.isAlive() )
+			_renderer.renderGameObject( _player, delta );
+		
 		for( Shark curShark : onScreenSharks ) {
 			_renderer.renderShark( curShark, delta );
 		}
 		
+		//****** NOTE: hack- render player being called before this if NOT alive
 		if( _player.isAlive() )
 			_renderer.renderGameObject( _player, delta );
-		
+
 		for( Wave curWave : _waves ) {
 			if( curWave != null )
 				_renderer.renderWaveLayer( curWave, delta, true );

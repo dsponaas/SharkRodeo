@@ -219,7 +219,13 @@ public class GameRenderer {
 	
 	public void renderSharkPositionIndicator( Shark shark ) {
 		Vector2 center = new Vector2( Gdx.graphics.getWidth() / 2f, ( Gdx.graphics.getHeight() - SharkRodeoConstants.getStatusBarWidth() ) / 2f );
-		Vector2 deltaVector = ( new Vector2( shark.getPosition() ) ).sub( _camera.position.x, _camera.position.y ).nor();
+		Vector2 deltaVector = ( new Vector2( shark.getPosition() ) ).sub( _camera.position.x, _camera.position.y );
+		float dist = deltaVector.len();
+		dist -= Gdx.graphics.getWidth() / 1.4f; //TODO: magic number that ill probly just leave as is
+		dist = ( dist < 0f ) ? 0f : dist;
+		float gameBoardWidth = GameBoard.getInstance().getWidth() / 2.0f; //TODO: magic number that ill probly just leave as is
+		float alpha = (dist > gameBoardWidth ) ? 0f : ( gameBoardWidth - dist ) / gameBoardWidth;
+		deltaVector.nor();
 		float deltaVectorAngle = deltaVector.angle();
 		
 		TextureRegion tex = Hud.getInstance().getSharkPositionIcon( shark.getDirection() );
@@ -257,7 +263,9 @@ public class GameRenderer {
 			center.set( renderSharkPositionIndicatorHelper( center, tex.getRegionWidth(), tex.getRegionHeight() ) );
 		}
 		
+		_hudBatch.setColor( 1f, 1f, 1f, alpha );
 		_hudBatch.draw( tex, center.x, center.y );
+		_hudBatch.setColor( 1f, 1f, 1f, 1f );
 	} // public void renderSharkPositionIndicator( Shark shark )
 	
 	private Vector2 renderSharkPositionIndicatorHelper( Vector2 pos, int texWidth, int texHeight ) {

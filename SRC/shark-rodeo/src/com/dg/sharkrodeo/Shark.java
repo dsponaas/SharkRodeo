@@ -371,9 +371,9 @@ public class Shark extends GameObject {
 		if( isBeingRidden() )
 			return false;
 		
-		float SIGHT_DISTANCE = 550f; //TODO: magic number
-		float SIGHT_DISTANCE_DIAG = 247.487f;//( float )Math.sqrt( ( SIGHT_DISTANCE * SIGHT_DISTANCE ) / 2f );
-		float SIGHT_OFFSET = 250f; //TODO: magic number
+		float SIGHT_DISTANCE = 300f; //TODO: magic number
+		float SIGHT_DISTANCE_DIAG = 212.132f;//( float )Math.sqrt( ( SIGHT_DISTANCE * SIGHT_DISTANCE ) / 2f );
+		float SIGHT_OFFSET = 150f; //TODO: magic number
 		float SIGHT_OFFSET_DIAG = 106.066f;//( float )Math.sqrt( ( SIGHT_OFFSET * SIGHT_OFFSET ) / 2f );
 		
 		Vector2 dist2 = new Vector2( this.getPosition() );

@@ -3,6 +3,20 @@ swimmer.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+dead
+  rotate: false
+  xy: 0, 640
+  size: 512, 128
+  orig: 512, 128
+  offset: 0, 0
+  index: -1
+dead_intro
+  rotate: false
+  xy: 512, 640
+  size: 512, 128
+  orig: 512, 128
+  offset: 0, 0
+  index: -1
 idle_left
   rotate: false
   xy: 0, 512

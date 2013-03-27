@@ -50,8 +50,9 @@ public class Player extends GameObject {
 		addAnimation( "idle_left", ResourceManager.getInstance().getPlayerAnim( "idle_left" ) );
 		addAnimation( "idle_right", ResourceManager.getInstance().getPlayerAnim( "idle_right" ) );
 		addAnimation( "mount_up", ResourceManager.getInstance().getPlayerAnim( "mount_up" ) );
+		addAnimation( "dead", ResourceManager.getInstance().getPlayerAnim( "dead" ) );
 
-		setAnimState( "idle_right" );
+		setAnimState( "idle_left" );
 		
 		_ridingShark = null;
 		_ridingScoreTimer = 0f;
@@ -215,7 +216,7 @@ public class Player extends GameObject {
 		this.accelerateInDirection( delta );
 		Direction newDirection = this.getDirection();
 
-		float distance = 18f; // TODO: magic number
+		float distance = 10f; // TODO: magic number
 		float diagDist = ( float )Math.sqrt( ( distance * distance ) / 2f ); // TODO: magic number
 		
 		if( ( newDirection != oldDirection ) || ( _playerState != PlayerState.MOVING ) ) {
@@ -258,6 +259,10 @@ public class Player extends GameObject {
 	}
 	
 	public void stopMoving() {
+		if( _playerState != PlayerState.MOVING ) {
+			return;
+		}
+		
 		_boundsOffsets[ 0 ].set( 0f, 0f );
 		if( this.getAcceleration().x > 0f )
 			this.transitionAnimState( "idle_right" );
@@ -284,6 +289,7 @@ public class Player extends GameObject {
 	
 	public void spawn() {
 		_playerState = PlayerState.IDLE;
+		setAnimState( "idle_left" );
 	}
 	
 	public void kill() {
@@ -296,6 +302,7 @@ public class Player extends GameObject {
 		_modifiers = new PlayerModifier[ MAX_MODIFIERS ];
 		
 		Hud.getInstance().deactivateButton( UtilityButtonType.SPRINT );
+		setAnimState( "dead" );
 	}
 	
 	public void setSprint( boolean val ) {

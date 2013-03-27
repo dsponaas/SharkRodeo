@@ -50,6 +50,8 @@ public class ResourceManager {
 		Animation swimUpRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, _playerAtlas.findRegion( "swim_upright" ) );
 		Animation idleLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, _playerAtlas.findRegion( "idle_left" ) );
 		Animation idleRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, _playerAtlas.findRegion( "idle_right" ) );
+		Animation deadAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, _playerAtlas.findRegion( "dead" ) );
+		Animation deadIntroAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.25f, 1, 4, _playerAtlas.findRegion( "dead_intro" ) );
 
 		AnimationSequence swimLeftSequence = new AnimationSequence( swimLeftAnim );
 		AnimationSequence swimRightSequence = new AnimationSequence( swimRightAnim );
@@ -62,6 +64,8 @@ public class ResourceManager {
 		AnimationSequence idleLeftSequence = new AnimationSequence( idleLeftAnim );
 		AnimationSequence idleRightSequence = new AnimationSequence( idleRightAnim );
 		AnimationSequence mountUpSequence = new AnimationSequence( idleRightAnim, false );
+		AnimationSequence deadSequence = new AnimationSequence( deadAnim );
+		deadSequence.setIntro( deadIntroAnim );
 		
 		_playerAnims = new HashMap<String, AnimationSequence>();
 		_playerAnims.put( "move_left", swimLeftSequence );
@@ -75,6 +79,7 @@ public class ResourceManager {
 		_playerAnims.put( "idle_left", idleLeftSequence );
 		_playerAnims.put( "idle_right", idleRightSequence );
 		_playerAnims.put( "mount_up", mountUpSequence );
+		_playerAnims.put( "dead", deadSequence );
 	}
 	
 	private void initSharkAnims() {
