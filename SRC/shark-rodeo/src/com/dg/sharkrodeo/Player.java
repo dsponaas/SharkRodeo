@@ -292,7 +292,7 @@ public class Player extends GameObject {
 		setAnimState( "idle_left" );
 	}
 	
-	public void kill() {
+	public void kill( boolean whirlpoolDeath ) {
 		_playerState = PlayerState.DEAD;
 		
 		for( PlayerModifier cur : _modifiers ) {
@@ -302,7 +302,12 @@ public class Player extends GameObject {
 		_modifiers = new PlayerModifier[ MAX_MODIFIERS ];
 		
 		Hud.getInstance().deactivateButton( UtilityButtonType.SPRINT );
-		setAnimState( "dead" );
+		if( !whirlpoolDeath ) {
+			setAnimState( "dead" );
+		}
+		else {
+			setAnimState( null );
+		}
 	}
 	
 	public void setSprint( boolean val ) {

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
+import com.dg.sharkrodeo.Factories.AnimationFactory;
 import com.dg.sharkrodeo.Shark.SharkState;
 
 public class Whirlpool {
@@ -18,7 +19,7 @@ public class Whirlpool {
 	private Circle _outerGravZone;
 	private Circle _innerGravZone;
 	private float _grav;
-	private Animation[] _anims;
+	private Animation _anim;
 	private float _elapsed;
 	private float _accelerationATerm;
 	
@@ -26,16 +27,15 @@ public class Whirlpool {
 	private final float FADE_TIME = 3f; //TODO: MAGIC NUMBER
 	private final float ACTIVE_TIME = 15f; //TODO: MAGIC NUMBER
 	
-	public Whirlpool( float x, float y, Animation bottomAnim, Animation topAnim ) {
+	public Whirlpool( float x, float y ) {
 		_position = new Vector2( x, y );
 		_killZone = new Circle( x, y, 40f ); //TODO: MAGIC NUMBER
 		_outerGravZone = new Circle( x, y, 500f ); //TODO: MAGIC NUMBER
 		_innerGravZone = new Circle( x, y, 220f ); //TODO: MAGIC NUMBER
 		_grav = 300f;
 		
-		_anims = new Animation[ 2 ];
-		_anims[ 0 ] = bottomAnim;
-		_anims[ 1 ] = topAnim;
+		TextureRegion tex = ResourceManager.getInstance().getWhirlpoolTexture( "whirlpool" );
+		_anim = AnimationFactory.createAnimation( 0.1f, 2, 4, tex );
 		
 		float delta = _outerGravZone.radius - _innerGravZone.radius;
 		_accelerationATerm = _grav / ( delta * delta );
@@ -108,8 +108,8 @@ public class Whirlpool {
 		_stateTime = -1f;
 	}
 	
-	public int getNumLayers()						{ return _anims.length; }
-	public TextureRegion getTexture( int layer )	{ return _anims[ layer ].getKeyFrame( _elapsed, true ); }
+//	public int getNumLayers()						{ return _anims.length; }
+	public TextureRegion getTexture()				{ return _anim.getKeyFrame( _elapsed, true ); }
 	public Vector2 getPosition()					{ return _position; }
 	
 }

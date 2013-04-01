@@ -34,7 +34,7 @@ public class GameObjectView {
 	
 	public void update( float delta ) {
 		if( _activeAnimation == null ) {
-			Gdx.app.log( SharkRodeoConstants.LOG_TAG, "*********** _activeAnimation is null in GameObjectView.update(float)***********" );
+//			Gdx.app.log( SharkRodeoConstants.LOG_TAG, "*********** _activeAnimation is null in GameObjectView.update(float)***********" );
 			return;
 		}
 		_activeAnimation.update( delta );
@@ -42,7 +42,7 @@ public class GameObjectView {
 	
 	public TextureRegion getCurrentAnimationFrame() {
 		if( _activeAnimation == null ) {
-			Gdx.app.log( SharkRodeoConstants.LOG_TAG, "*********** _activeAnimation is null in GameObjectView.getCurrentAnimationFrame()***********" );
+//			Gdx.app.log( SharkRodeoConstants.LOG_TAG, "*********** _activeAnimation is null in GameObjectView.getCurrentAnimationFrame()***********" );
 			return null;
 		}
 			
@@ -70,17 +70,19 @@ public class GameObjectView {
 	public void setAnimState( String newState ) {
 		_transitionState = null;
 
-		AnimationSequence newAnimation = _animations.get( newState );
+		AnimationSequence newAnimation = ( newState == null ) ? null : _animations.get( newState );
 		if( ( _activeAnimation == newAnimation ) && ( !_activeAnimation.isFinishing() ) ) {
 			return;
 		}
-		if( null == newAnimation ) {
-			Gdx.app.log( SharkRodeoConstants.LOG_TAG, "***********NULL ANIMATION IN setAnimState()***********" );
-			return;
-		}
+//		if( null == newAnimation ) {
+//			Gdx.app.log( SharkRodeoConstants.LOG_TAG, "***********NULL ANIMATION IN setAnimState()***********" );
+//			return;
+//		}
 		
 		_activeAnimation = newAnimation;
-		_activeAnimation.startSequence();
+		if( null != newAnimation ) {
+			_activeAnimation.startSequence();
+		}
 	} // public void setAnimState( String newState )
 	
 	public void transitionAnimState( String newState ) {

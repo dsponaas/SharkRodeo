@@ -21,33 +21,33 @@ public class OceanLayer
 //	private static float TIME_OFFSET_CRAPTAR = 0f;
 	private static Random _rand = new Random();
 	
-	public OceanLayer(Animation animation, float x, float y)
+	public OceanLayer( Animation animation, float x, float y )
 	{
-		this(animation, x, y, (float)_rand.nextDouble());
+		this( animation, x, y, ( float )_rand.nextDouble() );
 	}
 
-	public OceanLayer(Animation animation, float x, float y, float alpha)
+	public OceanLayer( Animation animation, float x, float y, float alpha )
 	{
 		_animation = animation;
-		_position = new Vector2(x, y);
+		_position = new Vector2( x, y );
 		_curAlpha = alpha;
-		_alphaDeltaPerSecond = .5f;
+		_alphaDeltaPerSecond = .2f;
 		_elapsedTime = 0f;
 //		_elapsedTime = TIME_OFFSET_CRAPTAR;
 //		TIME_OFFSET_CRAPTAR += 0.18f;
 		
-		TextureRegion tex = animation.getKeyFrame(0, true);
+		TextureRegion tex = animation.getKeyFrame( 0, true );
 		_textureWidth = tex.getRegionWidth();
 		_textureHeight = tex.getRegionHeight();
 	}
 	
-	public void update(float delta)
+	public void update( float delta )
 	{
 		_elapsedTime += delta;
 		
 		float alphaDelta = _alphaDeltaPerSecond * delta;
 		float alphaTemp = _curAlpha + alphaDelta;
-		if((alphaTemp < 0f) || (alphaTemp > 1f))
+		if( ( alphaTemp < 0f ) || ( alphaTemp > 1f ) )
 		{
 			alphaDelta *= -1f;
 			_alphaDeltaPerSecond *= -1f;
@@ -55,26 +55,26 @@ public class OceanLayer
 		_curAlpha += alphaDelta;
 	}
 	
-	public List<Vector2> getTexturePositions(float originX, float originY)
+	public List<Vector2> getTexturePositions( float originX, float originY )
 	{
 		float frameWidth = Gdx.graphics.getWidth();
 		float frameHeight = Gdx.graphics.getHeight();
 		
 		//This isnt the most efficient way of doing this but for the numbers involved it should be fine, yes?
-		float startX = (frameWidth * -1f) + _position.x;
-		float startY = (frameHeight * -1f) + _position.y;
-		while((startX + _textureWidth) < originX)
+		float startX = ( frameWidth * -1f ) + _position.x;
+		float startY = ( frameHeight * -1f ) + _position.y;
+		while( ( startX + _textureWidth ) < originX )
 			startX += _textureWidth;
-		while((startY + _textureHeight) < originY)
+		while( ( startY + _textureHeight ) < originY )
 			startY += _textureHeight;
 		
 		List<Vector2> retval = new ArrayList<Vector2>();
 		
-		for(float curX = startX; curX < (originX + frameWidth + _textureWidth); curX += _textureWidth)
+		for( float curX = startX; curX < ( originX + frameWidth + _textureWidth ); curX += _textureWidth )
 		{
-			for(float curY = startY; curY < (originY + frameHeight + _textureHeight); curY += _textureHeight)
+			for( float curY = startY; curY < ( originY + frameHeight + _textureHeight ); curY += _textureHeight )
 			{
-				retval.add(new Vector2(curX, curY));
+				retval.add( new Vector2( curX, curY ) );
 			}			
 		}
 		
@@ -83,10 +83,10 @@ public class OceanLayer
 	
 	public float getAlpha()
 	{
-		float alpha = _curAlpha - .2f;
-		return (alpha < 0f) ? 0f : alpha;
+		float alpha = _curAlpha - .0f;
+		return ( alpha < 0f ) ? 0f : alpha;
 	}
 	
-	public TextureRegion getTexture()	{ return _animation.getKeyFrame(_elapsedTime, true); }
+	public TextureRegion getTexture()	{ return _animation.getKeyFrame( _elapsedTime, true ); }
 
 }	

@@ -97,7 +97,7 @@ public class GameBoard {
 		_boundsBRTexture = ResourceManager.getInstance().getBackgroundTexture( "board_bounds_br" );
 		_boundsTRTexture = ResourceManager.getInstance().getBackgroundTexture( "board_bounds_tr" );
 		_boundsTLTexture = ResourceManager.getInstance().getBackgroundTexture( "board_bounds_tl" );
-		_mountedTouchTexture = ResourceManager.getInstance().getHudTexture( "touchpos" );
+		_mountedTouchTexture = ResourceManager.getInstance().getBackgroundTexture( "touchpos" );
 		
 		TextureRegion layerTex = null;
 		layerTex = ResourceManager.getInstance().getBackgroundTexture( "ocean_anim_1_sparse" );
@@ -179,7 +179,7 @@ public class GameBoard {
 				if( ( playerState == PlayerState.IDLE ) || ( playerState == PlayerState.MOVING ) ) {
 					Vector2 playerPos = _player.getPosition();
 					if( Utils.circlesOverlap( curShark.getBounds()[ 0 ], _player.getBounds()[ 0 ] ) ) {
-						beginPlayerDeath();
+						beginPlayerDeath( false );
 						break;
 					}
 					if( Utils.circlesOverlap( curShark.getBounds()[ 1 ], _player.getBounds()[ 0 ] ) ) {
@@ -264,7 +264,7 @@ public class GameBoard {
 				
 				Vector2 pos = _player.getPosition();
 				if( curWhirl.isInKillZone( pos.x, pos.y ) && ( playerState != PlayerState.MOUNTING ) && ( playerState != PlayerState.MOUNTED ) ) {
-					beginPlayerDeath();
+					beginPlayerDeath( true );
 				}
 				
 				if( curWhirl.isBeingPulled( pos.x, pos.y ) ) {
@@ -382,7 +382,7 @@ public class GameBoard {
 		
 		//****** NOTE: hack- render player being called after this IF alive
 		if( !_player.isAlive() )
-			_renderer.renderGameObject( _player, delta );
+			_renderer.renderPlayer( _player, delta );
 		
 		for( Shark curShark : onScreenSharks ) {
 			_renderer.renderShark( curShark, delta );
@@ -390,7 +390,7 @@ public class GameBoard {
 		
 		//****** NOTE: hack- render player being called before this if NOT alive
 		if( _player.isAlive() )
-			_renderer.renderGameObject( _player, delta );
+			_renderer.renderPlayer( _player, delta );
 
 		for( Wave curWave : _waves ) {
 			if( curWave != null )
@@ -645,13 +645,7 @@ public class GameBoard {
 	}
 	
 	public void spawnWhirlpool() {
-		TextureRegion bottomTex = ResourceManager.getInstance().getWhirlpoolTexture( "whirlpool_bottom" );
-		TextureRegion topTex = ResourceManager.getInstance().getWhirlpoolTexture( "whirlpool_top" );
-		
-		Animation bottomAnim = AnimationFactory.createAnimation( 0.3f, 1, 2, bottomTex );
-		Animation topAnim = AnimationFactory.createAnimation( 0.3f, 1, 2, topTex );
-		
-		Whirlpool newWhirlpool = new Whirlpool( Utils.getRandomFloatInRange( 0f, getWidth() ), Utils.getRandomFloatInRange( 0f, getHeight() ), bottomAnim, topAnim );
+		Whirlpool newWhirlpool = new Whirlpool( Utils.getRandomFloatInRange( 0f, getWidth() ), Utils.getRandomFloatInRange( 0f, getHeight() ) );
 		for( int i = 0; i < _whirlpools.length; ++i ) {
 			if( _whirlpools[ i ] == null ) {
 				_whirlpools[ i ] = newWhirlpool;
@@ -697,13 +691,13 @@ public class GameBoard {
 		} // for( int i = 0; i < _powerups.length; ++i )
 	} // public void spawnPowerup()
 	
-	public void beginPlayerDeath() {
+	public void beginPlayerDeath( boolean whirlpoolDeath ) {
 		if( !_player.isAlive() )
 			return;
 		
 		boolean gameOverFlag = GameState.takeLife();
 		
-		_player.kill();
+		_player.kill( whirlpoolDeath );
 		if( gameOverFlag ) {
 			_dialog = new GameOverDialog( ResourceManager.getInstance().getDialogTexture( "dialog_gameover" ), this );
 			_dialogTimer = 3f;

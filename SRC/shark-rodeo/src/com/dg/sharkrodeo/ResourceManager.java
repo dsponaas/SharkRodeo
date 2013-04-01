@@ -11,13 +11,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class ResourceManager {
 
 	private static ResourceManager _instance = null;
-	private TextureAtlas _powerupAtlas;
+//	private TextureAtlas _powerupAtlas;
 	private TextureAtlas _dialogAtlas;
 	private TextureAtlas _waveAtlas;
 	private TextureAtlas _whirlpoolAtlas;
 	private TextureAtlas _sharkAtlas;
 	private TextureAtlas _playerAtlas;
-	private TextureAtlas _hudAtlas;
+//	private TextureAtlas _hudAtlas;
 	private TextureAtlas _backgroundAtlas;
 	private HashMap<String, AnimationSequence> _sharkAnims;
 	private HashMap<String, AnimationSequence> _playerAnims;
@@ -28,11 +28,11 @@ public class ResourceManager {
 	
 	public void initialize() {
 		_backgroundAtlas = new TextureAtlas( "data/background.pack" );//TODO: make this variable
-		_powerupAtlas = new TextureAtlas( SharkRodeoConstants.getPowerupPack() );
+//		_powerupAtlas = new TextureAtlas( SharkRodeoConstants.getPowerupPack() );
 		_dialogAtlas = new TextureAtlas( SharkRodeoConstants.getDialogPack() );
 		_waveAtlas = new TextureAtlas( "data/wave.pack" );//TODO: make this variable
 		_whirlpoolAtlas = new TextureAtlas( "data/whirlpool.pack" );//TODO: make this variable
-		_hudAtlas = new TextureAtlas( SharkRodeoConstants.getHudPack() );
+//		_hudAtlas = new TextureAtlas( SharkRodeoConstants.getHudPack() );
 		initPlayerAnims();
 		initSharkAnims();
 		_deathNoise = Gdx.audio.newSound( Gdx.files.internal( "data/WilhelmScream.ogg" ) );;
@@ -143,9 +143,9 @@ public class ResourceManager {
 		return _instance;
 	}
 	
-	public TextureRegion getPowerupTexture( String name ) {
-		return _powerupAtlas.findRegion( name );
-	}
+//	public TextureRegion getPowerupTexture( String name ) {
+//		return _powerupAtlas.findRegion( name );
+//	}
 	
 	public TextureRegion getDialogTexture( String name ) {
 		return _dialogAtlas.findRegion( name );
@@ -159,9 +159,9 @@ public class ResourceManager {
 		return _whirlpoolAtlas.findRegion( name );
 	}
 	
-	public TextureRegion getHudTexture( String name ) {
-		return _hudAtlas.findRegion( name );
-	}
+//	public TextureRegion getHudTexture( String name ) {
+//		return _hudAtlas.findRegion( name );
+//	}
 	
 	public TextureRegion getBackgroundTexture( String name ) {
 		return _backgroundAtlas.findRegion( name );
@@ -180,13 +180,13 @@ public class ResourceManager {
 	}
 	
 	public void dispose() {
-		_powerupAtlas.dispose();
+//		_powerupAtlas.dispose();
 		_dialogAtlas.dispose();
 		_waveAtlas.dispose();
 		_whirlpoolAtlas.dispose();
 		_sharkAtlas.dispose();
 		_playerAtlas.dispose();
-		_hudAtlas.dispose();
+//		_hudAtlas.dispose();
 		_backgroundAtlas.dispose();
 		_deathNoise.dispose();
 	}

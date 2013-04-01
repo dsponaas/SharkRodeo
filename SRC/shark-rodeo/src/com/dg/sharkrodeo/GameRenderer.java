@@ -189,8 +189,11 @@ public class GameRenderer {
 		}
 	} // public void renderGameObjectParticles( GameObject obj, float delta )
 	
-	public void renderGameObject( GameObject obj, float delta ) {//float x, float y, float originX, float originY, float width, float height, float scaleX, float scaleY, float rotation
+	public void renderPlayer( Player obj, float delta ) {//float x, float y, float originX, float originY, float width, float height, float scaleX, float scaleY, float rotation
 		Vector2 position = obj.getPosition();
+		if( obj.isSprinting() ) {
+			delta *= 2f;
+		}
 		obj.updateView( delta );
 		
 		TextureRegion texture = obj.getTexture();
@@ -311,13 +314,11 @@ public class GameRenderer {
 	
 	public void renderWhirlpool( Whirlpool pool, float delta ) {
 		pool.updateView( delta );
-		for( int i = 0; i < pool.getNumLayers(); ++i ) {
-			Vector2 pos = pool.getPosition();
-			TextureRegion tex = pool.getTexture( i );
-			_batch.setColor( 1, 1, 1, pool.getAlpha() );
-			_batch.draw( tex, pos.x - ( ( float )tex.getRegionWidth() / 2f ), pos.y - ( ( float )tex.getRegionHeight() / 2f ) );
-			_batch.setColor( 1, 1, 1, 1 );
-		} // for( int i = 0; i < pool.getNumLayers(); ++i )
+		Vector2 pos = pool.getPosition();
+		TextureRegion tex = pool.getTexture();
+		_batch.setColor( 1, 1, 1, pool.getAlpha() );
+		_batch.draw( tex, pos.x - ( ( float )tex.getRegionWidth() / 2f ), pos.y - ( ( float )tex.getRegionHeight() / 2f ) );
+		_batch.setColor( 1, 1, 1, 1 );
 	} // public void renderWhirlpool( Whirlpool pool, float delta )
 	
 	public void renderGameBoard() {

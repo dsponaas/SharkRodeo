@@ -45,27 +45,27 @@ public class Hud {
 	public void initialize() {
 		_hudFont = new BitmapFont( Gdx.files.internal( "data/small_fonts_82_white_bold.fnt" ), false );
 		
-		_livesIcon = ResourceManager.getInstance().getHudTexture( "lives_icon" );
-		_scoreIcon = ResourceManager.getInstance().getHudTexture( "score_label" );
-		_sharksLeftIcon = ResourceManager.getInstance().getHudTexture( "sharks_left_icon" );
-		_2xIcon = ResourceManager.getInstance().getHudTexture( "powerup_2x" );
-		_4xIcon = ResourceManager.getInstance().getHudTexture( "powerup_4x" );
-		_speedUpIcon = ResourceManager.getInstance().getHudTexture( "powerup_speed_up" );
-		_enduranceUpIcon = ResourceManager.getInstance().getHudTexture( "powerup_endurance_up" );
-		_redExclamationIcon = ResourceManager.getInstance().getHudTexture( "red_exclamation" );
-		_yellowExclamationIcon = ResourceManager.getInstance().getHudTexture( "yellow_exclamation" );
+		_livesIcon = ResourceManager.getInstance().getBackgroundTexture( "lives_icon" );
+		_scoreIcon = ResourceManager.getInstance().getBackgroundTexture( "score_label" );
+		_sharksLeftIcon = ResourceManager.getInstance().getBackgroundTexture( "sharks_left_icon" );
+		_2xIcon = ResourceManager.getInstance().getBackgroundTexture( "powerup_2x" );
+		_4xIcon = ResourceManager.getInstance().getBackgroundTexture( "powerup_4x" );
+		_speedUpIcon = ResourceManager.getInstance().getBackgroundTexture( "powerup_speed_up" );
+		_enduranceUpIcon = ResourceManager.getInstance().getBackgroundTexture( "powerup_endurance_up" );
+		_redExclamationIcon = ResourceManager.getInstance().getBackgroundTexture( "red_exclamation" );
+		_yellowExclamationIcon = ResourceManager.getInstance().getBackgroundTexture( "yellow_exclamation" );
 
-		_sharkPosIconUp = ResourceManager.getInstance().getHudTexture( "shark_icon_up" );
-		_sharkPosIconDown = ResourceManager.getInstance().getHudTexture( "shark_icon_down" );
-		_sharkPosIconLeft = ResourceManager.getInstance().getHudTexture( "shark_icon_left" );
-		_sharkPosIconRight = ResourceManager.getInstance().getHudTexture( "shark_icon_right" );
-		_sharkPosIconUpLeft = ResourceManager.getInstance().getHudTexture( "shark_icon_upleft" );
-		_sharkPosIconUpRight = ResourceManager.getInstance().getHudTexture( "shark_icon_upright" );
-		_sharkPosIconDownLeft = ResourceManager.getInstance().getHudTexture( "shark_icon_downleft" );
-		_sharkPosIconDownRight = ResourceManager.getInstance().getHudTexture( "shark_icon_downright" );
+		_sharkPosIconUp = ResourceManager.getInstance().getBackgroundTexture( "shark_icon_up" );
+		_sharkPosIconDown = ResourceManager.getInstance().getBackgroundTexture( "shark_icon_down" );
+		_sharkPosIconLeft = ResourceManager.getInstance().getBackgroundTexture( "shark_icon_left" );
+		_sharkPosIconRight = ResourceManager.getInstance().getBackgroundTexture( "shark_icon_right" );
+		_sharkPosIconUpLeft = ResourceManager.getInstance().getBackgroundTexture( "shark_icon_upleft" );
+		_sharkPosIconUpRight = ResourceManager.getInstance().getBackgroundTexture( "shark_icon_upright" );
+		_sharkPosIconDownLeft = ResourceManager.getInstance().getBackgroundTexture( "shark_icon_downleft" );
+		_sharkPosIconDownRight = ResourceManager.getInstance().getBackgroundTexture( "shark_icon_downright" );
 		
-		TextureRegion sprintActiveIcon = ResourceManager.getInstance().getHudTexture( "sprint_icon_active" );
-		TextureRegion sprintInactiveIcon = ResourceManager.getInstance().getHudTexture( "sprint_icon_inactive" );
+		TextureRegion sprintActiveIcon = ResourceManager.getInstance().getBackgroundTexture( "sprint_icon_active" );
+		TextureRegion sprintInactiveIcon = ResourceManager.getInstance().getBackgroundTexture( "sprint_icon_inactive" );
 		
 		_utilityButtons = new HudUtilityButton[ 1 ];
 		for( int i = 0; i < _utilityButtons.length; ++i ) {

@@ -43,19 +43,19 @@ public class Powerup
 		switch(_type)
 		{
 		case MULTIPLIER_2X:
-			_anim = AnimationFactory.createAnimation(0.1f, 1, 6, ResourceManager.getInstance().getPowerupTexture("2x"));
+			_anim = AnimationFactory.createAnimation(0.1f, 1, 6, ResourceManager.getInstance().getBackgroundTexture("2x"));
 			break;
 		case MULTIPLIER_4X:
-			_anim = AnimationFactory.createAnimation(0.1f, 1, 6, ResourceManager.getInstance().getPowerupTexture("4x"));
+			_anim = AnimationFactory.createAnimation(0.1f, 1, 6, ResourceManager.getInstance().getBackgroundTexture("4x"));
 			break;
 		case SPEED_UP:
-			_anim = AnimationFactory.createAnimation(0.1f, 1, 6, ResourceManager.getInstance().getPowerupTexture("spd"));
+			_anim = AnimationFactory.createAnimation(0.1f, 1, 6, ResourceManager.getInstance().getBackgroundTexture("spd"));
 			break;
 		case ONE_UP:
-			_anim = AnimationFactory.createAnimation(0.1f, 1, 6, ResourceManager.getInstance().getPowerupTexture("1up"));
+			_anim = AnimationFactory.createAnimation(0.1f, 1, 6, ResourceManager.getInstance().getBackgroundTexture("1up"));
 			break;
 		case ENDURANCE_UP:
-			_anim = AnimationFactory.createAnimation(0.1f, 1, 6, ResourceManager.getInstance().getPowerupTexture("end"));
+			_anim = AnimationFactory.createAnimation(0.1f, 1, 6, ResourceManager.getInstance().getBackgroundTexture("end"));
 			break;
 		}
 		

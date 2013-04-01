@@ -5,57 +5,246 @@ filter: Nearest,Nearest
 repeat: none
 ocean_anim_1_sparse
   rotate: false
-  xy: 0, 512
+  xy: 0, 504
   size: 1024, 512
   orig: 1024, 512
   offset: 0, 0
   index: -1
+score_label
+  rotate: false
+  xy: 0, 448
+  size: 280, 56
+  orig: 280, 56
+  offset: 0, 0
+  index: -1
 board_bounds_bl
   rotate: false
-  xy: 0, 384
+  xy: 0, 320
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 board_bounds_br
   rotate: false
-  xy: 0, 256
+  xy: 0, 192
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 board_bounds_tl
   rotate: false
-  xy: 128, 384
+  xy: 128, 320
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 board_bounds_tr
   rotate: false
-  xy: 0, 128
+  xy: 0, 64
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+touchpos
+  rotate: false
+  xy: 128, 192
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 water_tex_blur
   rotate: false
-  xy: 0, 0
+  xy: 128, 64
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
+1up
+  rotate: false
+  xy: 280, 472
+  size: 192, 32
+  orig: 192, 32
+  offset: 0, 0
+  index: -1
+2x
+  rotate: false
+  xy: 0, 32
+  size: 192, 32
+  orig: 192, 32
+  offset: 0, 0
+  index: -1
+4x
+  rotate: false
+  xy: 472, 472
+  size: 192, 32
+  orig: 192, 32
+  offset: 0, 0
+  index: -1
+end
+  rotate: false
+  xy: 0, 0
+  size: 192, 32
+  orig: 192, 32
+  offset: 0, 0
+  index: -1
+spd
+  rotate: false
+  xy: 664, 472
+  size: 192, 32
+  orig: 192, 32
+  offset: 0, 0
+  index: -1
 board_bounds_hor
   rotate: false
-  xy: 128, 352
+  xy: 856, 472
   size: 128, 32
   orig: 128, 32
   offset: 0, 0
   index: -1
 board_bounds_vert
   rotate: false
-  xy: 256, 384
+  xy: 256, 320
   size: 32, 128
   orig: 32, 128
+  offset: 0, 0
+  index: -1
+sprint_icon_active
+  rotate: false
+  xy: 288, 360
+  size: 112, 112
+  orig: 112, 112
+  offset: 0, 0
+  index: -1
+sprint_icon_inactive
+  rotate: false
+  xy: 400, 360
+  size: 112, 112
+  orig: 112, 112
+  offset: 0, 0
+  index: -1
+sharks_left_icon
+  rotate: false
+  xy: 512, 416
+  size: 92, 56
+  orig: 92, 56
+  offset: 0, 0
+  index: -1
+lives_icon
+  rotate: false
+  xy: 512, 360
+  size: 90, 56
+  orig: 90, 56
+  offset: 0, 0
+  index: -1
+shark_icon_down
+  rotate: false
+  xy: 192, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shark_icon_downleft
+  rotate: false
+  xy: 604, 408
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shark_icon_downright
+  rotate: false
+  xy: 668, 408
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shark_icon_left
+  rotate: false
+  xy: 732, 408
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shark_icon_right
+  rotate: false
+  xy: 796, 408
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shark_icon_up
+  rotate: false
+  xy: 860, 408
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shark_icon_upleft
+  rotate: false
+  xy: 924, 408
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shark_icon_upright
+  rotate: false
+  xy: 602, 344
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+powerup_2x
+  rotate: false
+  xy: 984, 472
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+powerup_4x
+  rotate: false
+  xy: 256, 288
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+powerup_end
+  rotate: false
+  xy: 288, 328
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+powerup_endurance_up
+  rotate: false
+  xy: 288, 328
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+powerup_spd
+  rotate: false
+  xy: 666, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+powerup_speed_up
+  rotate: false
+  xy: 666, 376
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+red_exclamation
+  rotate: false
+  xy: 988, 440
+  size: 16, 32
+  orig: 16, 32
+  offset: 0, 0
+  index: -1
+yellow_exclamation
+  rotate: false
+  xy: 256, 256
+  size: 16, 32
+  orig: 16, 32
   offset: 0, 0
   index: -1
