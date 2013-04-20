@@ -5,245 +5,245 @@ filter: Nearest,Nearest
 repeat: none
 ocean_anim_1_sparse
   rotate: false
-  xy: 0, 504
+  xy: 0, 483
   size: 1024, 512
   orig: 1024, 512
   offset: 0, 0
   index: -1
 score_label
   rotate: false
-  xy: 0, 448
+  xy: 0, 425
   size: 280, 56
   orig: 280, 56
   offset: 0, 0
   index: -1
 board_bounds_bl
   rotate: false
-  xy: 0, 320
+  xy: 0, 295
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 board_bounds_br
   rotate: false
-  xy: 0, 192
+  xy: 0, 165
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 board_bounds_tl
   rotate: false
-  xy: 128, 320
+  xy: 128, 295
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 board_bounds_tr
   rotate: false
-  xy: 0, 64
+  xy: 0, 35
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 touchpos
   rotate: false
-  xy: 128, 192
+  xy: 128, 165
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 water_tex_blur
   rotate: false
-  xy: 128, 64
+  xy: 128, 35
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 1up
   rotate: false
-  xy: 280, 472
+  xy: 280, 449
   size: 192, 32
   orig: 192, 32
   offset: 0, 0
   index: -1
 2x
   rotate: false
-  xy: 0, 32
+  xy: 0, 1
   size: 192, 32
   orig: 192, 32
   offset: 0, 0
   index: -1
 4x
   rotate: false
-  xy: 472, 472
+  xy: 472, 449
   size: 192, 32
   orig: 192, 32
   offset: 0, 0
   index: -1
 end
   rotate: false
-  xy: 0, 0
+  xy: 664, 449
   size: 192, 32
   orig: 192, 32
   offset: 0, 0
   index: -1
 spd
   rotate: false
-  xy: 664, 472
+  xy: 280, 415
   size: 192, 32
   orig: 192, 32
   offset: 0, 0
   index: -1
-board_bounds_hor
-  rotate: false
-  xy: 856, 472
-  size: 128, 32
-  orig: 128, 32
-  offset: 0, 0
-  index: -1
-board_bounds_vert
-  rotate: false
-  xy: 256, 320
-  size: 32, 128
-  orig: 32, 128
-  offset: 0, 0
-  index: -1
 sprint_icon_active
   rotate: false
-  xy: 288, 360
+  xy: 256, 301
   size: 112, 112
   orig: 112, 112
   offset: 0, 0
   index: -1
 sprint_icon_inactive
   rotate: false
-  xy: 400, 360
+  xy: 256, 187
   size: 112, 112
   orig: 112, 112
   offset: 0, 0
   index: -1
+board_bounds_hor
+  rotate: false
+  xy: 856, 449
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
+board_bounds_vert
+  rotate: false
+  xy: 368, 285
+  size: 32, 128
+  orig: 32, 128
+  offset: 0, 0
+  index: -1
 sharks_left_icon
   rotate: false
-  xy: 512, 416
+  xy: 256, 129
   size: 92, 56
   orig: 92, 56
   offset: 0, 0
   index: -1
 lives_icon
   rotate: false
-  xy: 512, 360
+  xy: 256, 71
   size: 90, 56
   orig: 90, 56
   offset: 0, 0
   index: -1
 shark_icon_down
   rotate: false
-  xy: 192, 0
+  xy: 400, 349
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 shark_icon_downleft
   rotate: false
-  xy: 604, 408
+  xy: 400, 283
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 shark_icon_downright
   rotate: false
-  xy: 668, 408
+  xy: 256, 5
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 shark_icon_left
   rotate: false
-  xy: 732, 408
+  xy: 472, 383
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 shark_icon_right
   rotate: false
-  xy: 796, 408
+  xy: 536, 383
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 shark_icon_up
   rotate: false
-  xy: 860, 408
+  xy: 600, 383
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 shark_icon_upleft
   rotate: false
-  xy: 924, 408
+  xy: 664, 383
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 shark_icon_upright
   rotate: false
-  xy: 602, 344
+  xy: 728, 383
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 powerup_2x
   rotate: false
-  xy: 984, 472
+  xy: 368, 251
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 powerup_4x
   rotate: false
-  xy: 256, 288
+  xy: 984, 449
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 powerup_end
   rotate: false
-  xy: 288, 328
+  xy: 192, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 powerup_endurance_up
   rotate: false
-  xy: 288, 328
+  xy: 192, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 powerup_spd
   rotate: false
-  xy: 666, 376
+  xy: 224, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 powerup_speed_up
   rotate: false
-  xy: 666, 376
+  xy: 224, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 red_exclamation
   rotate: false
-  xy: 988, 440
+  xy: 348, 153
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
   index: -1
 yellow_exclamation
   rotate: false
-  xy: 256, 256
+  xy: 320, 37
   size: 16, 32
   orig: 16, 32
   offset: 0, 0

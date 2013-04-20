@@ -14,14 +14,13 @@ public class Wave {
 	
 	private Direction _direction;
 	private Rectangle _bounds;
-	private Animation _bottomAnim;
-	private Animation _topAnim;
+	private Animation _anim;
 	private Vector2 _position;
 	private float _speed;
 	private float _friction;
 	private float _waveTime;
 	
-	public Wave( Direction direction, Vector2 position, TextureRegion bottomTex, TextureRegion topTex ) {
+	public Wave( Direction direction, Vector2 position, TextureRegion tex ) {
 		float frameTime = .2f; //TODO: MAGIC NUMBER
 		_direction = direction;
 		float waveWidth = 0f;
@@ -32,30 +31,26 @@ public class Wave {
 		TextureRegion temp;
 		switch( direction ) {
 		case UP:
-			_bottomAnim = AnimationFactory.createAnimation( frameTime, 4, 1, bottomTex );
-			_topAnim = AnimationFactory.createAnimation( frameTime, 4, 1, topTex );
-			temp = _bottomAnim.getKeyFrame( 0f, true );
+			_anim = AnimationFactory.createAnimation( frameTime, 4, 1, tex );
+			temp = _anim.getKeyFrame( 0f, true );
 			waveWidth = ( float )temp.getRegionWidth() * waveSizeFactorLength;
 			waveHeight = ( float )temp.getRegionHeight() * waveSizeFactorDepth;
 			break;
 		case DOWN:
-			_bottomAnim = AnimationFactory.createAnimation( frameTime, 4, 1, bottomTex );
-			_topAnim = AnimationFactory.createAnimation( frameTime, 4, 1, topTex );
-			temp = _bottomAnim.getKeyFrame( 0f, true );
+			_anim = AnimationFactory.createAnimation( frameTime, 4, 1, tex );
+			temp = _anim.getKeyFrame( 0f, true );
 			waveWidth = ( float )temp.getRegionWidth() * waveSizeFactorLength;
 			waveHeight = ( float )temp.getRegionHeight() * waveSizeFactorDepth;
 			break;
 		case LEFT:
-			_bottomAnim = AnimationFactory.createAnimation( frameTime, 1, 4, bottomTex );
-			_topAnim = AnimationFactory.createAnimation( frameTime, 1, 4, topTex );
-			temp = _bottomAnim.getKeyFrame( 0f, true );
+			_anim = AnimationFactory.createAnimation( frameTime, 1, 4, tex );
+			temp = _anim.getKeyFrame( 0f, true );
 			waveWidth = ( float )temp.getRegionWidth() * waveSizeFactorDepth;
 			waveHeight = ( float )temp.getRegionHeight() * waveSizeFactorLength;
 			break;
 		case RIGHT:
-			_bottomAnim = AnimationFactory.createAnimation( frameTime, 1, 4, bottomTex );
-			_topAnim = AnimationFactory.createAnimation( frameTime, 1, 4, topTex );
-			temp = _bottomAnim.getKeyFrame( 0f, true );
+			_anim = AnimationFactory.createAnimation( frameTime, 1, 4, tex );
+			temp = _anim.getKeyFrame( 0f, true );
 			waveWidth = ( float )temp.getRegionWidth() * waveSizeFactorDepth;
 			waveHeight = ( float )temp.getRegionHeight() * waveSizeFactorLength;
 			break;
@@ -68,19 +63,36 @@ public class Wave {
 	}
 	
 	public boolean update( float delta ) {
+		boolean stillAliveFlag = true;
 		Vector2 velocity = new Vector2( 0f, 0f );
 		switch( _direction ) {
 		case UP:
 			velocity.set( 0f, _speed );
+			if( _position.y > ( SharkRodeoConstants.getGameBoardHeight() + ( float )( Gdx.graphics.getHeight() / 2 ) ) ) {
+				stillAliveFlag = false;
+				Gdx.app.log( SharkRodeoConstants.LOG_TAG, "WAVE DONE!" );
+			}
 			break;
 		case DOWN:
 			velocity.set( 0f, -1f * _speed );
+			if( _position.y < ( float )( Gdx.graphics.getHeight() / -2 ) ) {
+				stillAliveFlag = false;
+				Gdx.app.log( SharkRodeoConstants.LOG_TAG, "WAVE DONE!" );
+			}
 			break;
 		case LEFT:
 			velocity.set( -1f * _speed, 0f );
+			if( _position.x < ( float )( Gdx.graphics.getWidth() / -2 ) ) {
+				stillAliveFlag = false;
+				Gdx.app.log( SharkRodeoConstants.LOG_TAG, "WAVE DONE!" );
+			}
 			break;
 		case RIGHT:
 			velocity.set( _speed, 0f );
+			if( _position.x > ( SharkRodeoConstants.getGameBoardWidth() + ( float )( Gdx.graphics.getWidth() / 2 ) ) ) {
+				stillAliveFlag = false;
+				Gdx.app.log( SharkRodeoConstants.LOG_TAG, "WAVE DONE!" );
+			}
 			break;
 		}
 		velocity.mul( delta );
@@ -88,9 +100,9 @@ public class Wave {
 		_bounds.x = _position.x - ( _bounds.width / 2f );
 		_bounds.y = _position.y - ( _bounds.height / 2f );
 		
-		if( _waveTime > 60f ) // TODO: THIS IS INCORRECT. FIX IT
-			return false;
-		return true;
+//		if( _waveTime > 60f ) // TODO: THIS IS INCORRECT. FIX IT
+//			return false;
+		return stillAliveFlag;
 	}
 	
 	public void updateView( float delta ) {
@@ -123,8 +135,7 @@ public class Wave {
 	}
 	
 	public Vector2 getPosition()					{ return _position; }
-	public TextureRegion getBottomTexture()			{ return _bottomAnim.getKeyFrame( _waveTime, true ); }
-	public TextureRegion getTopTexture()			{ return _topAnim.getKeyFrame( _waveTime, true ); }
+	public TextureRegion getTexture()			{ return _anim.getKeyFrame( _waveTime, true ); }
 	
 	
 

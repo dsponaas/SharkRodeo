@@ -290,26 +290,20 @@ public class GameRenderer {
 		return pos;
 	} // private Vector2 renderSharkPositionIndicatorHelper( Vector2 pos )
 	
-	public void renderWaveLayer( Wave wave, float delta, boolean top ) {
+	public void renderWave( Wave wave, float delta ) {
 		wave.updateView( delta );
 		Vector2 position = wave.getPosition();
 		TextureRegion texture;
-		float alpha;
+//		float alpha;
 		
-		if( top ) {
-			texture = wave.getTopTexture();
-			alpha = 0.9f;
-		}
-		else {
-			texture = wave.getBottomTexture();
-			alpha = 0.5f;
-		}
+		texture = wave.getTexture();
+//		alpha = 0.9f;
 		
-		_batch.setColor( 1f, 1f, 1f, alpha );
+//		_batch.setColor( 1f, 1f, 1f, alpha );
 		if( texture != null ) {
 			_batch.draw( texture, position.x - ( ( float )( texture.getRegionWidth() / 2 ) ), position.y - ( ( float )( texture.getRegionHeight() / 2 ) ) );
 		}
-		_batch.setColor( 1f, 1f, 1f, 1f );
+//		_batch.setColor( 1f, 1f, 1f, 1f );
 	} // public void renderWaveLayer( Wave wave, float delta, boolean top )
 	
 	public void renderWhirlpool( Whirlpool pool, float delta ) {

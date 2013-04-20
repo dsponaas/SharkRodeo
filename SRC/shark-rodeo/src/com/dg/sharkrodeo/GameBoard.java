@@ -368,11 +368,6 @@ public class GameBoard {
 				_renderer.renderWhirlpool( curWhirl, delta );
 		}
 		
-		for( Wave curWave : _waves ) {
-			if( curWave != null )
-				_renderer.renderWaveLayer( curWave, delta, false );
-		}
-		
 		if( _player.getPlayerState() == PlayerState.MOUNTED ) {
 			if( _ridingFlag )
 				_renderer.renderMountedTouchPos( true, getRidingTimePercent() );
@@ -394,7 +389,7 @@ public class GameBoard {
 
 		for( Wave curWave : _waves ) {
 			if( curWave != null )
-				_renderer.renderWaveLayer( curWave, delta, true );
+				_renderer.renderWave( curWave, delta );
 		}
 		_renderer.finishRender();
 
@@ -615,28 +610,23 @@ public class GameBoard {
 		
 		for( int i = 0; i < _waves.length; ++i ) {
 			if( _waves[ i ] == null ) {
-				TextureRegion bottomTex = null;
-				TextureRegion topTex = null;
+				TextureRegion tex = null;
 				switch( dir ) {
 				case UP:
-					bottomTex = ResourceManager.getInstance().getWaveTexture( "wave_bottom_up" );
-					topTex = ResourceManager.getInstance().getWaveTexture( "wave_top_up" );
+					tex = ResourceManager.getInstance().getWaveTexture( "wave_up" );
 					break;
 				case DOWN:
-					bottomTex = ResourceManager.getInstance().getWaveTexture( "wave_bottom_down" );
-					topTex = ResourceManager.getInstance().getWaveTexture( "wave_top_down" );
+					tex = ResourceManager.getInstance().getWaveTexture( "wave_down" );
 					break;
 				case LEFT:
-					bottomTex = ResourceManager.getInstance().getWaveTexture( "wave_bottom_left" );
-					topTex = ResourceManager.getInstance().getWaveTexture( "wave_top_left" );
+					tex = ResourceManager.getInstance().getWaveTexture( "wave_left" );
 					break;
 				case RIGHT:
-					bottomTex = ResourceManager.getInstance().getWaveTexture( "wave_bottom_right" );
-					topTex = ResourceManager.getInstance().getWaveTexture( "wave_top_right" );
+					tex = ResourceManager.getInstance().getWaveTexture( "wave_right" );
 					break;
 				}
 
-				Wave wave = new Wave( dir, new Vector2( xPos, yPos ), bottomTex, topTex );
+				Wave wave = new Wave( dir, new Vector2( xPos, yPos ), tex );
 				_waves[ i ] = wave;
 				break;
 			}

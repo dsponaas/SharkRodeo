@@ -22,7 +22,8 @@ public class LevelInfo {
 	
 	public static int getMaximumWaves( int level ) {
 		switch( level ) {
-		case 1: return 0;
+//		case 1: return 0;
+		case 1: return 8;
 		case 2: return 1;
 		case 3: return 2;
 		case 4: return 4;
@@ -96,7 +97,8 @@ public class LevelInfo {
 	
 	public static float getWaveSpawnTime( int level ) {
 		switch( level ) {
-		case 1: return 10.05f;
+//		case 1: return 10.05f;
+		case 1: return 4.05f;
 		case 2: return 10.05f;
 		case 3: return 8.05f;
 		case 4: return 6.05f;
