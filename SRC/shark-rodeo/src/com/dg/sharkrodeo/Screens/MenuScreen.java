@@ -2,24 +2,24 @@ package com.dg.sharkrodeo.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.dg.sharkrodeo.GameBoard;
 import com.dg.sharkrodeo.GameState;
+import com.dg.sharkrodeo.ResourceManager;
 import com.dg.sharkrodeo.SharkRodeo;
-import com.dg.sharkrodeo.SharkRodeoConstants;
-import com.dg.sharkrodeo.SharkRodeoConstants.GameBoardScale;
 
 public class MenuScreen implements Screen {
 
@@ -31,13 +31,18 @@ public class MenuScreen implements Screen {
 	private TextureAtlas _atlas;
 	private Skin _skin;
 	private SpriteBatch _batch;
-	private TextButton _button;
-	private TextButton _sizeButton;
-	private TextButton _scoreButton;
-	private Label _label;
+	private ImageButton _startButton;
+//	private TextButton _sizeButton;
+	private ImageButton _scoreButton;
+//	private Label _label;
 	
 	public MenuScreen(SharkRodeo game) {
-		GameState.reset();
+		GameState.menuReset();
+		GameBoard.getInstance().startMenu(_game);
+		Music menuMusic = ResourceManager.getInstance().getMenuMusic();
+		if( !menuMusic.isPlaying() ) {
+			menuMusic.play();
+		}
 		_game = game;
 	}
 	
@@ -45,12 +50,15 @@ public class MenuScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-	
-		_stage.act(delta);
+
+		GameBoard.getInstance().update(delta);
+		GameBoard.getInstance().render(delta, false);
+		GameBoard.getInstance().unpause();
 		
+		_stage.act(delta);
 		_batch.begin();
-		_stage.draw();
 		//_whiteFont.draw(_batch, "SHARK RODEO, BITCHES!", (Gdx.graphics.getWidth() / 2) - 15 , (Gdx.graphics.getHeight() / 2) - 100);
+		_stage.draw();
 		_batch.end();
 	}
 
@@ -69,48 +77,24 @@ public class MenuScreen implements Screen {
 		
 		int BUFFER = 12;
 		
-		_button = new TextButton("Start Game", style);
-		_button.setWidth(400);
-		_button.setHeight(120);
-		_button.setX((Gdx.graphics.getWidth() / 2) - (_button.getWidth() / 2));
-		_button.setY(((Gdx.graphics.getHeight() / 3) * 2) - (_button.getHeight()));
+		TextureRegion startButtonTex = ResourceManager.getInstance().getMenuTexture( "startButton" );
+		_startButton = new ImageButton( new TextureRegionDrawable( startButtonTex ) );
+		_startButton.setX((Gdx.graphics.getWidth() / 2) - (_startButton.getWidth() / 2));
+		_startButton.setY(((Gdx.graphics.getHeight() / 3) * 2) - (_startButton.getHeight()));
 		
-		_sizeButton = new TextButton("Scale:" + SharkRodeoConstants.getScale(), style);
-		_sizeButton.setWidth(400);
-		_sizeButton.setHeight(120);
-		_sizeButton.setX((Gdx.graphics.getWidth() / 2) - (_button.getWidth() / 2));
-		_sizeButton.setY(((Gdx.graphics.getHeight() / 3) * 2) - (2 * _button.getHeight()) - BUFFER);
+		TextureRegion scoreButtonTex = ResourceManager.getInstance().getMenuTexture( "scoreButton" );
+		_scoreButton = new ImageButton( new TextureRegionDrawable( scoreButtonTex ) );
+		_scoreButton.setX((Gdx.graphics.getWidth() / 2) - (_scoreButton.getWidth() / 2));
+		_scoreButton.setY(((Gdx.graphics.getHeight() / 3) * 2) - (2 * _scoreButton.getHeight()) - (2 * BUFFER));
 		
-		_scoreButton = new TextButton("High Scores", style);
-		_scoreButton.setWidth(400);
-		_scoreButton.setHeight(120);
-		_scoreButton.setX((Gdx.graphics.getWidth() / 2) - (_button.getWidth() / 2));
-		_scoreButton.setY(((Gdx.graphics.getHeight() / 3) * 2) - (3 * _button.getHeight()) - (2 * BUFFER));
-		
-		_button.addListener(new InputListener() {
+		_startButton.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				return true;
 			}
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				GameState.reset();
+//				GameBoard.getInstance().startGame( _game );
 				_game.setScreen(new GameScreen(_game));
-			}
-		});
-		
-		_sizeButton.addListener(new InputListener() {
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				return true;
-			}
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				switch(SharkRodeoConstants.getScale())
-				{
-				case _128:
-					SharkRodeoConstants.setScale(GameBoardScale._256);
-					break;
-				case _256:
-					SharkRodeoConstants.setScale(GameBoardScale._128);
-					break;
-				}
-				_sizeButton.setText("Scale:" + SharkRodeoConstants.getScale());
 			}
 		});
 		
@@ -123,17 +107,22 @@ public class MenuScreen implements Screen {
 			}
 		});
 		
-		LabelStyle labelStyle = new LabelStyle(_vinerFont, Color.WHITE);
-		_label = new Label("SHARK RODEO", labelStyle);
-		_label.setX(0);
-		_label.setY((Gdx.graphics.getHeight() / 3) * 2 + 100);
-		_label.setWidth(Gdx.graphics.getWidth());
-		_label.setAlignment(Align.center);
+//		LabelStyle labelStyle = new LabelStyle(_vinerFont, Color.WHITE);
+//		_label = new Label("SHARK RODEO", labelStyle);
+//		_label.setX(0);
+//		_label.setY((Gdx.graphics.getHeight() / 3) * 2 + 100);
+//		_label.setWidth(Gdx.graphics.getWidth());
+//		_label.setAlignment(Align.center);
 		
-		_stage.addActor(_button);
-		_stage.addActor(_sizeButton);
+		TextureRegion bannerTex = ResourceManager.getInstance().getMenuTexture( "banner" );
+		Image banner = new Image( bannerTex );
+		banner.setX( ( Gdx.graphics.getWidth() / 2 ) - ( bannerTex.getRegionWidth() / 2 ));
+		banner.setY( Gdx.graphics.getHeight() - bannerTex.getRegionHeight() - 50 );//todo: magic number
+
+		_stage.addActor(banner);
+		_stage.addActor(_startButton);
 		_stage.addActor(_scoreButton);
-		_stage.addActor(_label);
+//		_stage.addActor(_label);
 	}
 
 	@Override
@@ -145,7 +134,7 @@ public class MenuScreen implements Screen {
 //		_whiteFont = new BitmapFont(Gdx.files.internal("data/whitefont.fnt"), false);
 		_blackFont = new BitmapFont(Gdx.files.internal("data/font.fnt"), false);
 		_vinerFont = new BitmapFont(Gdx.files.internal("data/segoe_92_white_bold.fnt"), false);
-		
+//		_banner = ResourceManager.getInstance().getMenuTexture( "banner" );
 	}
 
 	@Override

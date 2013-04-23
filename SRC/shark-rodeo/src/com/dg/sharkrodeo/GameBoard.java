@@ -60,7 +60,6 @@ public class GameBoard {
 	
 	private boolean _gameActive;
 	
-	private Music _music;
 	private SharkRodeo _game;
 		
 	private GameBoard() {
@@ -70,6 +69,61 @@ public class GameBoard {
 		if( _instance == null )
 			_instance = new GameBoard();
 		return _instance;
+	}
+
+	public void startMenu( SharkRodeo game ) {
+		_game = game;
+		_bounds = new Rectangle();
+		_bounds.x = 0f;
+		_bounds.y = 0f;
+		_bounds.width = SharkRodeoConstants.getGameBoardWidth();
+		_bounds.height = SharkRodeoConstants.getGameBoardHeight();
+		
+		_renderer = new GameRenderer();
+
+//		ResourceManager.getInstance().initialize();
+		Hud.getInstance().initialize();
+
+		_backgroundTexture = ResourceManager.getInstance().getBackgroundTexture( "water_tex_blur" );
+		_boundsVertTexture = ResourceManager.getInstance().getBackgroundTexture( "board_bounds_vert" );
+		_boundsHorTexture = ResourceManager.getInstance().getBackgroundTexture( "board_bounds_hor" );
+		_boundsBLTexture = ResourceManager.getInstance().getBackgroundTexture( "board_bounds_bl" );
+		_boundsBRTexture = ResourceManager.getInstance().getBackgroundTexture( "board_bounds_br" );
+		_boundsTRTexture = ResourceManager.getInstance().getBackgroundTexture( "board_bounds_tr" );
+		_boundsTLTexture = ResourceManager.getInstance().getBackgroundTexture( "board_bounds_tl" );
+		_mountedTouchTexture = ResourceManager.getInstance().getBackgroundTexture( "touchpos" );
+		
+		TextureRegion layerTex = null;
+		layerTex = ResourceManager.getInstance().getBackgroundTexture( "ocean_anim_1_sparse" );
+		_oceanLayers = new OceanLayer[ 4 ];
+		_oceanLayers[ 0 ] = new OceanLayer( AnimationFactory.createAnimation( .3f, 2, 4, layerTex ), 0, 0, 0.2f );
+		_oceanLayers[ 1 ] = new OceanLayer( AnimationFactory.createAnimation( .34f, 2, 4, layerTex ), -96, -16f, 0.62f ); //TODO: these all eventually need to be fixed up to accomodate scale or what have you.. do they?
+		_oceanLayers[ 2 ] = new OceanLayer( AnimationFactory.createAnimation( .38f, 2, 4, layerTex ), -32, -32f, 0.45f );
+		_oceanLayers[ 3 ] = new OceanLayer( AnimationFactory.createAnimation( .42f, 2, 4, layerTex ), -64, -48f, 0.89f );		
+		
+		_powerups = new Powerup[ 3 ];
+		_whirlpools = new Whirlpool[ 8 ];
+
+		_sharks = new Shark[ 10 ];
+//		for( int i = 0; i < _sharks.length; ++i ) {
+//			_sharks[ i ] = null; //dont think this is necessary in java - investigate
+//		}
+		
+		_waves = new Wave[ 10 ]; //TODO:magic number
+//		for( int i = 0; i < _waves.length; ++i ) {
+//			_waves[ i ] = null; //dont think this is necessary in java - investigate
+//		}
+		
+		_player = new Player( this );
+		_player.setPosition( getWidth() / 2f, getHeight() / 2f );
+		
+//		_inputHandler = new InputHandler( this );
+//		Gdx.input.setInputProcessor( _inputHandler );
+		
+//		_dialog = new StartLevelDialog( ResourceManager.getInstance().getDialogTexture( "dialog_begin" ), this );
+//		pause();
+		
+		resetCamera();
 	}
 	
 	public void startGame( SharkRodeo game ) {
@@ -87,7 +141,7 @@ public class GameBoard {
 		
 		_renderer = new GameRenderer();
 
-		ResourceManager.getInstance().initialize();
+//		ResourceManager.getInstance().initialize();
 		Hud.getInstance().initialize();
 
 		_backgroundTexture = ResourceManager.getInstance().getBackgroundTexture( "water_tex_blur" );
@@ -129,21 +183,23 @@ public class GameBoard {
 		_dialog = new StartLevelDialog( ResourceManager.getInstance().getDialogTexture( "dialog_begin" ), this );
 		pause();
 		
-		_music = Gdx.audio.newMusic( Gdx.files.internal( "data/test4_looping2.ogg" ) );
-		_music.setLooping( true );
-		_music.play();
+		ResourceManager.getInstance().getGameMusic().play();
 		
 		resetCamera();
 	}
 	
 	private void pause() {
 		_paused = true;
-		_inputHandler.pauseGameInput();	
+		if( _inputHandler != null ) {
+			_inputHandler.pauseGameInput();
+		}
 	}
 	
-	private void unpause() {
+	public void unpause() {
 		_paused = false;
-		_inputHandler.resumeGameInput();	
+		if( _inputHandler != null ) {
+			_inputHandler.resumeGameInput();
+		}
 	}
 	
 	public boolean dialogPress( int x, int y ) {
@@ -329,7 +385,7 @@ public class GameBoard {
 		return _gameActive;
 	}
 	
-	public void render(float delta) { //need delta for particle effects, yes?
+	public void render(float delta, boolean renderHud) { //need delta for particle effects, yes?
 		_renderer.beginRender();
 		
 		_renderer.renderGameBoard();
@@ -353,8 +409,10 @@ public class GameBoard {
 		for( Shark curShark : onScreenSharks ) {
 			_renderer.renderGameObjectParticles( curShark, delta );
 		}
-		if( _player.isAlive() )
-			_renderer.renderGameObjectParticles( _player, delta );
+		if( renderHud ) {
+			if( _player.isAlive() )
+				_renderer.renderGameObjectParticles( _player, delta );
+		}
 		
 		_renderer.renderBorder();
 		
@@ -376,8 +434,10 @@ public class GameBoard {
 		}
 		
 		//****** NOTE: hack- render player being called after this IF alive
-		if( !_player.isAlive() )
-			_renderer.renderPlayer( _player, delta );
+		if( renderHud ) {
+			if( !_player.isAlive() )
+				_renderer.renderPlayer( _player, delta );
+		}
 		
 		for( Shark curShark : onScreenSharks ) {
 			_renderer.renderShark( curShark, delta );
@@ -413,15 +473,17 @@ public class GameBoard {
 		
 		_renderer.endShapeRender();
 		
-		_renderer.beginHudBatch();
-		for( Shark curShark : offScreenSharks ) {
-			_renderer.renderSharkPositionIndicator( curShark );
+		if( renderHud ) {
+			_renderer.beginHudBatch();
+			for( Shark curShark : offScreenSharks ) {
+				_renderer.renderSharkPositionIndicator( curShark );
+			}
+			_renderer.renderHud();
+			if( ( _dialog != null ) && ( _dialogTimer < 0f ) ) {
+				_renderer.renderDialog( _dialog );
+			}
+			_renderer.endHudBatch();
 		}
-		_renderer.renderHud();
-		if( ( _dialog != null ) && ( _dialogTimer < 0f ) ) {
-			_renderer.renderDialog( _dialog );
-		}
-		_renderer.endHudBatch();
 	}
 
 	public void dispose() {
@@ -806,8 +868,7 @@ public class GameBoard {
 		int level = GameState.getLevel();
 		int score = GameState.getScore();
 		_game.saveScore( level, score );
-		_music.stop();
-		_music.dispose();
+		ResourceManager.getInstance().getGameMusic().stop();
 		_gameActive = false;
 	}
 }

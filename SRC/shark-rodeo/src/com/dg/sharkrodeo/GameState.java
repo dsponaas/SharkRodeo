@@ -39,6 +39,24 @@ public class GameState {
 		_sprintDuration = _maxSprintDuration;
 	}
 	
+	public static void menuReset() {
+		_score = 0;
+		_lives = 2;
+		_multiplier = 1;
+		_1upsReceivedThisLevel = 0;
+		_multiplierTime = 0f;
+		_gameTime = 0f;
+		_curLevel = 4;
+		_timeUntilSharkSpawn = 0f;
+		_timeUntilWaveSpawn = 0f;
+		_timeUntilWhirlpoolSpawn = 0f;
+		_sharksRemaining = 20;
+		
+		_maxSprintDuration = SharkRodeoConstants.SPRINT_DURATION;
+		_sprintRechargeRate = SharkRodeoConstants.SPRINT_RECHARGE_RATE;
+		_sprintDuration = _maxSprintDuration;
+	}
+	
 	public static void initLevel() {
 		_sharksRemaining = LevelInfo.getDelayedNumSharks( _curLevel );
 		_gameTime = 0f;

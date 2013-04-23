@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.dg.sharkrodeo.ResourceManager;
 import com.dg.sharkrodeo.SharkRodeo;
 import com.dg.sharkrodeo.SharkRodeoConstants;
 import com.dg.sharkrodeo.Tweens.FadeTween;
@@ -26,7 +27,9 @@ public class SplashScreen implements Screen {
 	TweenManager _tweenManager;
 	
 	public SplashScreen(SharkRodeo game) {
+		ResourceManager.getInstance().initialize();
 		_game = game;
+		ResourceManager.getInstance().getMenuMusic().play();
 	}
 	
 	@Override
@@ -35,8 +38,6 @@ public class SplashScreen implements Screen {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		_tweenManager.update(delta);
-		
-//		Gdx.app.log(MyGdxGameConstants.LOG_TAG, "craptar");
 		
 		_batch.begin();
 		_splashSprite.draw(_batch);

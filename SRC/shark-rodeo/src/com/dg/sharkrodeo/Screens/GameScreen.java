@@ -2,6 +2,7 @@ package com.dg.sharkrodeo.Screens;
 
 import com.badlogic.gdx.Screen;
 import com.dg.sharkrodeo.GameBoard;
+import com.dg.sharkrodeo.ResourceManager;
 import com.dg.sharkrodeo.SharkRodeo;
 
 public class GameScreen implements Screen {
@@ -13,6 +14,7 @@ public class GameScreen implements Screen {
 		_game = game;
 		
 		//move this to an init() method?
+		ResourceManager.getInstance().getMenuMusic().stop();
 		GameBoard.getInstance().startGame( _game ); // force creation of gameboard
 	}
 	
@@ -23,7 +25,7 @@ public class GameScreen implements Screen {
 		{
 			_game.setScreen(new MenuScreen(_game));
 		}
-		GameBoard.getInstance().render(delta);
+		GameBoard.getInstance().render(delta, true);
 		
 	}
 

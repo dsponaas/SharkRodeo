@@ -3,6 +3,7 @@ package com.dg.sharkrodeo;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -19,9 +20,13 @@ public class ResourceManager {
 	private TextureAtlas _playerAtlas;
 //	private TextureAtlas _hudAtlas;
 	private TextureAtlas _backgroundAtlas;
+	private TextureAtlas _menuAtlas;
 	private HashMap<String, AnimationSequence> _sharkAnims;
 	private HashMap<String, AnimationSequence> _playerAnims;
 	private Sound _deathNoise;
+	private Music _gameMusic;
+	private Music _menuMusic;
+
 	
 	private ResourceManager() {
 	}
@@ -32,10 +37,16 @@ public class ResourceManager {
 		_dialogAtlas = new TextureAtlas( SharkRodeoConstants.getDialogPack() );
 		_waveAtlas = new TextureAtlas( "data/wave.pack" );//TODO: make this variable
 		_whirlpoolAtlas = new TextureAtlas( "data/whirlpool.pack" );//TODO: make this variable
+		_menuAtlas = new TextureAtlas( "data/menu.pack" );//TODO: make this variable
 //		_hudAtlas = new TextureAtlas( SharkRodeoConstants.getHudPack() );
 		initPlayerAnims();
 		initSharkAnims();
-		_deathNoise = Gdx.audio.newSound( Gdx.files.internal( "data/WilhelmScream.ogg" ) );;
+		_deathNoise = Gdx.audio.newSound( Gdx.files.internal( "data/WilhelmScream.ogg" ) );
+		_gameMusic = Gdx.audio.newMusic( Gdx.files.internal( "data/test4_looping2.ogg" ) );
+		_gameMusic.setLooping( true );
+		_menuMusic = Gdx.audio.newMusic( Gdx.files.internal( "data/menu.ogg" ) );
+		_menuMusic.setLooping( true );
+
 	}
 	
 	private void initPlayerAnims() {
@@ -167,6 +178,10 @@ public class ResourceManager {
 		return _backgroundAtlas.findRegion( name );
 	}
 	
+	public TextureRegion getMenuTexture( String name ) {
+		return _menuAtlas.findRegion( name );
+	}
+	
 	public AnimationSequence getSkarkAnim( String anim ) {
 		return ( AnimationSequence )_sharkAnims.get( anim );
 	}
@@ -179,6 +194,14 @@ public class ResourceManager {
 		return _deathNoise;
 	}
 	
+	public Music getGameMusic() {
+		return _gameMusic;
+	}
+	
+	public Music getMenuMusic() {
+		return _menuMusic;
+	}
+	
 	public void dispose() {
 //		_powerupAtlas.dispose();
 		_dialogAtlas.dispose();
@@ -188,7 +211,10 @@ public class ResourceManager {
 		_playerAtlas.dispose();
 //		_hudAtlas.dispose();
 		_backgroundAtlas.dispose();
+		_menuAtlas.dispose();
 		_deathNoise.dispose();
+		_gameMusic.dispose();
+		_menuMusic.dispose();
 	}
 	
 }

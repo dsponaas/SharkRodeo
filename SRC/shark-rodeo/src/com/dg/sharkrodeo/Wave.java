@@ -70,28 +70,24 @@ public class Wave {
 			velocity.set( 0f, _speed );
 			if( _position.y > ( SharkRodeoConstants.getGameBoardHeight() + ( float )( Gdx.graphics.getHeight() / 2 ) ) ) {
 				stillAliveFlag = false;
-				Gdx.app.log( SharkRodeoConstants.LOG_TAG, "WAVE DONE!" );
 			}
 			break;
 		case DOWN:
 			velocity.set( 0f, -1f * _speed );
 			if( _position.y < ( float )( Gdx.graphics.getHeight() / -2 ) ) {
 				stillAliveFlag = false;
-				Gdx.app.log( SharkRodeoConstants.LOG_TAG, "WAVE DONE!" );
 			}
 			break;
 		case LEFT:
 			velocity.set( -1f * _speed, 0f );
 			if( _position.x < ( float )( Gdx.graphics.getWidth() / -2 ) ) {
 				stillAliveFlag = false;
-				Gdx.app.log( SharkRodeoConstants.LOG_TAG, "WAVE DONE!" );
 			}
 			break;
 		case RIGHT:
 			velocity.set( _speed, 0f );
 			if( _position.x > ( SharkRodeoConstants.getGameBoardWidth() + ( float )( Gdx.graphics.getWidth() / 2 ) ) ) {
 				stillAliveFlag = false;
-				Gdx.app.log( SharkRodeoConstants.LOG_TAG, "WAVE DONE!" );
 			}
 			break;
 		}
