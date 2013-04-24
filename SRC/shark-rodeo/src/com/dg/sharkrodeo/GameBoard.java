@@ -186,6 +186,7 @@ public class GameBoard {
 		ResourceManager.getInstance().getGameMusic().play();
 		
 		resetCamera();
+//		GameState.initLevel();
 	}
 	
 	private void pause() {

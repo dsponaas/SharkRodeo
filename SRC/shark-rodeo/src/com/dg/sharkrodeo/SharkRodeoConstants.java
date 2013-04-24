@@ -122,8 +122,8 @@ public class SharkRodeoConstants {
 	private static final float SHARK_DEST_ALERT_DISTANCE_SQUARED_128 = 40000f;
 	private static final float SHARK_DEST_ALERT_DISTANCE_SQUARED_256 = 160000f;
 	/**************************************************************************************************************************/
-	private static final float PLAYER_HITBOX_RADIUS_128 = 16f;
-	private static final float PLAYER_HITBOX_RADIUS_256 = 32f;
+	private static final float PLAYER_HITBOX_RADIUS_128 = 24f;
+	private static final float PLAYER_HITBOX_RADIUS_256 = 48f;
 	/**************************************************************************************************************************/
 	private static final float WAVE_SPEED_128 = 200f;
 	private static final float WAVE_SPEED_256 = 400f;

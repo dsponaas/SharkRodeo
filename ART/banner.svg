@@ -7,6 +7,7 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="700"
@@ -19,7 +20,30 @@
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
-     id="defs4" />
+     id="defs4">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient2997">
+      <stop
+         style="stop-color:#aa0000;stop-opacity:1;"
+         offset="0"
+         id="stop2999" />
+      <stop
+         style="stop-color:#550000;stop-opacity:1"
+         offset="1"
+         id="stop3001" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2997"
+       id="linearGradient3003"
+       x1="39.14341"
+       y1="950.08423"
+       x2="39.648487"
+       y2="985.18701"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0082481,0,0,1.0082481,-1.0577968,-10.642246)" />
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -27,9 +51,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="241.06016"
-     inkscape:cy="122.45542"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="314.93924"
+     inkscape:cy="164.73858"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -59,7 +83,7 @@
        xml:space="preserve"
        id="flowRoot2985"
        style="font-size:72px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:True Crimes;-inkscape-font-specification:True Crimes"
-       transform="translate(0,952.36218)"><flowRegion
+       transform="matrix(1.0040824,0,0,1.0124311,-1.0534264,953.51471)"><flowRegion
          id="flowRegion2987"><rect
            id="rect2989"
            width="517.14288"
@@ -67,24 +91,31 @@
            x="-2.8571429"
            y="20"
            style="font-size:72px" /></flowRegion><flowPara
-         id="flowPara2991"></flowPara></flowRoot>    <rect
-       style="color:#000000;fill:#000000;fill-opacity:0.87450981;fill-rule:evenodd;stroke:none;stroke-width:0.86099999999999999;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="flowPara2991" /></flowRoot>    <rect
+       style="color:#000000;fill:#000000;fill-opacity:0.8745098;fill-rule:evenodd;stroke:none;stroke-width:0.861;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        id="rect2997"
-       width="692.15308"
-       height="153.80026"
-       x="3.9285715"
-       y="895.34766"
-       ry="27.342268" />
+       width="694.97864"
+       height="155.71217"
+       x="2.8911827"
+       y="895.79144"
+       ry="27.682163" />
     <text
        xml:space="preserve"
-       style="font-size:110.62240601000001000px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#800000;fill-opacity:1;stroke:none;font-family:True Crimes;-inkscape-font-specification:True Crimes"
-       x="19.19002"
-       y="1006.8819"
+       style="font-size:111.53482819px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient3003);fill-opacity:1;stroke:none;font-family:True Crimes;-inkscape-font-specification:True Crimes"
+       x="18.290504"
+       y="1004.5444"
        id="text2993"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       transform="scale(0.99586834,1.0041488)"><tspan
          sodipodi:role="line"
          id="tspan2995"
-         x="19.19002"
-         y="1006.8819">SHARK RODEO</tspan></text>
+         x="18.290504"
+         y="1004.5444"
+         style="fill:url(#linearGradient3003);fill-opacity:1">SHARK RODEO</tspan></text>
+    <path
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.861;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 27.658995,892.37111 c -15.319314,0 -27.65006655,12.6817 -27.65006655,28.43701 l 0,103.10368 c 0,15.7553 12.33075255,28.4371 27.65006655,28.4371 l 644.692755,0 c 15.31932,0 27.65006,-12.6818 27.65006,-28.4371 l 0,-103.10368 c 0,-15.75531 -12.33074,-28.43701 -27.65006,-28.43701 l -644.692755,0 z m 3.065486,3.49611 637.863709,0 c 14.71201,0 26.55741,12.18252 26.55741,27.31325 l 0,98.98313 c 0,15.1308 -11.8454,27.3134 -26.55741,27.3134 l -637.863709,0 c -14.712017,0 -26.5574194,-12.1826 -26.5574194,-27.3134 l 0,-98.98313 c 0,-15.13073 11.8454024,-27.31325 26.5574194,-27.31325 z"
+       id="rect2997-5"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>

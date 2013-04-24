@@ -25,15 +25,13 @@ public class MenuScreen implements Screen {
 
 	private SharkRodeo _game;
 	private Stage _stage;
-	private BitmapFont _blackFont;
-	private BitmapFont _vinerFont;
-//	private BitmapFont _whiteFont;
 	private TextureAtlas _atlas;
 	private Skin _skin;
 	private SpriteBatch _batch;
 	private ImageButton _startButton;
 //	private TextButton _sizeButton;
 	private ImageButton _scoreButton;
+	private ImageButton _creditsButton;
 //	private Label _label;
 	
 	public MenuScreen(SharkRodeo game) {
@@ -70,11 +68,6 @@ public class MenuScreen implements Screen {
 		
 		Gdx.input.setInputProcessor(_stage);
 		
-		TextButtonStyle style = new TextButtonStyle();
-		style.up = _skin.getDrawable("buttonnormal");
-		style.down = _skin.getDrawable("buttonpressed");
-		style.font = _blackFont;
-		
 		int BUFFER = 12;
 		
 		TextureRegion startButtonTex = ResourceManager.getInstance().getMenuTexture( "startButton" );
@@ -87,12 +80,18 @@ public class MenuScreen implements Screen {
 		_scoreButton.setX((Gdx.graphics.getWidth() / 2) - (_scoreButton.getWidth() / 2));
 		_scoreButton.setY(((Gdx.graphics.getHeight() / 3) * 2) - (2 * _scoreButton.getHeight()) - (2 * BUFFER));
 		
+		TextureRegion creditsButtonTex = ResourceManager.getInstance().getMenuTexture( "creditsButton" );
+		_creditsButton = new ImageButton( new TextureRegionDrawable( creditsButtonTex ) );
+		_creditsButton.setX((Gdx.graphics.getWidth() / 2) - (_creditsButton.getWidth() / 2));
+		_creditsButton.setY(((Gdx.graphics.getHeight() / 3) * 2) - (3 * _creditsButton.getHeight()) - (3 * BUFFER));
+		
 		_startButton.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				return true;
 			}
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				GameState.reset();
+//				GameState.initLevel();
 //				GameBoard.getInstance().startGame( _game );
 				_game.setScreen(new GameScreen(_game));
 			}
@@ -107,12 +106,14 @@ public class MenuScreen implements Screen {
 			}
 		});
 		
-//		LabelStyle labelStyle = new LabelStyle(_vinerFont, Color.WHITE);
-//		_label = new Label("SHARK RODEO", labelStyle);
-//		_label.setX(0);
-//		_label.setY((Gdx.graphics.getHeight() / 3) * 2 + 100);
-//		_label.setWidth(Gdx.graphics.getWidth());
-//		_label.setAlignment(Align.center);
+		_creditsButton.addListener(new InputListener() {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				return true;
+			}
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				return;
+			}
+		});
 		
 		TextureRegion bannerTex = ResourceManager.getInstance().getMenuTexture( "banner" );
 		Image banner = new Image( bannerTex );
@@ -122,7 +123,7 @@ public class MenuScreen implements Screen {
 		_stage.addActor(banner);
 		_stage.addActor(_startButton);
 		_stage.addActor(_scoreButton);
-//		_stage.addActor(_label);
+		_stage.addActor(_creditsButton);
 	}
 
 	@Override
@@ -131,10 +132,6 @@ public class MenuScreen implements Screen {
 		_atlas = new TextureAtlas("data/button.pack");
 		_skin = new Skin();
 		_skin.addRegions(_atlas);
-//		_whiteFont = new BitmapFont(Gdx.files.internal("data/whitefont.fnt"), false);
-		_blackFont = new BitmapFont(Gdx.files.internal("data/font.fnt"), false);
-		_vinerFont = new BitmapFont(Gdx.files.internal("data/segoe_92_white_bold.fnt"), false);
-//		_banner = ResourceManager.getInstance().getMenuTexture( "banner" );
 	}
 
 	@Override
@@ -157,9 +154,6 @@ public class MenuScreen implements Screen {
 		_batch.dispose();
 		_skin.dispose();
 		_atlas.dispose();
-//		_whiteFont.dispose();
-		_vinerFont.dispose();
-		_blackFont.dispose();
 		_stage.dispose();
 	}
 }

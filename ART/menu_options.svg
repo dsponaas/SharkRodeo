@@ -7,6 +7,7 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="450"
@@ -17,9 +18,159 @@
    inkscape:export-filename="C:\Users\sponaas\Desktop\SHARK_RODEO\ART\menu\startButton.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
-   sodipodi:docname="New document 3">
+   sodipodi:docname="menu_options.svg">
   <defs
-     id="defs3771" />
+     id="defs3771">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3964">
+      <stop
+         style="stop-color:#aa0000;stop-opacity:1;"
+         offset="0"
+         id="stop3966" />
+      <stop
+         style="stop-color:#550000;stop-opacity:1"
+         offset="1"
+         id="stop3968" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3896">
+      <stop
+         style="stop-color:#aa0000;stop-opacity:1;"
+         offset="0"
+         id="stop3898" />
+      <stop
+         style="stop-color:#550000;stop-opacity:1"
+         offset="1"
+         id="stop3900" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient2997">
+      <stop
+         style="stop-color:#aa0000;stop-opacity:1;"
+         offset="0"
+         id="stop2999" />
+      <stop
+         style="stop-color:#550000;stop-opacity:1"
+         offset="1"
+         id="stop3001" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2997"
+       id="linearGradient3003"
+       x1="22.375"
+       y1="975.48718"
+       x2="22.875"
+       y2="1001.3622"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0043511,0,0,1.004351,-177.48478,206.55602)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2997"
+       id="linearGradient3807"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0043511,0,0,1.004351,-177.48478,206.55602)"
+       x1="22.375"
+       y1="975.48718"
+       x2="22.875"
+       y2="1001.3622" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2997"
+       id="linearGradient3811"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.97759234,0,0,0.97759224,1.4260755,35.536024)"
+       x1="22.375"
+       y1="975.48718"
+       x2="22.875"
+       y2="1001.3622" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2997-8"
+       id="linearGradient3811-6"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.97759235,0,0,0.97759225,7.0172901,-812.10637)"
+       x1="22.375"
+       y1="975.48718"
+       x2="22.875"
+       y2="1001.3622" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient2997-8">
+      <stop
+         style="stop-color:#aa0000;stop-opacity:1;"
+         offset="0"
+         id="stop2999-8" />
+      <stop
+         style="stop-color:#550000;stop-opacity:1"
+         offset="1"
+         id="stop3001-2" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2997-8"
+       id="linearGradient3855"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.97759233,0,0,0.97759223,1.9207379,32.503653)"
+       x1="22.375"
+       y1="975.48718"
+       x2="22.875"
+       y2="1001.3622" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3896"
+       id="linearGradient3902"
+       x1="83.125"
+       y1="-74.1875"
+       x2="83.25"
+       y2="-45.9375"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-61.00574,114.99645)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3896-0"
+       id="linearGradient3902-6"
+       x1="83.125"
+       y1="-74.1875"
+       x2="83.25"
+       y2="-45.9375"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-61.008223,115.02539)" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3896-0">
+      <stop
+         style="stop-color:#aa0000;stop-opacity:1;"
+         offset="0"
+         id="stop3898-4" />
+      <stop
+         style="stop-color:#550000;stop-opacity:1"
+         offset="1"
+         id="stop3900-9" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3896-0"
+       id="linearGradient3919"
+       x1="83.125"
+       y1="-74.1875"
+       x2="83.25"
+       y2="-45.9375"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-61.00574,114.99645)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3964"
+       id="linearGradient3970"
+       x1="104.25"
+       y1="45"
+       x2="104.5"
+       y2="74.0625"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -27,9 +178,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="154.04771"
-     inkscape:cy="19.613776"
+     inkscape:zoom="2"
+     inkscape:cx="69.185634"
+     inkscape:cy="77.581355"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -57,25 +208,32 @@
      transform="translate(0,-932.36218)"
      style="display:inline"
      sodipodi:insensitive="true">
+    <path
+       inkscape:connector-curvature="0"
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.861;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 21.804195,932.36726 c -12.0735837,0 -21.79638895,9.5183 -21.79638895,21.33794 l 0,77.3162 c 0,11.8196 9.72280525,21.3379 21.79638895,21.3379 l 406.415035,0 c 12.07358,0 21.79639,-9.5183 21.79639,-21.3379 l 0,-77.3162 c 0,-11.81964 -9.72281,-21.33794 -21.79639,-21.33794 l -406.415035,0 z m 2.736077,3.09987 400.451008,0 c 11.40665,0 20.59743,8.99746 20.59743,20.1642 l 0,73.07267 c 0,11.1667 -9.19078,20.1642 -20.59743,20.1642 l -400.451008,0 c -11.406655,0 -20.5974338,-8.9975 -20.5974338,-20.1642 l 0,-73.07267 c 0,-11.16674 9.1907788,-20.1642 20.5974338,-20.1642 z"
+       id="rect2997-1" />
     <rect
        style="color:#000000;fill:#000000;fill-opacity:0.8745098;fill-rule:evenodd;stroke:none;stroke-width:0.861;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        id="rect2997"
-       width="448.91858"
-       height="117.72884"
-       x="0.70917618"
-       y="933.67627"
-       ry="20.929571" />
+       width="443.59479"
+       height="113.86221"
+       x="2.6422439"
+       y="935.16772"
+       ry="20.242168" />
     <text
        xml:space="preserve"
-       style="font-size:80.22196198px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#800000;fill-opacity:1;stroke:none;font-family:True Crimes;-inkscape-font-specification:True Crimes"
-       x="13.561678"
-       y="1015.8566"
+       style="font-size:78.42436981px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient3811);fill-opacity:1;stroke:none;font-family:True Crimes;-inkscape-font-specification:True Crimes"
+       x="14.683873"
+       y="1028.6295"
        id="text3795"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       transform="scale(1.0107903,0.9893249)"><tspan
          sodipodi:role="line"
          id="tspan3797"
-         x="13.561678"
-         y="1015.8566">START GAME</tspan></text>
+         x="14.683873"
+         y="1028.6295"
+         style="fill:url(#linearGradient3811);fill-opacity:1">START GAME</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -83,24 +241,62 @@
      inkscape:label="Layer 2"
      style="display:none"
      sodipodi:insensitive="true">
+    <path
+       inkscape:connector-curvature="0"
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.861;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 21.811436,-0.0084905 c -12.073584,0 -21.7963891,9.5183 -21.7963891,21.3379415 l 0,77.3162 c 0,11.819599 9.7228051,21.337899 21.7963891,21.337899 l 406.415034,0 c 12.07358,0 21.79639,-9.5183 21.79639,-21.337899 l 0,-77.3162 c 0,-11.8196415 -9.72281,-21.3379415 -21.79639,-21.3379415 l -406.415034,0 z m 2.736077,3.09987 400.451007,0 c 11.40665,0 20.59743,8.9974595 20.59743,20.1642015 l 0,73.07267 c 0,11.166699 -9.19078,20.164199 -20.59743,20.164199 l -400.451007,0 c -11.406655,0 -20.597434,-8.9975 -20.597434,-20.164199 l 0,-73.07267 c 0,-11.166742 9.190779,-20.1642015 20.597434,-20.1642015 z"
+       id="rect2997-1-7" />
     <rect
        style="color:#000000;fill:#000000;fill-opacity:0.8745098;fill-rule:evenodd;stroke:none;stroke-width:0.861;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="rect2997-8"
-       width="446.39096"
-       height="117.02728"
-       x="2.0268226"
-       y="1.1355796"
-       ry="20.804852" />
+       id="rect2997-7"
+       width="443.59479"
+       height="113.86221"
+       x="2.6494837"
+       y="2.7919765"
+       ry="20.242168" />
     <text
        xml:space="preserve"
-       style="font-size:75.99695587px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#800000;fill-opacity:1;stroke:none;font-family:True Crimes;-inkscape-font-specification:True Crimes"
-       x="14.535994"
-       y="84.225967"
+       style="font-size:75.99695587px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient3902);fill-opacity:1;stroke:none;font-family:True Crimes;-inkscape-font-specification:True Crimes"
+       x="12.220121"
+       y="83.96402"
        id="text3807"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3809"
-         x="14.535994"
-         y="84.225967">HIGH SCORES</tspan></text>
+         x="12.220121"
+         y="83.96402"
+         style="fill:url(#linearGradient3902);fill-opacity:1">HIGH SCORES</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Layer 3"
+     style="display:none"
+     sodipodi:insensitive="true">
+    <path
+       inkscape:connector-curvature="0"
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.861;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 21.808947,0.02044716 c -12.0735802,0 -21.7963902,9.51830004 -21.7963902,21.33793984 l 0,77.3162 c 0,11.819603 9.72281,21.337903 21.7963902,21.337903 l 406.415033,0 c 12.07358,0 21.79639,-9.5183 21.79639,-21.337903 l 0,-77.3162 c 0,-11.8196398 -9.72281,-21.33793984 -21.79639,-21.33793984 l -406.415033,0 z m 2.73608,3.09987004 400.451003,0 c 11.40665,0 20.59743,8.9974598 20.59743,20.1641998 l 0,73.07267 c 0,11.166703 -9.19078,20.164203 -20.59743,20.164203 l -400.451003,0 c -11.40666,0 -20.5974302,-8.9975 -20.5974302,-20.164203 l 0,-73.07267 c 0,-11.16674 9.1907702,-20.1641998 20.5974302,-20.1641998 z"
+       id="rect2997-1-7-4" />
+    <rect
+       style="color:#000000;fill:#000000;fill-opacity:0.8745098;fill-rule:evenodd;stroke:none;stroke-width:0.861;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect2997-7-6"
+       width="443.59479"
+       height="113.86221"
+       x="2.6469905"
+       y="2.8209105"
+       ry="20.242168" />
+    <text
+       xml:space="preserve"
+       style="font-size:76.29152679px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient3970);fill-opacity:1;stroke:none;font-family:True Crimes;-inkscape-font-specification:True Crimes"
+       x="92.303444"
+       y="85.241928"
+       id="text3960"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3962"
+         x="92.303444"
+         y="85.241928"
+         style="fill:url(#linearGradient3970);fill-opacity:1">CREDITS</tspan></text>
   </g>
 </svg>

@@ -10,16 +10,23 @@ banner
   orig: 700, 160
   offset: 0, 0
   index: -1
-scoreButton
+creditsButton
   rotate: false
   xy: 0, 120
   size: 450, 120
   orig: 450, 120
   offset: 0, 0
   index: -1
-startButton
+scoreButton
   rotate: false
   xy: 0, 0
+  size: 450, 120
+  orig: 450, 120
+  offset: 0, 0
+  index: -1
+startButton
+  rotate: false
+  xy: 450, 120
   size: 450, 120
   orig: 450, 120
   offset: 0, 0

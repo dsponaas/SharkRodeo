@@ -149,6 +149,10 @@ public class GameState {
 		++_lives;
 	}
 	
+	public static void stupidGameStartSharkNumHack() {
+		_sharksRemaining++;
+	}
+	
 	public static void addToScore( int val )					{ _score += ( val * _multiplier ); }
 	public static void incrementLevel()							{ ++_curLevel; }
 	

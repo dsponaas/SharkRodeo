@@ -2,13 +2,13 @@ package com.dg.sharkrodeo.Screens;
 
 import com.badlogic.gdx.Screen;
 import com.dg.sharkrodeo.GameBoard;
+import com.dg.sharkrodeo.GameState;
 import com.dg.sharkrodeo.ResourceManager;
 import com.dg.sharkrodeo.SharkRodeo;
 
 public class GameScreen implements Screen {
 
 	private SharkRodeo _game;
-//	private GameBoard _gameBoard;
 	
 	public GameScreen(SharkRodeo game) {
 		_game = game;
@@ -16,6 +16,8 @@ public class GameScreen implements Screen {
 		//move this to an init() method?
 		ResourceManager.getInstance().getMenuMusic().stop();
 		GameBoard.getInstance().startGame( _game ); // force creation of gameboard
+		GameState.initLevel();
+		GameState.stupidGameStartSharkNumHack();
 	}
 	
 	@Override
