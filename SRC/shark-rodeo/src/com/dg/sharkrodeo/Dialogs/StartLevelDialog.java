@@ -17,6 +17,7 @@ public class StartLevelDialog extends SharkRodeoDialog
 		GameState.initLevel();
 		_board.initLevel();
 		_board.spawnPlayer();
+		_board.startMusic();
 	}
 
 }

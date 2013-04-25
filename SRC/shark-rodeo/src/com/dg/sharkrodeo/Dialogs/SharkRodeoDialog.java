@@ -30,6 +30,7 @@ public class SharkRodeoDialog {
 		_touchPos = new Vector2(_renderPos);
 		
 		_ignoreInputTime = SharkRodeoConstants.DIALOG_IGNORE_INPUT_TIME;
+		GameBoard.getInstance().fadeMusic( SharkRodeoConstants.MUSIC_FADE_TIME );
 		
 		_board = board;
 	}

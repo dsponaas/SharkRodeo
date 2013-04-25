@@ -24,11 +24,14 @@ public class Shark extends GameObject {
 		setAccelerationRate( SharkRodeoConstants.getSharkAcceleration() );
 		setMaxSpeed( SharkRodeoConstants.getSharkMaxSpeed() );
 		
-		initBoundsList( 2 );
+		initBoundsList( 3 );
 		Circle bounds = new Circle( this.getPosition().x, this.getPosition().y, SharkRodeoConstants.getSharkMouthHitboxRadius() );
 		Circle bounds2 = new Circle( this.getPosition().x, this.getPosition().y, SharkRodeoConstants.getSharkBackHitboxRadius() );
+		Circle bounds3 = new Circle( this.getPosition().x, this.getPosition().y, SharkRodeoConstants.getSharkBackHitboxRadius() );
 		setBounds( 0, bounds, new Vector2( 0, 0 ) );
 		setBounds( 1, bounds2, new Vector2( 0, 0 ) );
+		setBounds( 2, bounds3, new Vector2( 0, 0 ) );
+		_boundsOffsets[ 2 ].set( 0, 0 );
 		
 		this.setXPosition( 800f );
 		this.setYPosition( 800f );
@@ -222,7 +225,7 @@ public class Shark extends GameObject {
 				this.setAnimState( "move_up" );
 			}
 			_boundsOffsets[ 0 ].set( 0, distance );
-			_boundsOffsets[ 1 ].set( 0, -1f * distance );
+			_boundsOffsets[ 1 ].set( 0, -.8f * distance );
 			break;
 		case DOWN:
 			if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.THRASHING ) ) {
@@ -232,7 +235,7 @@ public class Shark extends GameObject {
 				this.setAnimState( "move_down" );
 			}
 			_boundsOffsets[ 0 ].set( 0, -1f * distance );
-			_boundsOffsets[ 1 ].set( 0, distance );
+			_boundsOffsets[ 1 ].set( 0, 0.8f * distance );
 			break;
 		case LEFT:
 			if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.THRASHING ) ) {
@@ -242,7 +245,7 @@ public class Shark extends GameObject {
 				this.setAnimState( "move_left" );
 			}
 			_boundsOffsets[ 0 ].set( -1f * distance, 0 );
-			_boundsOffsets[ 1 ].set( distance, 0 );
+			_boundsOffsets[ 1 ].set( 0.8f * distance, 0 );
 			break;
 		case RIGHT:
 			if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.THRASHING ) ) {
@@ -252,7 +255,7 @@ public class Shark extends GameObject {
 				this.setAnimState( "move_right" );
 			}
 			_boundsOffsets[ 0 ].set( distance, 0 );
-			_boundsOffsets[ 1 ].set( -1f * distance, 0 );
+			_boundsOffsets[ 1 ].set( -0.8f * distance, 0 );
 			break;
 		case UP_LEFT:
 			if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.THRASHING ) ) {
@@ -262,7 +265,7 @@ public class Shark extends GameObject {
 				this.setAnimState( "move_upleft" );
 			}
 			_boundsOffsets[ 0 ].set( -1f * diagDist, diagDist );
-			_boundsOffsets[ 1 ].set( diagDist, -1f * diagDist );
+			_boundsOffsets[ 1 ].set( 0.8f * diagDist, -0.8f * diagDist );
 			break;
 		case UP_RIGHT:
 			if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.THRASHING ) ) {
@@ -272,7 +275,7 @@ public class Shark extends GameObject {
 				this.setAnimState( "move_upright" );
 			}
 			_boundsOffsets[ 0 ].set( diagDist, diagDist );
-			_boundsOffsets[ 1 ].set( -1f * diagDist, -1f * diagDist );
+			_boundsOffsets[ 1 ].set( -0.8f * diagDist, -0.8f * diagDist );
 			break;
 		case DOWN_LEFT:
 			if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.THRASHING ) ) {
@@ -282,7 +285,7 @@ public class Shark extends GameObject {
 				this.setAnimState( "move_downleft" );
 			}
 			_boundsOffsets[ 0 ].set( -1f * diagDist, -1f * diagDist );
-			_boundsOffsets[ 1 ].set( diagDist, diagDist );
+			_boundsOffsets[ 1 ].set( 0.8f * diagDist, 0.8f * diagDist );
 			break;
 		case DOWN_RIGHT:
 			if( ( _sharkState == SharkState.MOUNTED ) || ( _sharkState == SharkState.THRASHING ) ) {
@@ -292,7 +295,7 @@ public class Shark extends GameObject {
 				this.setAnimState( "move_downright" );
 			}
 			_boundsOffsets[ 0 ].set( diagDist, -1f * diagDist );
-			_boundsOffsets[ 1 ].set( -1f * diagDist, diagDist );
+			_boundsOffsets[ 1 ].set( -0.8f * diagDist, 0.8f * diagDist );
 			break;
 		} // switch( newDirection )
 	} // private void changeDirection( Direction newDirection )

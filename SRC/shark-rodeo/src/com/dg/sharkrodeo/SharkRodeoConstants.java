@@ -17,7 +17,8 @@ public class SharkRodeoConstants {
 	public static final double SHARK_REGULAR_TURN_SPEED = Math.PI / 75.0;
 	public static final double SHARK_LUNGE_TURN_SPEED = Math.PI / 40.0;
 	public static final float SHARK_LUNGE_MULTIPLIER = 1.8f;
-	public static final float DIALOG_IGNORE_INPUT_TIME = 0.75f;
+	public static final float DIALOG_IGNORE_INPUT_TIME = 1f;
+	public static final float MUSIC_FADE_TIME = 4f;
 	public static final float POWERUP_FADE_TIMER = 2f;
 	public static final float POWERUP_TIMER = 8f;
 	public static final float SPRINT_DURATION = 5f;
@@ -89,8 +90,8 @@ public class SharkRodeoConstants {
 	private static final float CAMERA_SHAKE_MAX_128 = 100f;
 	private static final float CAMERA_SHAKE_MAX_256 = 200f;
 	/**************************************************************************************************************************/
-	private static final float PLAYER_ACCELERATION_128 = 500f;
-	private static final float PLAYER_ACCELERATION_256 = 1000f;
+	private static final float PLAYER_ACCELERATION_128 = 600f;
+	private static final float PLAYER_ACCELERATION_256 = 1200f;
 	/**************************************************************************************************************************/
 	private static final float PLAYER_MAX_SPEED_128 = 260f;
 	private static final float PLAYER_MAX_SPEED_256 = 460f;
@@ -122,8 +123,8 @@ public class SharkRodeoConstants {
 	private static final float SHARK_DEST_ALERT_DISTANCE_SQUARED_128 = 40000f;
 	private static final float SHARK_DEST_ALERT_DISTANCE_SQUARED_256 = 160000f;
 	/**************************************************************************************************************************/
-	private static final float PLAYER_HITBOX_RADIUS_128 = 24f;
-	private static final float PLAYER_HITBOX_RADIUS_256 = 48f;
+	private static final float PLAYER_HITBOX_RADIUS_128 = 20f;
+	private static final float PLAYER_HITBOX_RADIUS_256 = 40f;
 	/**************************************************************************************************************************/
 	private static final float WAVE_SPEED_128 = 200f;
 	private static final float WAVE_SPEED_256 = 400f;

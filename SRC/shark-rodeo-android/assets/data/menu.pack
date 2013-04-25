@@ -5,29 +5,36 @@ filter: Nearest,Nearest
 repeat: none
 banner
   rotate: false
-  xy: 0, 240
+  xy: 1, 276
   size: 700, 160
   orig: 700, 160
   offset: 0, 0
   index: -1
 creditsButton
   rotate: false
-  xy: 0, 120
-  size: 450, 120
-  orig: 450, 120
+  xy: 1, 184
+  size: 450, 92
+  orig: 450, 92
+  offset: 0, 0
+  index: -1
+instructionsButton
+  rotate: false
+  xy: 1, 92
+  size: 450, 92
+  orig: 450, 92
   offset: 0, 0
   index: -1
 scoreButton
   rotate: false
-  xy: 0, 0
-  size: 450, 120
-  orig: 450, 120
+  xy: 1, 0
+  size: 450, 92
+  orig: 450, 92
   offset: 0, 0
   index: -1
 startButton
   rotate: false
-  xy: 450, 120
-  size: 450, 120
-  orig: 450, 120
+  xy: 453, 184
+  size: 450, 92
+  orig: 450, 92
   offset: 0, 0
   index: -1

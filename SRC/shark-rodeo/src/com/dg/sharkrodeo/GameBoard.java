@@ -60,6 +60,10 @@ public class GameBoard {
 	
 	private boolean _gameActive;
 	
+	private boolean _fadeMusic;
+	private float _fadeMusicTime;
+	private float _fadeMusicTotalTime;
+	
 	private SharkRodeo _game;
 		
 	private GameBoard() {
@@ -183,8 +187,6 @@ public class GameBoard {
 		_dialog = new StartLevelDialog( ResourceManager.getInstance().getDialogTexture( "dialog_begin" ), this );
 		pause();
 		
-		ResourceManager.getInstance().getGameMusic().play();
-		
 		resetCamera();
 //		GameState.initLevel();
 	}
@@ -221,6 +223,17 @@ public class GameBoard {
 	public boolean update( float delta ) {
 		if( _dialogTimer > 0f )
 			_dialogTimer -= delta;
+		
+		if( _fadeMusic ) {
+			_fadeMusicTime -= delta;
+			if( _fadeMusicTime < 0f ) {
+				ResourceManager.getInstance().getGameMusic().stop();
+				_fadeMusic = false;
+			}
+			else {
+				ResourceManager.getInstance().getGameMusic().setVolume( _fadeMusicTime / _fadeMusicTotalTime );
+			}
+		}
 		
 		_renderer.setCameraDest( _player.getPosition().x, _player.getPosition().y + ( SharkRodeoConstants.getStatusBarWidth() / 2f ) );
 		_renderer.update( delta );
@@ -843,6 +856,19 @@ public class GameBoard {
 			return true;
 		}
 		return false;
+	}
+	
+	public void startMusic() {
+		_fadeMusic = false;
+		Music music = ResourceManager.getInstance().getGameMusic();
+		music.setVolume( 1f );
+		music.play();
+	}
+	
+	public void fadeMusic( float time ) {
+		_fadeMusic = true;
+		_fadeMusicTime = time;
+		_fadeMusicTotalTime = time;
 	}
 	
 	public float getWidth() 				{ return _bounds.width; }

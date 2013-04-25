@@ -14,6 +14,7 @@ public class PlayerDeathDialog extends SharkRodeoDialog
 	public void onComplete()
 	{
 		_board.spawnPlayer();
+		_board.startMusic();
 	}
 
 }

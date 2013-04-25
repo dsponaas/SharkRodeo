@@ -25,14 +25,11 @@ public class MenuScreen implements Screen {
 
 	private SharkRodeo _game;
 	private Stage _stage;
-	private TextureAtlas _atlas;
-	private Skin _skin;
 	private SpriteBatch _batch;
 	private ImageButton _startButton;
-//	private TextButton _sizeButton;
 	private ImageButton _scoreButton;
 	private ImageButton _creditsButton;
-//	private Label _label;
+	private ImageButton _instructionsButton;
 	
 	public MenuScreen(SharkRodeo game) {
 		GameState.menuReset();
@@ -55,7 +52,6 @@ public class MenuScreen implements Screen {
 		
 		_stage.act(delta);
 		_batch.begin();
-		//_whiteFont.draw(_batch, "SHARK RODEO, BITCHES!", (Gdx.graphics.getWidth() / 2) - 15 , (Gdx.graphics.getHeight() / 2) - 100);
 		_stage.draw();
 		_batch.end();
 	}
@@ -75,15 +71,22 @@ public class MenuScreen implements Screen {
 		_startButton.setX((Gdx.graphics.getWidth() / 2) - (_startButton.getWidth() / 2));
 		_startButton.setY(((Gdx.graphics.getHeight() / 3) * 2) - (_startButton.getHeight()));
 		
+		TextureRegion instructionsButtonTex = ResourceManager.getInstance().getMenuTexture( "instructionsButton" );
+		_instructionsButton = new ImageButton( new TextureRegionDrawable( instructionsButtonTex ) );
+		_instructionsButton.setX((Gdx.graphics.getWidth() / 2) - (_instructionsButton.getWidth() / 2));
+		_instructionsButton.setY(((Gdx.graphics.getHeight() / 3) * 2) - (2 * _instructionsButton.getHeight()) - (1 * BUFFER));
+		
 		TextureRegion scoreButtonTex = ResourceManager.getInstance().getMenuTexture( "scoreButton" );
 		_scoreButton = new ImageButton( new TextureRegionDrawable( scoreButtonTex ) );
 		_scoreButton.setX((Gdx.graphics.getWidth() / 2) - (_scoreButton.getWidth() / 2));
-		_scoreButton.setY(((Gdx.graphics.getHeight() / 3) * 2) - (2 * _scoreButton.getHeight()) - (2 * BUFFER));
+		_scoreButton.setY(((Gdx.graphics.getHeight() / 3) * 2) - (3 * _scoreButton.getHeight()) - (2 * BUFFER));
 		
 		TextureRegion creditsButtonTex = ResourceManager.getInstance().getMenuTexture( "creditsButton" );
 		_creditsButton = new ImageButton( new TextureRegionDrawable( creditsButtonTex ) );
 		_creditsButton.setX((Gdx.graphics.getWidth() / 2) - (_creditsButton.getWidth() / 2));
-		_creditsButton.setY(((Gdx.graphics.getHeight() / 3) * 2) - (3 * _creditsButton.getHeight()) - (3 * BUFFER));
+		_creditsButton.setY(((Gdx.graphics.getHeight() / 3) * 2) - (4 * _creditsButton.getHeight()) - (3 * BUFFER));
+		
+		//_instructionsButton
 		
 		_startButton.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -115,6 +118,15 @@ public class MenuScreen implements Screen {
 			}
 		});
 		
+		_instructionsButton.addListener(new InputListener() {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				return true;
+			}
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				return;
+			}
+		});
+		
 		TextureRegion bannerTex = ResourceManager.getInstance().getMenuTexture( "banner" );
 		Image banner = new Image( bannerTex );
 		banner.setX( ( Gdx.graphics.getWidth() / 2 ) - ( bannerTex.getRegionWidth() / 2 ));
@@ -124,14 +136,12 @@ public class MenuScreen implements Screen {
 		_stage.addActor(_startButton);
 		_stage.addActor(_scoreButton);
 		_stage.addActor(_creditsButton);
+		_stage.addActor(_instructionsButton);
 	}
 
 	@Override
 	public void show() {
 		_batch = new SpriteBatch();
-		_atlas = new TextureAtlas("data/button.pack");
-		_skin = new Skin();
-		_skin.addRegions(_atlas);
 	}
 
 	@Override
@@ -152,8 +162,6 @@ public class MenuScreen implements Screen {
 	@Override
 	public void dispose() {
 		_batch.dispose();
-		_skin.dispose();
-		_atlas.dispose();
 		_stage.dispose();
 	}
 }
