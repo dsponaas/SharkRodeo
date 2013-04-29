@@ -14,9 +14,10 @@ public class SharkRodeoConstants {
 	public static final float MULTIPLIER_TIME = 20f;
 	public static final float RIDING_SCORE_TIME = .97f; //1 second but we'd prefer to cheat to the lower end
 	public static final float DEFAULT_SHARK_HEALTH = 15f;
-	public static final double SHARK_REGULAR_TURN_SPEED = Math.PI / 75.0;
-	public static final double SHARK_LUNGE_TURN_SPEED = Math.PI / 40.0;
-	public static final float SHARK_LUNGE_MULTIPLIER = 1.8f;
+	public static final double SHARK_REGULAR_TURN_SPEED = Math.PI / 90.0;
+	public static final double SHARK_LUNGE_TURN_SPEED = Math.PI / 50.0;
+	public static final float SHARK_LUNGE_MULTIPLIER = 1.5f;
+	public static final float SHARK_LUNGE_TIMEOUT = 3f;
 	public static final float DIALOG_IGNORE_INPUT_TIME = 1f;
 	public static final float MUSIC_FADE_TIME = 4f;
 	public static final float POWERUP_FADE_TIMER = 2f;

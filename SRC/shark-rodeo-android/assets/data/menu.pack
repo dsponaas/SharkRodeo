@@ -3,38 +3,90 @@ menu.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+credits1
+  rotate: false
+  xy: 1, 560
+  size: 600, 400
+  orig: 600, 400
+  offset: 0, 0
+  index: -1
+credits2
+  rotate: false
+  xy: 1, 160
+  size: 600, 400
+  orig: 600, 400
+  offset: 0, 0
+  index: -1
 banner
   rotate: false
-  xy: 1, 276
+  xy: 1, 0
   size: 700, 160
   orig: 700, 160
   offset: 0, 0
   index: -1
-creditsButton
+nextButton
   rotate: false
-  xy: 1, 184
-  size: 450, 92
-  orig: 450, 92
+  xy: 603, 868
+  size: 240, 92
+  orig: 240, 92
   offset: 0, 0
   index: -1
-instructionsButton
+
+menu2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+credits3
+  rotate: false
+  xy: 1, 584
+  size: 600, 400
+  orig: 600, 400
+  offset: 0, 0
+  index: -1
+instructions1
+  rotate: false
+  xy: 1, 184
+  size: 600, 400
+  orig: 600, 400
+  offset: 0, 0
+  index: -1
+creditsButton
   rotate: false
   xy: 1, 92
   size: 450, 92
   orig: 450, 92
   offset: 0, 0
   index: -1
-scoreButton
+instructionsButton
   rotate: false
   xy: 1, 0
   size: 450, 92
   orig: 450, 92
   offset: 0, 0
   index: -1
-startButton
+scoreButton
   rotate: false
-  xy: 453, 184
+  xy: 453, 92
   size: 450, 92
   orig: 450, 92
+  offset: 0, 0
+  index: -1
+startButton
+  rotate: false
+  xy: 453, 0
+  size: 450, 92
+  orig: 450, 92
+  offset: 0, 0
+  index: -1
+
+menu3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+instructions2
+  rotate: false
+  xy: 1, 0
+  size: 600, 400
+  orig: 600, 400
   offset: 0, 0
   index: -1

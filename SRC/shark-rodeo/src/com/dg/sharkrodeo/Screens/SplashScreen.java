@@ -74,7 +74,7 @@ public class SplashScreen implements Screen {
 	
 	private void tweenCompleted() {
 		//Gdx.app.log(MyGdxGameConstants.LOG_TAG, "craptartastic");
-		_game.setScreen(new MenuScreen(_game));
+		_game.setScreen(new MenuScreen(_game, true));
 	}
 
 	@Override

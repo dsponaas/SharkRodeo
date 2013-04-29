@@ -132,18 +132,21 @@ public class Shark extends GameObject {
 		
 		if( _sharkState == SharkState.LUNGING ) {
 			_lungeTimeout -= delta;
+			Gdx.app.log(SharkRodeoConstants.LOG_TAG, "lungeTimeout:" + _lungeTimeout );
+			
 			Vector2 playerPos = GameBoard.getInstance().getPlayerPos();
+			Vector2 sharkPos = getPosition();
+			Vector2 sharkToPlayer = ( new Vector2( playerPos.x - sharkPos.x, playerPos.y - sharkPos.y ) );
+			float distanceToPlayer = sharkToPlayer.len();
+			
+			sharkToPlayer.nor().mul( distanceToPlayer + 150f ).add( sharkPos );
+			searchToDest( sharkToPlayer );
+
 			if( isPointInLineOfSight( playerPos.x, playerPos.y ) ) {
-				Vector2 sharkPos = getPosition();
-				Vector2 sharkToPlayer = ( new Vector2( playerPos.x - sharkPos.x, playerPos.y - sharkPos.y ) );
-				float distanceToPlayer = sharkToPlayer.len();
-				
-				sharkToPlayer.nor().mul( distanceToPlayer + 150f ).add( sharkPos );
-				searchToDest( sharkToPlayer );
 			} // if( isPointInLineOfSight( playerPos.x, playerPos.y ) )
 			else {
 				Vector2 sharkToDest = ( new Vector2( _searchDest ) ).sub( getPosition() );
-				if( ( _lungeTimeout < 0f ) || ( sharkToDest.len2() < 22500 ) ) { // TODO: magic number
+				if( _lungeTimeout < 0f ) { // TODO: magic number
 					endLunge();
 					searchToDest( getNextSearchDest() );
 				}
@@ -177,7 +180,7 @@ public class Shark extends GameObject {
 		Vector2 delta = dest.sub( this.getPosition() );
 		this.accelerateInDirection( delta );
 		
-		if( _sharkState != SharkState.MOUNTED ) {
+		if( ( _sharkState != SharkState.MOUNTED ) && ( _sharkState != SharkState.LUNGING ) ) {
 			setSharkState( SharkState.SEARCHING );
 		}
 	} // public void searchToDest( Vector2 dest )
@@ -476,7 +479,7 @@ public class Shark extends GameObject {
 		boolean retval = ( u >= 0f ) && ( v >= 0f ) && ( ( u + v ) < 1f );
 		
 		if( retval ) {
-			_lungeTimeout = 3f; // TODO: magic number
+			_lungeTimeout = SharkRodeoConstants.SHARK_LUNGE_TIMEOUT;
 			return true;
 		}
 		return false;

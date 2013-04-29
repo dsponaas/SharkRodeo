@@ -10,17 +10,29 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="450"
+   width="240"
    height="92"
    id="svg3769"
    version="1.1"
    inkscape:version="0.48.2 r9819"
-   inkscape:export-filename="C:\Users\sponaas\Desktop\SHARK_RODEO\ART\menu\creditsButton.png"
+   inkscape:export-filename="C:\Users\sponaas\Desktop\SHARK_RODEO\ART\menu\nextButton.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
    sodipodi:docname="menu_options.svg">
   <defs
      id="defs3771">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3116">
+      <stop
+         style="stop-color:#ffcc00;stop-opacity:1;"
+         offset="0"
+         id="stop3118" />
+      <stop
+         style="stop-color:#aa8800;stop-opacity:1"
+         offset="1"
+         id="stop3120" />
+    </linearGradient>
     <linearGradient
        inkscape:collect="always"
        id="linearGradient3848">
@@ -224,6 +236,37 @@
        x2="23.069359"
        y2="54.876892"
        gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3848-7">
+      <stop
+         style="stop-color:#aa0000;stop-opacity:1;"
+         offset="0"
+         id="stop3850-4" />
+      <stop
+         style="stop-color:#550000;stop-opacity:1"
+         offset="1"
+         id="stop3852-0" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3848-7"
+       id="linearGradient3075"
+       x1="22.804193"
+       y1="33.663689"
+       x2="23.069359"
+       y2="54.876892"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3116"
+       id="linearGradient3122"
+       x1="84.145706"
+       y1="33.310139"
+       x2="84.322479"
+       y2="57.351768"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(25.264503,0.38677864)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -232,16 +275,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="-0.2484723"
-     inkscape:cy="96.929366"
+     inkscape:zoom="4.0000001"
+     inkscape:cx="82.831777"
+     inkscape:cy="79.348775"
      inkscape:document-units="px"
-     inkscape:current-layer="layer4"
+     inkscape:current-layer="layer5"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1028"
-     inkscape:window-x="-32000"
-     inkscape:window-y="-32000"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata3774">
@@ -326,7 +369,7 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="credits"
-     style="display:inline"
+     style="display:none"
      transform="translate(0,-28)"
      sodipodi:insensitive="true">
     <path
@@ -386,5 +429,35 @@
          x="15.495004"
          y="68.661064"
          style="fill:url(#linearGradient3854);fill-opacity:1">HOW TO PLAY</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="next">
+    <path
+       inkscape:connector-curvature="0"
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.861;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 11.625699,-0.00866262 c -6.4395788,0 -11.62534314837,7.29845002 -11.62534314837,16.36152962 l 0,59.28462 c 0,9.06306 5.18576434837,16.36151 11.62534314837,16.36151 l 216.766011,0 c 6.43957,0 11.62535,-7.29845 11.62535,-16.36151 l 0,-59.28462 c 0,-9.0630796 -5.18578,-16.36152962 -11.62535,-16.36152962 l -216.766011,0 z m 1.459319,2.37692002 213.585032,0 c 6.08386,0 10.98586,6.8990796 10.98586,15.4615296 l 0,56.03077 c 0,8.56242 -4.902,15.46153 -10.98586,15.46153 l -213.585032,0 c -6.0838697,0 -10.9858699,-6.89911 -10.9858699,-15.46153 l 0,-56.03077 c 0,-8.56245 4.9020002,-15.4615296 10.9858699,-15.4615296 z"
+       id="rect2997-1-7-4-9-9" />
+    <rect
+       style="color:#000000;fill:#000000;fill-opacity:0.74901961;fill-rule:evenodd;stroke:none;stroke-width:0.861;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect2997-7-6-4-4"
+       width="236.59625"
+       height="87.307426"
+       x="1.4054594"
+       y="2.1386588"
+       ry="15.521318" />
+    <text
+       xml:space="preserve"
+       style="font-size:68.37937927px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient3122);fill-opacity:1;stroke:none;display:inline;font-family:True Crimes;-inkscape-font-specification:True Crimes"
+       x="40.763752"
+       y="69.035751"
+       id="text3844-8"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3846-8"
+         x="40.763752"
+         y="69.035751"
+         style="fill:url(#linearGradient3122);fill-opacity:1">NEXT</tspan></text>
   </g>
 </svg>

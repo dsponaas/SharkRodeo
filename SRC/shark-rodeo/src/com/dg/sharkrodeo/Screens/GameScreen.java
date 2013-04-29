@@ -25,7 +25,7 @@ public class GameScreen implements Screen {
 		
 		if(!GameBoard.getInstance().update(delta))
 		{
-			_game.setScreen(new MenuScreen(_game));
+			_game.setScreen(new MenuScreen(_game, true));
 		}
 		GameBoard.getInstance().render(delta, true);
 		

@@ -31,12 +31,14 @@ public class MenuScreen implements Screen {
 	private ImageButton _creditsButton;
 	private ImageButton _instructionsButton;
 	
-	public MenuScreen(SharkRodeo game) {
-		GameState.menuReset();
-		GameBoard.getInstance().startMenu(_game);
-		Music menuMusic = ResourceManager.getInstance().getMenuMusic();
-		if( !menuMusic.isPlaying() ) {
-			menuMusic.play();
+	public MenuScreen(SharkRodeo game, boolean resetGameState) {
+		if( resetGameState ) {
+			GameState.menuReset();
+			GameBoard.getInstance().startMenu(_game);
+			Music menuMusic = ResourceManager.getInstance().getMenuMusic();
+			if( !menuMusic.isPlaying() ) {
+				menuMusic.play();
+			}
 		}
 		_game = game;
 	}
@@ -114,7 +116,7 @@ public class MenuScreen implements Screen {
 				return true;
 			}
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				return;
+				_game.setScreen(new CreditsScreen(_game));
 			}
 		});
 		
@@ -123,7 +125,7 @@ public class MenuScreen implements Screen {
 				return true;
 			}
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				return;
+				_game.setScreen(new InstructionsScreen(_game));
 			}
 		});
 		
