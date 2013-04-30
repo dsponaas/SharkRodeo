@@ -59,6 +59,8 @@ public class CreditsScreen implements Screen {
 
 	@Override
 	public void show() {
+		Gdx.input.setInputProcessor(null);
+		
 		TextureRegion credits1Tex = ResourceManager.getInstance().getMenuTexture( "credits1" );
 		_creditsSprite1 = new Sprite(credits1Tex);
 		_creditsSprite1.setColor(1, 1, 1, 0);

@@ -9,22 +9,24 @@ import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.dg.sharkrodeo.ResourceManager;
 import com.dg.sharkrodeo.SharkRodeo;
-import com.dg.sharkrodeo.SharkRodeoConstants;
 import com.dg.sharkrodeo.Tweens.FadeTween;
 
 public class SplashScreen implements Screen {
 
-	Texture _splashTexture;
-	Sprite _splashSprite;
+	Sprite _backgroundSprite;
+	Sprite _presentsSprite;
+	Sprite _titleSprite;
 	SpriteBatch _batch;
 	SharkRodeo _game;
 	TweenManager _tweenManager;
+	TweenCallback presentsShowing;
+	TweenCallback titleShowing;
+	TweenCallback allHidden;
 	
 	public SplashScreen(SharkRodeo game) {
 		ResourceManager.getInstance().initialize();
@@ -40,7 +42,9 @@ public class SplashScreen implements Screen {
 		_tweenManager.update(delta);
 		
 		_batch.begin();
-		_splashSprite.draw(_batch);
+		_backgroundSprite.draw(_batch);
+		_presentsSprite.draw(_batch);
+		_titleSprite.draw(_batch);
 		_batch.end();
 	}
 
@@ -51,29 +55,71 @@ public class SplashScreen implements Screen {
 
 	@Override
 	public void show() {
-		_splashTexture = new Texture("data/splash_screen_08.png");
-		_splashTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+		TextureRegion backgroundTex = ResourceManager.getInstance().getSplashTexture( "background" );
+		_backgroundSprite = new Sprite( backgroundTex );
+		_backgroundSprite.setColor(1, 1, 1, 0);
+		_backgroundSprite.setOrigin( _backgroundSprite.getWidth() / 2, _backgroundSprite.getHeight() / 2 );
+		_backgroundSprite.setPosition( ( Gdx.graphics.getWidth() / 2 ) - ( _backgroundSprite.getWidth() / 2 ), ( Gdx.graphics.getHeight() / 2 ) - ( _backgroundSprite.getHeight() / 2 ) );
 		
-		_splashSprite = new Sprite(_splashTexture);
-		_splashSprite.setColor(1, 1, 1, 0);
-		_splashSprite.setOrigin(_splashSprite.getWidth() / 2, _splashSprite.getHeight() / 2);
-		_splashSprite.setPosition((Gdx.graphics.getWidth() / 2) - (_splashSprite.getWidth() / 2), (Gdx.graphics.getHeight() / 2) - (_splashSprite.getHeight() / 2));
+		TextureRegion presentsTex = ResourceManager.getInstance().getSplashTexture( "presents" );
+		_presentsSprite = new Sprite( presentsTex );
+		_presentsSprite.setColor(1, 1, 1, 0);
+		_presentsSprite.setOrigin( _presentsSprite.getWidth() / 2, _presentsSprite.getHeight() / 2 );
+		_presentsSprite.setPosition( ( Gdx.graphics.getWidth() / 2 ) - ( _presentsSprite.getWidth() / 2 ), ( Gdx.graphics.getHeight() / 2 ) - ( _presentsSprite.getHeight() / 2 ) );
+		
+		TextureRegion titleTex = ResourceManager.getInstance().getSplashTexture( "title" );
+		_titleSprite = new Sprite( titleTex );
+		_titleSprite.setColor(1, 1, 1, 0);
+		_titleSprite.setOrigin( _titleSprite.getWidth() / 2, _titleSprite.getHeight() / 2 );
+		_titleSprite.setPosition( ( Gdx.graphics.getWidth() / 2 ) - ( _titleSprite.getWidth() / 2 ), ( Gdx.graphics.getHeight() / 2 ) - ( _titleSprite.getHeight() / 2 ) );
 		
 		_batch = new SpriteBatch();
 		
 		Tween.registerAccessor(Sprite.class, new FadeTween());
 		_tweenManager = new TweenManager();
-		TweenCallback cb = new TweenCallback() {
+		TweenCallback backgroundShowing = new TweenCallback() {
 			@Override
 			public void onEvent(int type, BaseTween<?> source) {
-				tweenCompleted();
+				showPresents();
 			}
 		};
-		Tween.to(_splashSprite, FadeTween.ALPHA, 2f).target(1).ease(TweenEquations.easeInQuad).repeatYoyo(1, 2f).setCallback(cb).setCallbackTriggers(TweenCallback.COMPLETE).start(_tweenManager);
+		presentsShowing = new TweenCallback() {
+			@Override
+			public void onEvent(int type, BaseTween<?> source) {
+				showTitle();
+			}
+		};
+		titleShowing = new TweenCallback() {
+			@Override
+			public void onEvent(int type, BaseTween<?> source) {
+				hideAll();
+			}
+		};
+		allHidden = new TweenCallback() {
+			@Override
+			public void onEvent(int type, BaseTween<?> source) {
+				splashCompleted();
+			}
+		};
+		Tween.to( _backgroundSprite, FadeTween.ALPHA, 3f ).target( 1 ).ease( TweenEquations.easeInQuad ).setCallback( backgroundShowing ).setCallbackTriggers(TweenCallback.COMPLETE).start(_tweenManager);
 	}
 	
-	private void tweenCompleted() {
-		//Gdx.app.log(MyGdxGameConstants.LOG_TAG, "craptartastic");
+	private void showPresents() {
+		Tween.to( _presentsSprite, FadeTween.ALPHA, 2f ).target( 1 ).ease( TweenEquations.easeInQuad ).setCallback( presentsShowing ).setCallbackTriggers(TweenCallback.COMPLETE).start(_tweenManager);
+	}
+
+	private void showTitle() {
+		Tween.to( _titleSprite, FadeTween.ALPHA, 2f ).target( 1 ).ease( TweenEquations.easeInQuad ).setCallback( titleShowing ).setCallbackTriggers(TweenCallback.COMPLETE).start(_tweenManager);
+	}
+
+	private void hideAll() {
+		Tween.to( _backgroundSprite, FadeTween.ALPHA, 1f ).target( 0 ).ease( TweenEquations.easeInQuad ).delay( 2f ).start(_tweenManager);
+		Tween.to( _presentsSprite, FadeTween.ALPHA, 1f ).target( 0 ).ease( TweenEquations.easeInQuad ).delay( 2f ).start(_tweenManager);
+		Tween.to( _titleSprite, FadeTween.ALPHA, 1f ).target( 0 ).ease( TweenEquations.easeInQuad ).delay( 2f ).setCallback( allHidden ).setCallbackTriggers(TweenCallback.COMPLETE).start(_tweenManager);
+	}
+
+	private void splashCompleted() {
 		_game.setScreen(new MenuScreen(_game, true));
 	}
 

@@ -21,6 +21,7 @@ public class ResourceManager {
 //	private TextureAtlas _hudAtlas;
 	private TextureAtlas _backgroundAtlas;
 	private TextureAtlas _menuAtlas;
+	private TextureAtlas _splashAtlas;
 	private HashMap<String, AnimationSequence> _sharkAnims;
 	private HashMap<String, AnimationSequence> _playerAnims;
 	private Sound _deathNoise;
@@ -38,6 +39,7 @@ public class ResourceManager {
 		_waveAtlas = new TextureAtlas( "data/wave.pack" );//TODO: make this variable
 		_whirlpoolAtlas = new TextureAtlas( "data/whirlpool.pack" );//TODO: make this variable
 		_menuAtlas = new TextureAtlas( "data/menu.pack" );//TODO: make this variable
+		_splashAtlas = new TextureAtlas( "data/splash.pack" );//TODO: make this variable
 //		_hudAtlas = new TextureAtlas( SharkRodeoConstants.getHudPack() );
 		initPlayerAnims();
 		initSharkAnims();
@@ -182,6 +184,10 @@ public class ResourceManager {
 		return _menuAtlas.findRegion( name );
 	}
 	
+	public TextureRegion getSplashTexture( String name ) {
+		return _splashAtlas.findRegion( name );
+	}
+	
 	public AnimationSequence getSkarkAnim( String anim ) {
 		return ( AnimationSequence )_sharkAnims.get( anim );
 	}
@@ -212,6 +218,7 @@ public class ResourceManager {
 //		_hudAtlas.dispose();
 		_backgroundAtlas.dispose();
 		_menuAtlas.dispose();
+		_splashAtlas.dispose();
 		_deathNoise.dispose();
 		_gameMusic.dispose();
 		_menuMusic.dispose();
