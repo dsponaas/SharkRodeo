@@ -1,8 +1,8 @@
 package com.dg.sharkrodeo;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -19,6 +19,9 @@ public class Wave {
 	private float _speed;
 	private float _friction;
 	private float _waveTime;
+	
+	private Sound _waveSound;
+	private long _soundId;
 	
 	public Wave( Direction direction, Vector2 position, TextureRegion tex ) {
 		float frameTime = .2f; //TODO: MAGIC NUMBER
@@ -60,6 +63,10 @@ public class Wave {
 		_waveTime = 0f;
 		_speed = SharkRodeoConstants.getWaveSpeed();
 		_friction = SharkRodeoConstants.getWaveFriction();
+		
+		_waveSound = ResourceManager.getInstance().getWaveSound();
+		_soundId = _waveSound.play( 0.0f );
+		_waveSound.setLooping( _soundId, true );
 	}
 	
 	public boolean update( float delta ) {
@@ -96,6 +103,18 @@ public class Wave {
 		_bounds.x = _position.x - ( _bounds.width / 2f );
 		_bounds.y = _position.y - ( _bounds.height / 2f );
 		
+		Vector2 playerDelta = new Vector2( GameBoard.getInstance().getPlayerPos() );
+		playerDelta.sub( _position );
+		float dist = playerDelta.len();
+		final float maxDist = ( ( float )Gdx.graphics.getWidth() / 2f ); //TODO: MOVE THIS TO CONSTANTS 
+		if( dist > maxDist ) {
+			_waveSound.setVolume( _soundId, 0f );
+		}
+		else {
+			float factor = ( maxDist - dist ) / maxDist;
+			_waveSound.setVolume( _soundId, factor );
+		}
+		
 //		if( _waveTime > 60f ) // TODO: THIS IS INCORRECT. FIX IT
 //			return false;
 		return stillAliveFlag;
@@ -128,6 +147,10 @@ public class Wave {
 				break;
 			}
 		}
+	}
+	
+	public void killWave() {
+		_waveSound.stop( _soundId );
 	}
 	
 	public Vector2 getPosition()					{ return _position; }

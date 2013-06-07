@@ -25,6 +25,9 @@ public class ResourceManager {
 	private HashMap<String, AnimationSequence> _sharkAnims;
 	private HashMap<String, AnimationSequence> _playerAnims;
 	private Sound _deathNoise;
+	private Sound _ridingNoise;
+	private Sound _dismountNoise;
+	private Sound _waveSound;
 	private Music _gameMusic;
 	private Music _menuMusic;
 
@@ -43,7 +46,10 @@ public class ResourceManager {
 //		_hudAtlas = new TextureAtlas( SharkRodeoConstants.getHudPack() );
 		initPlayerAnims();
 		initSharkAnims();
-		_deathNoise = Gdx.audio.newSound( Gdx.files.internal( "data/WilhelmScream.ogg" ) );
+		_deathNoise = Gdx.audio.newSound( Gdx.files.internal( "data/death.ogg" ) );
+		_ridingNoise = Gdx.audio.newSound( Gdx.files.internal( "data/yahoo.ogg" ) );
+		_dismountNoise = Gdx.audio.newSound( Gdx.files.internal( "data/dismount.ogg" ) );
+		_waveSound = Gdx.audio.newSound( Gdx.files.internal( "data/wave.ogg" ) );
 		_gameMusic = Gdx.audio.newMusic( Gdx.files.internal( "data/test4_looping2.ogg" ) );
 		_gameMusic.setLooping( true );
 		_menuMusic = Gdx.audio.newMusic( Gdx.files.internal( "data/menu.ogg" ) );
@@ -63,6 +69,8 @@ public class ResourceManager {
 		Animation swimUpRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, _playerAtlas.findRegion( "swim_upright" ) );
 		Animation idleLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, _playerAtlas.findRegion( "idle_left" ) );
 		Animation idleRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, _playerAtlas.findRegion( "idle_right" ) );
+		Animation dismountLeftAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.08f, 2, 4, _playerAtlas.findRegion( "dismount_left" ) );
+//		Animation dismountRightAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, _playerAtlas.findRegion( "dismount_right" ) );
 		Animation deadAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.15f, 1, 4, _playerAtlas.findRegion( "dead" ) );
 		Animation deadIntroAnim = com.dg.sharkrodeo.Factories.AnimationFactory.createAnimation( 0.25f, 1, 4, _playerAtlas.findRegion( "dead_intro" ) );
 
@@ -76,6 +84,8 @@ public class ResourceManager {
 		AnimationSequence swimUpRightSequence = new AnimationSequence( swimUpRightAnim );
 		AnimationSequence idleLeftSequence = new AnimationSequence( idleLeftAnim );
 		AnimationSequence idleRightSequence = new AnimationSequence( idleRightAnim );
+		AnimationSequence dismountLeftSequence = new AnimationSequence( dismountLeftAnim );
+//		AnimationSequence dismountRightSequence = new AnimationSequence( dismountRightAnim );
 		AnimationSequence mountUpSequence = new AnimationSequence( idleRightAnim, false );
 		AnimationSequence deadSequence = new AnimationSequence( deadAnim );
 		deadSequence.setIntro( deadIntroAnim );
@@ -91,6 +101,8 @@ public class ResourceManager {
 		_playerAnims.put( "move_upright", swimUpRightSequence );
 		_playerAnims.put( "idle_left", idleLeftSequence );
 		_playerAnims.put( "idle_right", idleRightSequence );
+		_playerAnims.put( "dismount_left", dismountLeftSequence );
+//		_playerAnims.put( "dismount_right", dismountRightSequence );
 		_playerAnims.put( "mount_up", mountUpSequence );
 		_playerAnims.put( "dead", deadSequence );
 	}
@@ -200,6 +212,18 @@ public class ResourceManager {
 		return _deathNoise;
 	}
 	
+	public Sound getRidingNoise() {
+		return _ridingNoise;
+	}
+	
+	public Sound getDismountNoise() {
+		return _dismountNoise;
+	}
+	
+	public Sound getWaveSound() {
+		return _waveSound;
+	}
+	
 	public Music getGameMusic() {
 		return _gameMusic;
 	}
@@ -220,6 +244,9 @@ public class ResourceManager {
 		_menuAtlas.dispose();
 		_splashAtlas.dispose();
 		_deathNoise.dispose();
+		_ridingNoise.dispose();
+		_waveSound.dispose();
+		_dismountNoise.dispose();
 		_gameMusic.dispose();
 		_menuMusic.dispose();
 	}

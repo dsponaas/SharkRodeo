@@ -5,9 +5,6 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
@@ -316,6 +313,7 @@ public class GameBoard {
 			_waves[ i ].pushGameObj( _player, delta );
 
 			if( !_waves[ i ].update( delta ) ) {
+				_waves[ i ].killWave();
 				_waves[ i ] = null;
 			}
 		}
@@ -781,7 +779,7 @@ public class GameBoard {
 		
 		endCameraShake(); // just for good measure...
 		
-		ResourceManager.getInstance().getDeathNoise().play( 0.6f );
+		ResourceManager.getInstance().getDeathNoise().play( 0.5f );
 		
 		pause();
 	}

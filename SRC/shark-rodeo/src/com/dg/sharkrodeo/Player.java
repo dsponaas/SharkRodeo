@@ -1,8 +1,6 @@
 package com.dg.sharkrodeo;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
@@ -49,6 +47,8 @@ public class Player extends GameObject {
 		addAnimation( "move_upright", ResourceManager.getInstance().getPlayerAnim( "move_upright" ) );
 		addAnimation( "idle_left", ResourceManager.getInstance().getPlayerAnim( "idle_left" ) );
 		addAnimation( "idle_right", ResourceManager.getInstance().getPlayerAnim( "idle_right" ) );
+		addAnimation( "dismount_left", ResourceManager.getInstance().getPlayerAnim( "dismount_left" ) );
+		addAnimation( "dismount_right", ResourceManager.getInstance().getPlayerAnim( "dismount_right" ) );
 		addAnimation( "mount_up", ResourceManager.getInstance().getPlayerAnim( "mount_up" ) );
 		addAnimation( "dead", ResourceManager.getInstance().getPlayerAnim( "dead" ) );
 
@@ -129,28 +129,28 @@ public class Player extends GameObject {
 		
 		switch( this.getDirection() ) {
 		case UP:
-			this.setAnimState( "mount_up" );
+			this.setAnimState( null );
 			break;
 		case DOWN:
-			this.setAnimState( "mount_up" );
+			this.setAnimState( null );
 			break;
 		case LEFT:
-			this.setAnimState( "mount_up" );
+			this.setAnimState( null );
 			break;
 		case RIGHT:
-			this.setAnimState( "mount_up" );
+			this.setAnimState( null );
 			break;
 		case UP_LEFT:
-			this.setAnimState( "mount_up" );
+			this.setAnimState( null );
 			break;
 		case UP_RIGHT:
-			this.setAnimState( "mount_up" );
+			this.setAnimState( null );
 			break;
 		case DOWN_LEFT:
-			this.setAnimState( "mount_up" );
+			this.setAnimState( null );
 			break;
 		case DOWN_RIGHT:
-			this.setAnimState( "mount_up" );
+			this.setAnimState( null );
 			break;
 		}
 
@@ -164,6 +164,9 @@ public class Player extends GameObject {
 	
 	public void mountShark() {
 		_ridingScoreTimer = SharkRodeoConstants.RIDING_SCORE_TIME;
+		Sound ridingNoise = ResourceManager.getInstance().getRidingNoise();
+		long id = ridingNoise.play( 0.25f );
+		ridingNoise.setLooping( id, true );
 	}
 	
 	public void dismountingShark() {
@@ -171,7 +174,7 @@ public class Player extends GameObject {
 		_playerState = PlayerState.DISMOUNTING;
 		_ridingShark.dismount();
 
-		this.setAnimState( "idle_left" );
+		this.setAnimState( "dismount_left" );
 		this.setInTheWater( false );
 
 		_dismountTargetY = getPosition().y;
@@ -179,6 +182,9 @@ public class Player extends GameObject {
 		if( this.getPosition().x < ( GameBoard.getInstance().getWidth() / 2f ) ) {
 			_dismountVelocity.set( _dismountVelocity.x * -1f, _dismountVelocity.y );
 		}
+		
+		ResourceManager.getInstance().getRidingNoise().stop();
+		ResourceManager.getInstance().getDismountNoise().play( 0.25f );
 	}
 	
 	private void dismountComplete() {
@@ -202,9 +208,9 @@ public class Player extends GameObject {
 	}
 	
 	public void accelerateInDirection( Vector2 dir ) {
-		float oldAngle = ( new Vector2( getAcceleration() ) ).angle();
+//		float oldAngle = ( new Vector2( getAcceleration() ) ).angle();
 		Vector2 unitDir = dir.nor();
-		float angle = unitDir.angle();
+//		float angle = unitDir.angle();
 
 		setDirection( getDirection( unitDir) );
 		setAcceleration( unitDir.mul( getAccelerationRate() ) );
@@ -216,42 +222,42 @@ public class Player extends GameObject {
 		this.accelerateInDirection( delta );
 		Direction newDirection = this.getDirection();
 
-		float distance = 8f; // TODO: magic number
-		float diagDist = ( float )Math.sqrt( ( distance * distance ) / 2f ); // TODO: magic number
+//		float distance = 8f; // TODO: magic number
+//		float diagDist = ( float )Math.sqrt( ( distance * distance ) / 2f ); // TODO: magic number
 		
 		if( ( newDirection != oldDirection ) || ( _playerState != PlayerState.MOVING ) ) {
 			switch( newDirection ) {
 			case UP:
 				this.setAnimState( "move_up" );
-				_boundsOffsets[ 0 ].set( 0f, distance );
+//				_boundsOffsets[ 0 ].set( 0f, distance );
 				break;
 			case DOWN:
 				this.setAnimState( "move_down" );
-				_boundsOffsets[ 0 ].set( 0f, -1f * distance );
+//				_boundsOffsets[ 0 ].set( 0f, -1f * distance );
 				break;
 			case LEFT:
 				this.setAnimState( "move_left" );
-				_boundsOffsets[ 0 ].set( -1f * distance, 0f );
+//				_boundsOffsets[ 0 ].set( -1f * distance, 0f );
 				break;
 			case RIGHT:
 				this.setAnimState( "move_right" );
-				_boundsOffsets[ 0 ].set( distance, 0f );
+//				_boundsOffsets[ 0 ].set( distance, 0f );
 				break;
 			case UP_LEFT:
 				this.setAnimState( "move_upleft" );
-				_boundsOffsets[ 0 ].set( -1f * diagDist, diagDist );
+//				_boundsOffsets[ 0 ].set( -1f * diagDist, diagDist );
 				break;
 			case UP_RIGHT:
 				this.setAnimState( "move_upright" );
-				_boundsOffsets[ 0 ].set( diagDist, diagDist );
+//				_boundsOffsets[ 0 ].set( diagDist, diagDist );
 				break;
 			case DOWN_LEFT:
 				this.setAnimState( "move_downleft" );
-				_boundsOffsets[ 0 ].set( -1f* diagDist, -1f * diagDist );
+//				_boundsOffsets[ 0 ].set( -1f* diagDist, -1f * diagDist );
 				break;
 			case DOWN_RIGHT:
 				this.setAnimState( "move_downright" );
-				_boundsOffsets[ 0 ].set( diagDist, -1f * diagDist );
+//				_boundsOffsets[ 0 ].set( diagDist, -1f * diagDist );
 				break;
 			}
 			_playerState = PlayerState.MOVING;

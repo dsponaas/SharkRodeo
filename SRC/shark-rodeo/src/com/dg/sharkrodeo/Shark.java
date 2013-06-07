@@ -1,8 +1,5 @@
 package com.dg.sharkrodeo;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -102,8 +99,8 @@ public class Shark extends GameObject {
 		
 		
 		if( _sharkState == SharkState.LUNGING ) {
-			setAccelerationRate( SharkRodeoConstants.SHARK_LUNGE_MULTIPLIER * SharkRodeoConstants.getSharkAcceleration() );
-			setMaxSpeed( SharkRodeoConstants.SHARK_LUNGE_MULTIPLIER * SharkRodeoConstants.getSharkMaxSpeed() );
+			setAccelerationRate( SharkRodeoConstants.SHARK_LUNGE_ACCEL_MULTIPLIER * SharkRodeoConstants.getSharkAcceleration() );
+			setMaxSpeed( SharkRodeoConstants.SHARK_LUNGE_SPEED_MULTIPLIER * SharkRodeoConstants.getSharkMaxSpeed() );
 		}
 		else if( !isBeingRidden() ) {
 			setAccelerationRate( SharkRodeoConstants.getSharkAcceleration() );
@@ -132,7 +129,7 @@ public class Shark extends GameObject {
 		
 		if( _sharkState == SharkState.LUNGING ) {
 			_lungeTimeout -= delta;
-			Gdx.app.log(SharkRodeoConstants.LOG_TAG, "lungeTimeout:" + _lungeTimeout );
+//			Gdx.app.log(SharkRodeoConstants.LOG_TAG, "lungeTimeout:" + _lungeTimeout );
 			
 			Vector2 playerPos = GameBoard.getInstance().getPlayerPos();
 			Vector2 sharkPos = getPosition();
@@ -145,7 +142,7 @@ public class Shark extends GameObject {
 			if( isPointInLineOfSight( playerPos.x, playerPos.y ) ) {
 			} // if( isPointInLineOfSight( playerPos.x, playerPos.y ) )
 			else {
-				Vector2 sharkToDest = ( new Vector2( _searchDest ) ).sub( getPosition() );
+//				Vector2 sharkToDest = ( new Vector2( _searchDest ) ).sub( getPosition() );
 				if( _lungeTimeout < 0f ) { // TODO: magic number
 					endLunge();
 					searchToDest( getNextSearchDest() );
@@ -203,8 +200,8 @@ public class Shark extends GameObject {
 		Vector2 delta = sharkDest.sub( this.getPosition() );
 		this.accelerateInDirection( delta );
 
-		setAccelerationRate( SharkRodeoConstants.SHARK_LUNGE_MULTIPLIER * SharkRodeoConstants.getSharkAcceleration() );
-		setMaxSpeed( SharkRodeoConstants.SHARK_LUNGE_MULTIPLIER * SharkRodeoConstants.getSharkMaxSpeed() );
+		setAccelerationRate( SharkRodeoConstants.SHARK_LUNGE_ACCEL_MULTIPLIER * SharkRodeoConstants.getSharkAcceleration() );
+		setMaxSpeed( SharkRodeoConstants.SHARK_LUNGE_SPEED_MULTIPLIER * SharkRodeoConstants.getSharkMaxSpeed() );
 	} // public void lungeAtPlayer()
 	
 	public void endLunge() {

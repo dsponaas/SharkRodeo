@@ -16,7 +16,8 @@ public class SharkRodeoConstants {
 	public static final float DEFAULT_SHARK_HEALTH = 15f;
 	public static final double SHARK_REGULAR_TURN_SPEED = Math.PI / 90.0;
 	public static final double SHARK_LUNGE_TURN_SPEED = Math.PI / 50.0;
-	public static final float SHARK_LUNGE_MULTIPLIER = 1.5f;
+	public static final float SHARK_LUNGE_SPEED_MULTIPLIER = 1.5f;
+	public static final float SHARK_LUNGE_ACCEL_MULTIPLIER = 3.0f;
 	public static final float SHARK_LUNGE_TIMEOUT = 3f;
 	public static final float DIALOG_IGNORE_INPUT_TIME = 1f;
 	public static final float MUSIC_FADE_TIME = 4f;
@@ -109,8 +110,8 @@ public class SharkRodeoConstants {
 	private static final float MOUNTED_SHARK_MAX_SPEED_128 = 900f;
 	private static final float MOUNTED_SHARK_MAX_SPEED_256 = 1800f;
 	/**************************************************************************************************************************/
-	private static final float SHARK_MOUTH_HITBOX_RADIUS_128 = 16f;
-	private static final float SHARK_MOUTH_HITBOX_RADIUS_256 = 32f;
+	private static final float SHARK_MOUTH_HITBOX_RADIUS_128 = 12f;
+	private static final float SHARK_MOUTH_HITBOX_RADIUS_256 = 24f;
 	/**************************************************************************************************************************/
 	private static final float SHARK_BACK_HITBOX_RADIUS_128 = 12f;
 	private static final float SHARK_BACK_HITBOX_RADIUS_256 = 24f;
