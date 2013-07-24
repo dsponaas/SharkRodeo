@@ -19,6 +19,8 @@ public class Player extends GameObject {
 	private float _dismountTargetY;
 	private Vector2 _dismountVelocity;
 	
+	private static long _soundId = -1;
+	
 	private final int MAX_MODIFIERS = 3;
 //	private boolean _alive;
 	
@@ -165,8 +167,10 @@ public class Player extends GameObject {
 	public void mountShark() {
 		_ridingScoreTimer = SharkRodeoConstants.RIDING_SCORE_TIME;
 		Sound ridingNoise = ResourceManager.getInstance().getRidingNoise();
-		long id = ridingNoise.play( 0.25f );
-		ridingNoise.setLooping( id, true );
+		_soundId = -1;
+		while( _soundId < 0 ) {
+			_soundId = ridingNoise.loop( 0.5f );
+		}
 	}
 	
 	public void dismountingShark() {
@@ -183,8 +187,8 @@ public class Player extends GameObject {
 			_dismountVelocity.set( _dismountVelocity.x * -1f, _dismountVelocity.y );
 		}
 		
-		ResourceManager.getInstance().getRidingNoise().stop();
-		ResourceManager.getInstance().getDismountNoise().play( 0.25f );
+		ResourceManager.getInstance().getRidingNoise().stop( _soundId );
+		ResourceManager.getInstance().getDismountNoise().play( 0.5f );
 	}
 	
 	private void dismountComplete() {
@@ -204,6 +208,8 @@ public class Player extends GameObject {
 		this.killVelocity();
 		this.setUpatePosition( true );
 		
+		ResourceManager.getInstance().getRidingNoise().stop( _soundId );
+
 		GameBoard.getInstance().tameShark( _ridingShark );
 	}
 	

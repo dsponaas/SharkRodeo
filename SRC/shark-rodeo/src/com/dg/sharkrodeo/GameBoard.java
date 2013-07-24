@@ -502,19 +502,26 @@ public class GameBoard {
 		ResourceManager.getInstance().dispose();
 	}
 
-	//****************************************************************************************************************************************************************************************************	
-	//****************************************************************************************************************************************************************************************************	
-	//**********make these dependent on level******************************************************************************************************************************************************************************************	
-	//****************************************************************************************************************************************************************************************************	
-	//****************************************************************************************************************************************************************************************************	
 	public void initLevel() {
 		int level = GameState.getLevel();
 		_sharks = new Shark[ LevelInfo.getMaximumSharks( level ) ];
+		
+		if( _waves != null ) {
+			for( int i = 0; i < _waves.length; ++i ) {
+				if( _waves[ i ] != null ) {
+					_waves[ i ].killWave();
+				}
+			}
+		}
 		_waves = new Wave[ LevelInfo.getMaximumWaves( level ) ];
 		_whirlpools = new Whirlpool[ LevelInfo.getMaximumWhirlpools( level ) ];
 		for( int i = 0; i < LevelInfo.getInitialNumSharks( level ); ++i ) {
 			spawnShark();
 		}
+		
+		// look... i know... i'm just trying to move on to my next project by this point
+		// do not as i have done, do as i would have intended to do... also... dont drink and comment
+		ResourceManager.getInstance().getWaveSound().stop();
 	}
 	
 	public boolean isLevelComplete() {
@@ -702,6 +709,7 @@ public class GameBoard {
 
 				Wave wave = new Wave( dir, new Vector2( xPos, yPos ), tex );
 				_waves[ i ] = wave;
+				wave.setId( i );
 				break;
 			}
 		}
@@ -712,6 +720,7 @@ public class GameBoard {
 		Whirlpool newWhirlpool = new Whirlpool( Utils.getRandomFloatInRange( 0f, getWidth() ), Utils.getRandomFloatInRange( 0f, getHeight() ) );
 		for( int i = 0; i < _whirlpools.length; ++i ) {
 			if( _whirlpools[ i ] == null ) {
+				newWhirlpool.setId( i );
 				_whirlpools[ i ] = newWhirlpool;
 				break;
 			}
@@ -779,7 +788,7 @@ public class GameBoard {
 		
 		endCameraShake(); // just for good measure...
 		
-		ResourceManager.getInstance().getDeathNoise().play( 0.5f );
+		ResourceManager.getInstance().getDeathNoise().play( 1f );
 		
 		pause();
 	}
@@ -788,10 +797,16 @@ public class GameBoard {
 		Vector2 playerPos = new Vector2( getWidth() / 2f, getHeight() / 2f );
 		
 		for( int i = 0; i < _whirlpools.length; ++i ) {
+			if( _whirlpools[ i ] != null ) {
+				_whirlpools[ i ].kill();
+			}
 			_whirlpools[ i ] = null;
 		}
 		
 		for( int i = 0; i < _waves.length; ++i ) {
+			if( _waves[ i ] != null ) {
+				_waves[ i ].killWave();
+			}
 			_waves[ i ] = null;
 		}
 		

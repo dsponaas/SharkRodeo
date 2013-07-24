@@ -28,6 +28,7 @@ public class ResourceManager {
 	private Sound _ridingNoise;
 	private Sound _dismountNoise;
 	private Sound _waveSound;
+	private Sound _whirlpoolSound;
 	private Music _gameMusic;
 	private Music _menuMusic;
 
@@ -50,7 +51,8 @@ public class ResourceManager {
 		_ridingNoise = Gdx.audio.newSound( Gdx.files.internal( "data/yahoo.ogg" ) );
 		_dismountNoise = Gdx.audio.newSound( Gdx.files.internal( "data/dismount.ogg" ) );
 		_waveSound = Gdx.audio.newSound( Gdx.files.internal( "data/wave.ogg" ) );
-		_gameMusic = Gdx.audio.newMusic( Gdx.files.internal( "data/test4_looping2.ogg" ) );
+		_whirlpoolSound = Gdx.audio.newSound( Gdx.files.internal( "data/whirlpool.ogg" ) );
+		_gameMusic = Gdx.audio.newMusic( Gdx.files.internal( "data/test4_looping.ogg" ) );
 		_gameMusic.setLooping( true );
 		_menuMusic = Gdx.audio.newMusic( Gdx.files.internal( "data/menu.ogg" ) );
 		_menuMusic.setLooping( true );
@@ -224,6 +226,10 @@ public class ResourceManager {
 		return _waveSound;
 	}
 	
+	public Sound getWhirlpoolSound() {
+		return _whirlpoolSound;
+	}
+	
 	public Music getGameMusic() {
 		return _gameMusic;
 	}
@@ -246,6 +252,7 @@ public class ResourceManager {
 		_deathNoise.dispose();
 		_ridingNoise.dispose();
 		_waveSound.dispose();
+		_whirlpoolSound.dispose();
 		_dismountNoise.dispose();
 		_gameMusic.dispose();
 		_menuMusic.dispose();

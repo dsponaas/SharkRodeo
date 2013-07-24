@@ -1,12 +1,12 @@
 package com.dg.sharkrodeo;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.dg.sharkrodeo.Factories.AnimationFactory;
-import com.dg.sharkrodeo.Shark.SharkState;
 
 public class Whirlpool {
 
@@ -22,6 +22,9 @@ public class Whirlpool {
 	private Animation _anim;
 	private float _elapsed;
 	private float _accelerationATerm;
+	
+	private static RecurringSoundPlayer _sound;
+	private static int _whirlpoolId;
 	
 	private final float EVENT_HORIZON_FACTOR = 3f; //TODO: MAGIC NUMBER
 	private final float FADE_TIME = 3f; //TODO: MAGIC NUMBER
@@ -42,6 +45,12 @@ public class Whirlpool {
 		
 		_whirlpoolState = WhirlpoolState.FADE_IN;
 		_stateTime = FADE_TIME;
+		
+		if ( _sound == null ) {
+			_sound = new RecurringSoundPlayer( ResourceManager.getInstance().getWhirlpoolSound() );
+		}
+		
+		_whirlpoolId = -1;
 	}
 	
 	public boolean update( float delta ) {
@@ -62,6 +71,18 @@ public class Whirlpool {
 			}
 		}
 		
+		Vector2 playerDelta = new Vector2( GameBoard.getInstance().getPlayerPos() );
+		playerDelta.sub( _position );
+		float dist = playerDelta.len();
+		final float maxDist = ( ( float )Gdx.graphics.getWidth() / 2f ); //TODO: MOVE THIS TO CONSTANTS 
+		if( dist > maxDist ) {
+			_sound.setVolume( _whirlpoolId, -1f );
+		}
+		else {
+			float factor = ( maxDist - dist ) / maxDist;
+			_sound.setVolume( _whirlpoolId, factor );
+		}
+	
 		return true;
 	}
 	
@@ -106,8 +127,13 @@ public class Whirlpool {
 	public void kill() {
 		_whirlpoolState = WhirlpoolState.ACTIVE;
 		_stateTime = -1f;
+		_sound.setVolume( _whirlpoolId, -1f );
 	}
 	
+	public void setId( int id ) {
+		_whirlpoolId = id;
+	}
+
 //	public int getNumLayers()						{ return _anims.length; }
 	public TextureRegion getTexture()				{ return _anim.getKeyFrame( _elapsed, true ); }
 	public Vector2 getPosition()					{ return _position; }

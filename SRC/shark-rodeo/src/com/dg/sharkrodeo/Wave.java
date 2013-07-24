@@ -20,8 +20,8 @@ public class Wave {
 	private float _friction;
 	private float _waveTime;
 	
-	private Sound _waveSound;
-	private long _soundId;
+	private int _waveId;
+	private static RecurringSoundPlayer _sound = null;
 	
 	public Wave( Direction direction, Vector2 position, TextureRegion tex ) {
 		float frameTime = .2f; //TODO: MAGIC NUMBER
@@ -64,9 +64,11 @@ public class Wave {
 		_speed = SharkRodeoConstants.getWaveSpeed();
 		_friction = SharkRodeoConstants.getWaveFriction();
 		
-		_waveSound = ResourceManager.getInstance().getWaveSound();
-		_soundId = _waveSound.play( 0.0f );
-		_waveSound.setLooping( _soundId, true );
+		if ( _sound == null ) {
+			_sound = new RecurringSoundPlayer( ResourceManager.getInstance().getWaveSound() );
+		}
+		
+		_waveId = -1;
 	}
 	
 	public boolean update( float delta ) {
@@ -108,15 +110,13 @@ public class Wave {
 		float dist = playerDelta.len();
 		final float maxDist = ( ( float )Gdx.graphics.getWidth() / 2f ); //TODO: MOVE THIS TO CONSTANTS 
 		if( dist > maxDist ) {
-			_waveSound.setVolume( _soundId, 0f );
+			_sound.setVolume( _waveId, -1f );
 		}
 		else {
 			float factor = ( maxDist - dist ) / maxDist;
-			_waveSound.setVolume( _soundId, factor );
+			_sound.setVolume( _waveId, factor );
 		}
 		
-//		if( _waveTime > 60f ) // TODO: THIS IS INCORRECT. FIX IT
-//			return false;
 		return stillAliveFlag;
 	}
 	
@@ -150,12 +150,14 @@ public class Wave {
 	}
 	
 	public void killWave() {
-		_waveSound.stop( _soundId );
+		_sound.setVolume( _waveId, -1f );
 	}
 	
 	public Vector2 getPosition()					{ return _position; }
 	public TextureRegion getTexture()			{ return _anim.getKeyFrame( _waveTime, true ); }
 	
-	
+	public void setId( int id ) {
+		_waveId = id;
+	}
 
 }
